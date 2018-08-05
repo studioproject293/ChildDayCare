@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "353424315001",
+    "firebase_url": "https://chatingfirebaseapplication9-02.firebaseio.com",
+    "project_id": "chatingfirebaseapplication9-02",
+    "storage_bucket": "chatingfirebaseapplication9-02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353424315001:android:d83e417bc10d7745",
+        "android_client_info": {
+          "package_name": "com.example.abhinav_rapidbox.childdaycare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353424315001-jk5aul4squtv07ltrl2jurpqd4ci80d5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhinav_rapidbox.childdaycare",
+            "certificate_hash": "10e4534015f1e04869075ec01b7fbaea1a4c11e5"
+          }
+        },
+        {
+          "client_id": "353424315001-p2uk4vmo0mc0iakaertoi1pqhdjh1kr1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "353424315001-e9n350lrpslqiomlkihhd2v6pcep3vc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOBvcp1F6Jl-wT694ozDEL_7REqv1eyUY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353424315001-p2uk4vmo0mc0iakaertoi1pqhdjh1kr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

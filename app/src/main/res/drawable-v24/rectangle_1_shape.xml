@@ -1,0 +1,11 @@
+
+<!-- rectangle_1 from your PSD file. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle" >
+	<solid android:color="@color/white" />
+</shape>
+
+
+
+
+	<!--rectangle_1_color-->
