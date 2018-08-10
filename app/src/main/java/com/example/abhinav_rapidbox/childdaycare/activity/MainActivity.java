@@ -22,14 +22,17 @@ import android.widget.TextView;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.fragment.EnquiryFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.HomeFragment;
+import com.example.abhinav_rapidbox.childdaycare.fragment.OtpFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ProductDetailsFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignInFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragmentChild;
+import com.example.abhinav_rapidbox.childdaycare.fragment.UserSignUpFragment;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentInteractionListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
+import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -119,11 +122,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                                 mFragmentTag).commit();
                 break;
             case AppConstant.PRODUCT_DETAILS_FRAGMENT:
-                DayCareListModel dayCareListModel= (DayCareListModel) data;
+                DayCareListModel dayCareListModel = (DayCareListModel) data;
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
-                        .replace(R.id.fragment_main, new ProductDetailsFragment(dayCareListModel),
+                        .replace(R.id.fragment_main, new ProductDetailsFragment().newInstance(dayCareListModel),
                                 mFragmentTag).commit();
                 break;
             case AppConstant.SignupFragment:
@@ -154,6 +157,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack(mFragmentTag)
                         .replace(R.id.fragment_main, new SignupFragmentChild().newInstance(user),
                                 mFragmentTag).commit();
+                break;
+            case AppConstant.FRAGMENT_OTP:
+                UserSignUpModel userSignUpModel = (UserSignUpModel) data;
+                mFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(mFragmentTag)
+                        .replace(R.id.fragment_main, new OtpFragment().newInstance(userSignUpModel),
+                                mFragmentTag).commit();
+                break;
+            case AppConstant.FRAGMENT_USER_SIGNUP:
+                mFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(mFragmentTag)
+                        .replace(R.id.fragment_main, new UserSignUpFragment().newInstance(),
+                                mFragmentTag).commit();
+                break;
+
 
         }
     }

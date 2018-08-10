@@ -51,6 +51,7 @@
                     android:inputType="textCapWords"
                     android:maxLength="25"
                     android:paddingBottom="4dp"
+                    android:backgroundTint="@color/colorPrimary"
                     android:paddingTop="4dp"
                     android:textColor="#000" />
             </android.support.design.widget.TextInputLayout>
@@ -72,6 +73,8 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:hint="Password"
                     android:maxLength="10"
+                    android:backgroundTint="@color/colorPrimary"
+
                     android:paddingBottom="4dp"
                     android:inputType="textPassword"
                     android:paddingTop="4dp"
@@ -90,6 +93,16 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create an account ?"
+                android:textColor="#000"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:id="@+id/signUp"
+                android:textStyle="bold"
+                android:gravity="center"/>
         </LinearLayout>
 
     </ScrollView>

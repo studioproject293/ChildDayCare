@@ -1,4 +1,4 @@
-package com.example.abhinav_rapidbox.childdaycare;
+package com.example.abhinav_rapidbox.childdaycare.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
-import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
+import com.example.abhinav_rapidbox.childdaycare.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private LinearLayout imageSplash;

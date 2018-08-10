@@ -2,6 +2,8 @@ package com.example.abhinav_rapidbox.childdaycare.service;
 
 
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
+import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
+import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 
 import java.util.ArrayList;
 
@@ -22,5 +24,11 @@ public interface ApiServices {
     int REQUEST_DAYCARE = 1;
     @GET("daycare")
     Call<Result<ArrayList<DayCareListModel>>> getCategories();
+    int REQUEST_SIGININ_USER =2;
+    @POST("signup/login")
+    Call<Result<UserSignUpModel>>loginUrl(@Body SiginInModel siginInModel);
+    int REQUEST_USER_SIGINUP =3;
+    @POST("signup/saveuser")
+    Call<Result<UserSignUpModel>>signUpUrl(@Body UserSignUpModel userSignUpModel);
 
 }

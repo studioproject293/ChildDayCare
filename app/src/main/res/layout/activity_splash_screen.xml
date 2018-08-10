@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/dummy1"
     android:id="@+id/imageSplash"
-    tools:context="com.example.abhinav_rapidbox.childdaycare.SplashScreenActivity"
+    tools:context="com.example.abhinav_rapidbox.childdaycare.activity.SplashScreenActivity"
     android:orientation="horizontal">
 
 </LinearLayout>

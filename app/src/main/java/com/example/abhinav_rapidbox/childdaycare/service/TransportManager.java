@@ -4,8 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.view.View;
 
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
+import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
+import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.google.gson.Gson;
@@ -93,29 +96,53 @@ public class TransportManager {
             listener.onFailureResponse(reqType, result);
         }
     }
-  /*  public void getProducts(Context context, String sKey, int size) {
+    public void saveUser(Context context, UserSignUpModel userSignUpModel) {
         if (isConnectionAvailable(context)) {
-            getAPIService().getProduct(sKey, size).enqueue(new Callback<Result<ArrayList<Product>>>() {
+            getAPIService().signUpUrl(userSignUpModel).enqueue(new Callback<Result<UserSignUpModel>>() {
                 @Override
-                public void onResponse(Call<Result<ArrayList<Product>>> call, Response<Result<ArrayList<Product>>> res) {
+                public void onResponse(Call<Result<UserSignUpModel>> call, Response<Result<UserSignUpModel>> res) {
                     if (res.isSuccessful()) {
 //                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
-                        filterData(ApiServices.REQUEST_PRODUCTS, res.body());
+                        filterData(ApiServices.REQUEST_USER_SIGINUP, res.body());
                     } else {
-                        processResponse(res, ApiServices.REQUEST_PRODUCTS);
+                        processResponse(res, ApiServices.REQUEST_USER_SIGINUP);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Result<ArrayList<Product>>> call, Throwable arg0) {
+                public void onFailure(Call<Result<UserSignUpModel>> call, Throwable arg0) {
                     //arg0.printStackTrace();
-                    processResponse(arg0.getLocalizedMessage(),ApiServices.REQUEST_PRODUCTS);
+                    processResponse(arg0.getLocalizedMessage(),ApiServices.REQUEST_USER_SIGINUP);
                 }
             });
         } else {
-            processResponse(Constants.NO_INTERNET,ApiServices.REQUEST_PRODUCTS);
+            processResponse(Constants.NO_INTERNET,ApiServices.REQUEST_USER_SIGINUP);
         }
-    }*/
+    }
+
+    public void signInService(Context context, SiginInModel siginInModel) {
+        if (isConnectionAvailable(context)) {
+            getAPIService().loginUrl(siginInModel).enqueue(new Callback<Result<UserSignUpModel>>() {
+                @Override
+                public void onResponse(Call<Result<UserSignUpModel>> call, Response<Result<UserSignUpModel>> res) {
+                    if (res.isSuccessful()) {
+//                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
+                        filterData(ApiServices.REQUEST_SIGININ_USER, res.body());
+                    } else {
+                        processResponse(res, ApiServices.REQUEST_SIGININ_USER);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Result<UserSignUpModel>> call, Throwable arg0) {
+                    //arg0.printStackTrace();
+                    processResponse(arg0.getLocalizedMessage(),ApiServices.REQUEST_SIGININ_USER);
+                }
+            });
+        } else {
+            processResponse(Constants.NO_INTERNET,ApiServices.REQUEST_SIGININ_USER);
+        }
+    }
 
     public void getDayCareList(Context context) {
         if (isConnectionAvailable(context)) {
@@ -158,5 +185,6 @@ public class TransportManager {
             listener.onFailureResponse(reqType, result);
         }
     }
+
 
 }

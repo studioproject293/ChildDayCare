@@ -9,4 +9,8 @@
     <string name="exit_message">Are you sure, You want to Exit ?</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="An_OTP_has_been">An OTP has been</string>
+    <string name="sent_to_static">sent to</string>
+    <string name="please_enter_otp">Please enter OTP. OTP is sent via SMS  </string>
+    <string name="sent_to">sent to %1$s</string>
 </resources>

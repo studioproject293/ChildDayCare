@@ -16,7 +16,10 @@ public class AppConstant {
     public static final int SignInFragment = 4;
     public static final int ENQUIRY_FRAGMENT = 5;
     public static final String TABLE_USER = "userDetailList";
-    public static final int SIGNUP_FRAGMENT_CHILD =6 ;
+    public static final int SIGNUP_FRAGMENT_CHILD = 6;
+    public static final int FRAGMENT_USER_SIGNUP = 7;
+    public static final int FRAGMENT_OTP = 8;
+
 
     private void showError(EditText editText, Context context) {
         Animation shake = AnimationUtils.loadAnimation(context, R.anim.shake);
