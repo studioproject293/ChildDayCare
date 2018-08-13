@@ -29,6 +29,7 @@ import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragmentChild;
 import com.example.abhinav_rapidbox.childdaycare.fragment.UserSignUpFragment;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentInteractionListener;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                                 mFragmentTag).commit();
                 break;
             case AppConstant.SignupFragment:
+
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
@@ -151,11 +153,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                                 mFragmentTag).commit();
                 break;
             case AppConstant.SIGNUP_FRAGMENT_CHILD:
-                User user = (User) data;
+                ChildSignUp childSignUp = (ChildSignUp) data;
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
-                        .replace(R.id.fragment_main, new SignupFragmentChild().newInstance(user),
+                        .replace(R.id.fragment_main, new SignupFragmentChild().newInstance(childSignUp),
                                 mFragmentTag).commit();
                 break;
             case AppConstant.FRAGMENT_OTP:

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.google.firebase.database.DatabaseReference;
@@ -89,13 +90,14 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
             @Override
             public void onClick(View view) {
                 if (validDataEntered()) {
-                    User user = new User();
-                    user.setFatherName(editTextFatherName.getText().toString());
-                    user.setPhoneNo(editTextContactNo.getText().toString());
+                    ChildSignUp user = new ChildSignUp();
+                    user.setFathers_name(editTextFatherName.getText().toString());
+                    user.setContact_no(editTextContactNo.getText().toString());
                     user.setAddress(editTextAddress.getText().toString());
                     user.setPassword(editTextPassword.getText().toString());
-                    user.setMotherName(editTextMotherName.getText().toString());
-                    user.setEmailId(editTextEmail.getText().toString());
+                    user.setMothers_name(editTextMotherName.getText().toString());
+                    user.setEmail_id(editTextEmail.getText().toString());
+                    user.setUserid(editTextEmail.getText().toString());
                     mListener.onFragmentInteraction(AppConstant.SIGNUP_FRAGMENT_CHILD, user);
                 }
             }

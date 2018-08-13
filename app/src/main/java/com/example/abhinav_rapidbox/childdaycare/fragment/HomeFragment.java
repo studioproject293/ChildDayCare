@@ -1,6 +1,7 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,14 +9,20 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.adapter.HomeRecyclerAdapter;
 import com.example.abhinav_rapidbox.childdaycare.adapter.ProductViewPagerAdapter;
+import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
@@ -27,6 +34,8 @@ import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,11 +51,16 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     ProductViewPagerAdapter productViewPagerAdapter;
     SpringDotsIndicator springDotsIndicator;
     ViewPager product_viewPager;
+    ArrayList<DayCareListModel> dayCareListModels;
     private int currentPage = 0;
+    String checkValue = "";
+    PrefManager prefManager;
     private int imageArra[] = {R.drawable.dummy1, R.drawable.dummy2, R.drawable.dummy3};
+
     public static HomeFragment newInstance() {
-        return  new HomeFragment();
+        return new HomeFragment();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +71,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         setId();
+        prefManager = PrefManager.getInstance();
         productViewPagerAdapter = new ProductViewPagerAdapter(getActivity(), imageArra);
         product_viewPager.setAdapter(productViewPagerAdapter);
         product_viewPager.setCurrentItem(0);
@@ -118,30 +133,33 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
     @Override
     public void onListItemSelected(int itemId, Object data) {
-        final DayCareListModel dayCareListModel= (DayCareListModel) data;
+        final DayCareListModel dayCareListModel = (DayCareListModel) data;
         switch (itemId) {
             case R.id.cardID1:
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle("Stop On The Go!");
-                alert.setMessage("Sorry you don't have to permission to see details.Please login or signup.");
-                alert.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                                mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
-                            }
-                        });
-                alert.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                if (TextUtils.isEmpty(prefManager.getUsername())) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Alert !");
+                    alert.setMessage("Sorry you don't have to permission to see details.Please login or signup.");
+                    alert.setPositiveButton("LogIn",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    mListener.onFragmentInteraction(AppConstant.SignInFragment, null);
+                                }
+                            });
+                    alert.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                alert.show();
-
+                    alert.show();
+                } else {
+                    mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
+                }
                 break;
         }
     }
@@ -158,6 +176,61 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
                 mListener.onFragmentInteraction(AppConstant.SignInFragment, null);
                 break;
             case R.id.sortby:
+                // Sorting
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.custom_dialog);
+                dialog.setCancelable(false);
+
+                // there are a lot of settings, for dialog, check them all out!
+                // set up radiobutton
+                RadioButton radioButtonFee = (RadioButton) dialog.findViewById(R.id.radiofee);
+                RadioButton radioButtonRating = (RadioButton) dialog.findViewById(R.id.radioRating);
+                Button buttonSubmit = dialog.findViewById(R.id.submit);
+                Button buttonCancel = dialog.findViewById(R.id.cancel);
+                // now that the dialog is set up, it's time to show it
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                radioButtonFee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (compoundButton.isChecked()) {
+                            checkValue = "yes";
+                        }
+                    }
+                });
+                radioButtonRating.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (compoundButton.isChecked()) {
+                            checkValue = "no";
+                        }
+                    }
+                });
+                buttonSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                        ArrayList<DayCareListModel> arrayList = new ArrayList<>();
+                        if (AppCache.getInstance().getDayCareListModels() != null && AppCache.getInstance().getDayCareListModels().size() > 0) {
+                            for (int i = 0; i < AppCache.getInstance().getDayCareListModels().size(); i++) {
+                                DayCareListModel dayCareListModel = AppCache.getInstance().getDayCareListModels().get(i);
+                                if (checkValue.equals("yes"))
+                                    dayCareListModel.setFeeOrNot("yes");
+                                else
+                                    dayCareListModel.setFeeOrNot("no");
+
+                                arrayList.add(i, dayCareListModel);
+                                Collections.sort(arrayList);
+                                updateList(arrayList);
+                            }
+                        }
+                    }
+                });
+                dialog.show();
 
                 break;
         }
@@ -170,13 +243,15 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
             case REQUEST_DAYCARE:
                 DialogUtil.stopProgressDisplay();
                 ArrayList<DayCareListModel> dayCareListModels = (ArrayList<DayCareListModel>) data.getData();
+                AppCache.getInstance().setDayCareListModels(dayCareListModels);
                 updateList(dayCareListModels);
+
                 break;
         }
     }
 
     private void updateList(ArrayList<DayCareListModel> dayCareListModels) {
-        homeRecyclerAdapter = new HomeRecyclerAdapter(getActivity(),dayCareListModels);
+        homeRecyclerAdapter = new HomeRecyclerAdapter(getActivity(), dayCareListModels);
         homeRecyclerAdapter.setListner(this);
         recyclerViewHome.setAdapter(homeRecyclerAdapter);
 
@@ -185,6 +260,6 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
     @Override
     public void onFailureResponse(int reqType, Result data) {
-      DialogUtil.stopProgressDisplay();
+        DialogUtil.stopProgressDisplay();
     }
 }

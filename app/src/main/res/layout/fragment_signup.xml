@@ -50,6 +50,7 @@
                         android:hint="Father Name"
                         android:inputType="textCapWords"
                         android:maxLength="25"
+                        android:backgroundTint="@color/colorPrimary"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:textColor="#000" />
@@ -69,6 +70,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Mother Name"
+                        android:backgroundTint="@color/colorPrimary"
                         android:paddingBottom="4dp"
 
                         android:paddingTop="4dp"
@@ -89,6 +91,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Contact No"
+                        android:backgroundTint="@color/colorPrimary"
                         android:maxLength="10"
                         android:inputType="phone"
                         android:paddingBottom="4dp"
@@ -111,6 +114,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Address"
+                        android:backgroundTint="@color/colorPrimary"
                         android:inputType="text"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
@@ -130,7 +134,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:hint="Email Id(UserId)"
+                        android:hint="Email Id"
+                        android:backgroundTint="@color/colorPrimary"
                         android:inputType="textEmailAddress"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
@@ -152,6 +157,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Password"
+                        android:backgroundTint="@color/colorPrimary"
                         android:inputType="textPassword"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp" />
@@ -204,6 +210,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Child Name"
+
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:textColor="#000" />

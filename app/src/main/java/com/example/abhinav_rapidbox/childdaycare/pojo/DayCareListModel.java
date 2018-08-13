@@ -1,10 +1,12 @@
 package com.example.abhinav_rapidbox.childdaycare.pojo;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by vikram jha on 7/11/2018.
  */
 
-public class DayCareListModel {
+public class DayCareListModel implements Comparable<DayCareListModel> {
     private Integer id;
     private String code;
     private String name;
@@ -13,6 +15,15 @@ public class DayCareListModel {
     private Double longitude;
     private Integer fee;
     String homeImage;
+    String feeOrNot;
+
+    public String getFeeOrNot() {
+        return feeOrNot;
+    }
+
+    public void setFeeOrNot(String feeOrNot) {
+        this.feeOrNot = feeOrNot;
+    }
 
     public String getHomeImage() {
         return homeImage;
@@ -76,5 +87,18 @@ public class DayCareListModel {
 
     public void setFee(Integer fee) {
         this.fee = fee;
+    }
+
+
+
+    @Override
+    public int compareTo( DayCareListModel dayCareListModel) {
+        int compareRating = ((DayCareListModel) dayCareListModel).getRating();
+        int compareFee = ((DayCareListModel) dayCareListModel).getFee();
+        //ascending order
+        if (this.feeOrNot.equals("yes"))
+            return this.rating - compareRating;
+        else
+            return this.fee - compareFee;
     }
 }

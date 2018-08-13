@@ -1,7 +1,6 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +21,7 @@ import com.example.abhinav_rapidbox.childdaycare.service.Result;
 import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
-import com.example.abhinav_rapidbox.childdaycare.utill.PrefManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -62,35 +58,12 @@ public class SignInFragment extends BaseFragment implements EventListner{
                 } else {
                     DialogUtil.displayProgress(getActivity());
                     SiginInModel siginInModel=new SiginInModel();
-                    siginInModel.setUser_id("1");
+                    siginInModel.setUser_id(editText_emailID.getText().toString());
                     siginInModel.setPassword(password);
                     TransportManager.getInstance(SignInFragment.this).signInService(getActivity(),siginInModel);
                 }
 
-               /* auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                *//*progressBar.setVisibility(View.GONE);*//*
-                                if (!task.isSuccessful()) {
-                                    // there was an error
-                                    if (password.length() < 6) {
-                                        editText_password.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    *//*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();*//*
-                                    //where should go
 
-                                }
-                            }
-                        });*/
             }
         });
 
@@ -131,7 +104,7 @@ public class SignInFragment extends BaseFragment implements EventListner{
         switch (reqType){
             case ApiServices.REQUEST_SIGININ_USER :
                 UserSignUpModel userSignUpModel= (UserSignUpModel) data.getData();
-                userSignUpModel.setUser_name(userSignUpModel.getUser_name());
+                prefManager.setUsername(userSignUpModel.getUser_name());
                 break;
         }
         DialogUtil.stopProgressDisplay();
@@ -139,6 +112,7 @@ public class SignInFragment extends BaseFragment implements EventListner{
 
     @Override
     public void onFailureResponse(int reqType, Result data) {
-
+        DialogUtil.stopProgressDisplay();
+        Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -30,7 +30,7 @@ public class UserSignUpFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.fragment_login, container, false);
+        root_view = inflater.inflate(R.layout.fragment_registration, container, false);
         setId();
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +65,7 @@ public class UserSignUpFragment extends BaseFragment {
                     userSignUpModel.setUser_name(edit_text_name.getText().toString());
                     userSignUpModel.setEmail_id(edit_text_email.getText().toString());
                     userSignUpModel.setPassword(editTextConfirmPassword.getText().toString());
+                    userSignUpModel.setUser_id(edit_text_email.getText().toString());
                     usersTable(userSignUpModel);
                 }
             }

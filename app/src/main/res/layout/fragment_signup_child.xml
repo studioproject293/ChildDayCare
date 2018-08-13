@@ -50,6 +50,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Child Name"
+                        android:backgroundTint="@color/colorPrimary"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:textColor="#000" />
@@ -89,6 +90,7 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:hint="Age"
+                        android:backgroundTint="@color/colorPrimary"
                         android:inputType="text"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"

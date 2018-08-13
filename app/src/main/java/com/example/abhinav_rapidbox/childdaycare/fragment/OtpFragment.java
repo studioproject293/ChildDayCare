@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
+import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
 import com.example.abhinav_rapidbox.childdaycare.service.Result;
+import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
+import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.example.abhinav_rapidbox.childdaycare.utill.PinEntryView;
 
@@ -50,6 +53,8 @@ public class OtpFragment extends BaseFragment implements EventListner {
                 } else {
                     DialogUtil.hideKeyboard(confirm, activity);
                     DialogUtil.displayProgress(activity);
+                    userSignUpModelData.setOtp("123456");
+                    TransportManager.getInstance(OtpFragment.this).saveUser(getActivity(),userSignUpModelData);
 
                 }
             }
@@ -63,21 +68,23 @@ public class OtpFragment extends BaseFragment implements EventListner {
         otp = root_view.findViewById(R.id.edittext_otp);
         confirm = root_view.findViewById(R.id.otp_confirm);
         mobileno = root_view.findViewById(R.id.mobileno);
-        mobileno.setText(getString(R.string.sent_to, ""));
+        mobileno.setText(getString(R.string.sent_to, userSignUpModelData.getContact_no()));
         lineer = root_view.findViewById(R.id.lineer);
     }
 
     @Override
     public void onSuccessResponse(int reqType, Result data) {
         switch (reqType) {
-
+            case ApiServices.REQUEST_USER_SIGINUP:
+                Toast.makeText(activity, data.getMessage(), Toast.LENGTH_SHORT).show();
+                mListener.onFragmentInteraction(AppConstant.SignInFragment,null);
         }
         DialogUtil.stopProgressDisplay();
     }
 
     @Override
     public void onFailureResponse(int reqType, Result data) {
-
+        DialogUtil.stopProgressDisplay();
     }
 
 

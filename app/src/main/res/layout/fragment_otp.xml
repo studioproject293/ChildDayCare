@@ -36,22 +36,21 @@
             android:fontFamily="sans-serif"
             android:textSize="18sp" />
 
-        <com.trusource.custom.PinEntryView
+        <com.example.abhinav_rapidbox.childdaycare.utill.PinEntryView
             android:id="@+id/edittext_otp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:accentRequiresFocus="true"
             app:accentType="character"
-            app:accentWidth="@dimen/spacing_xsmall"
+            app:accentWidth="1dp"
             app:backgroundTint="@color/colorPrimaryDark"
-            app:digitBackground="@drawable/otp_background"
-            app:digitSpacing="@dimen/spacing_small"
-            app:digitTextColor="@color/Main_text_color"
-            app:digitTextSize="@dimen/text_large"
-            app:digitWidth="@dimen/layout_xlarge"
+            app:digitBackground="#fff"
+            app:digitSpacing="10dp"
+            app:digitTextColor="@color/colorPrimary"
+            app:digitTextSize="16sp"
             app:mask=" "
-            app:numDigits="4"
+            app:numDigits="6"
             app:pinAccentColor="@color/colorPrimary"
             app:pinInputType="number" />
 

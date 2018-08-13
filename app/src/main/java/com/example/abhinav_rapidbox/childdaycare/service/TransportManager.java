@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
@@ -67,10 +68,11 @@ public class TransportManager {
         if (result.getCode().equalsIgnoreCase("200")) {
             listener.onSuccessResponse(type, result);
         } else {
-            listener.onFailureResponse(type,result);
+            listener.onFailureResponse(type, result);
         }
         //listener.onSuccessResponse(type, result);
     }
+
     public boolean isConnectionAvailable(Context context) {
         if (context == null) return false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -96,6 +98,7 @@ public class TransportManager {
             listener.onFailureResponse(reqType, result);
         }
     }
+
     public void saveUser(Context context, UserSignUpModel userSignUpModel) {
         if (isConnectionAvailable(context)) {
             getAPIService().signUpUrl(userSignUpModel).enqueue(new Callback<Result<UserSignUpModel>>() {
@@ -112,11 +115,35 @@ public class TransportManager {
                 @Override
                 public void onFailure(Call<Result<UserSignUpModel>> call, Throwable arg0) {
                     //arg0.printStackTrace();
-                    processResponse(arg0.getLocalizedMessage(),ApiServices.REQUEST_USER_SIGINUP);
+                    processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_USER_SIGINUP);
                 }
             });
         } else {
-            processResponse(Constants.NO_INTERNET,ApiServices.REQUEST_USER_SIGINUP);
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_USER_SIGINUP);
+        }
+    }
+
+    public void saveChildData(Context context, ChildSignUp childSignUp) {
+        if (isConnectionAvailable(context)) {
+            getAPIService().childSignUpUrl(childSignUp).enqueue(new Callback<Result<ChildSignUp>>() {
+                @Override
+                public void onResponse(Call<Result<ChildSignUp>> call, Response<Result<ChildSignUp>> res) {
+                    if (res.isSuccessful()) {
+//                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
+                        filterData(ApiServices.REQUEST_CHILD_SIGINUP, res.body());
+                    } else {
+                        processResponse(res, ApiServices.REQUEST_CHILD_SIGINUP);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Result<ChildSignUp>> call, Throwable arg0) {
+                    //arg0.printStackTrace();
+                    processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_CHILD_SIGINUP);
+                }
+            });
+        } else {
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_CHILD_SIGINUP);
         }
     }
 
@@ -136,11 +163,11 @@ public class TransportManager {
                 @Override
                 public void onFailure(Call<Result<UserSignUpModel>> call, Throwable arg0) {
                     //arg0.printStackTrace();
-                    processResponse(arg0.getLocalizedMessage(),ApiServices.REQUEST_SIGININ_USER);
+                    processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_SIGININ_USER);
                 }
             });
         } else {
-            processResponse(Constants.NO_INTERNET,ApiServices.REQUEST_SIGININ_USER);
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_SIGININ_USER);
         }
     }
 
@@ -148,7 +175,7 @@ public class TransportManager {
         if (isConnectionAvailable(context)) {
             getAPIService().getCategories().enqueue(new Callback<Result<ArrayList<DayCareListModel>>>() {
                 @Override
-                public void onResponse(Call<Result<ArrayList<DayCareListModel>>>call, Response<Result<ArrayList<DayCareListModel>>> res) {
+                public void onResponse(Call<Result<ArrayList<DayCareListModel>>> call, Response<Result<ArrayList<DayCareListModel>>> res) {
                     if (res.isSuccessful()) {
 //                        listener.onSuccessResponse(ApiServices.REQUEST_CATEGORIES, res.body());
                         filterData(ApiServices.REQUEST_DAYCARE, res.body());
@@ -164,7 +191,7 @@ public class TransportManager {
                 }
             });
         } else {
-           processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_DAYCARE);
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_DAYCARE);
         }
     }
 
@@ -173,7 +200,7 @@ public class TransportManager {
         if (res != null) {
             Result result = new Result();
             result.setCode(Constants.ERROR_SERVER);
-            if(res.contains("Unable to resolve host") )
+            if (res.contains("Unable to resolve host"))
                 result.setMessage(Constants.NO_INTERNET);
             else
                 result.setMessage(res);

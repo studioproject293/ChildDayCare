@@ -3,6 +3,7 @@ package com.example.abhinav_rapidbox.childdaycare.fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -19,7 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
+import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
+import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
+import com.example.abhinav_rapidbox.childdaycare.service.Result;
+import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
+import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
+import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,7 +42,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class SignupFragmentChild extends BaseFragment implements AdapterView.OnItemSelectedListener {
+public class SignupFragmentChild extends BaseFragment implements AdapterView.OnItemSelectedListener, EventListner {
 
     private View root_view;
     private FirebaseStorage mFirebaseStorage;
@@ -41,8 +50,8 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     private EditText editTextChildName, editTextAge;
     private TextView dateOfbirth;
     Button button_register;
-    static User userRecive;
-    User user;
+    static ChildSignUp userRecive;
+
     Spinner sppiner;
     String valueBloodGroup;
     Integer yearValue;
@@ -55,7 +64,7 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                              Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_signup_child, container, false);
         setId();
-        user = new User();
+
         sppiner.setOnItemSelectedListener(this);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, sppinerData);
@@ -66,32 +75,39 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         mFirebaseStorage = FirebaseStorage.getInstance();
 
 
-            dateOfbirth.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePickerStrt();
-                }
-            });
-            button_register.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (validDataEntered()) {
-                        user.setFatherName(userRecive.getFatherName());
-                        user.setPhoneNo(userRecive.getPhoneNo());
-                        user.setAddress(user.getAddress());
-                        user.setPassword(userRecive.getPassword());
-                        user.setMotherName(userRecive.getMotherName());
-                        user.setChildName(editTextChildName.getText().toString());
-                        user.setBlirdGroup(valueBloodGroup);
-                        user.setAge(editTextAge.getText().toString());
-                        user.setEmailId(user.getEmailId());
+        dateOfbirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerStrt();
+            }
+        });
+        button_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validDataEntered()) {
 
 
+                    userRecive.setChild_name(editTextChildName.getText().toString());
+                    userRecive.setBlood_group(valueBloodGroup);
+                    if (editTextAge.getText().toString().contains("Days")) {
+                        String ageValue = editTextAge.getText().toString();
+                        String newAge = ageValue.replace(" Days", "");
+                        userRecive.setAge(Integer.parseInt(newAge));
+                    } else {
+                        String ageValue = editTextAge.getText().toString();
+                        String newAge = ageValue.replace(" Years", "");
+                        userRecive.setAge(Integer.parseInt(newAge));
                     }
+                    //userRecive.setAge(Integer.parseInt(editTextAge.getText().toString()));
+                    userRecive.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                    DialogUtil.displayProgress(getActivity());
+                    TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
+
                 }
-            });
-            return root_view;
-        }
+            }
+        });
+        return root_view;
+    }
 
 
     private void setId() {
@@ -242,57 +258,76 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
 
     }
 
-    public static SignupFragmentChild newInstance(User user1) {
+    public static SignupFragmentChild newInstance(ChildSignUp user1) {
         userRecive = user1;
         return new SignupFragmentChild();
     }
-   public void ageCaluate(){
-       if (!dateOfbirth.getText().toString().trim().isEmpty()) {
-           DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-           try {
-               date = (Date) dateFormat.parse(dateOfbirth.getText().toString());
-           } catch (ParseException e) {
+    public void ageCaluate() {
+        if (!dateOfbirth.getText().toString().trim().isEmpty()) {
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-               e.printStackTrace();
-           }
+            try {
+                date = (Date) dateFormat.parse(dateOfbirth.getText().toString());
+            } catch (ParseException e) {
 
-
-           String stringDate = String.valueOf(date.getTime());
-
-           DateFormat sdf = new SimpleDateFormat("yyyy");
-           SimpleDateFormat sdfDOY = new SimpleDateFormat("dd");
-           SimpleDateFormat sdfDOM = new SimpleDateFormat("MM");
-
-           Date netDate = (new Date(Long.parseLong(stringDate)));
-           Date DOY = (new Date(Long.parseLong(stringDate)));
-           Date DOM = (new Date(Long.parseLong(stringDate)));
-
-           String date_DOY = sdfDOY.format(DOY);
-           String date_result = sdf.format(netDate);
-           String date_DOM = sdfDOM.format(DOM);
-
-           Calendar today = Calendar.getInstance();
-
-           d = Integer.parseInt(date_DOY);
-           m = Integer.parseInt(date_DOM);
-           y = Integer.parseInt(date_result);
-           //getAge(y,m,d);
-           yearValue = today.get(Calendar.YEAR) - y;
-       } else {
-           yearValue = 0;
-       }
+                e.printStackTrace();
+            }
 
 
-       if (yearValue >= 1) {
-           editTextAge.setText(String.valueOf(yearValue) + " Years");
-       } else {
-           long diff = System.currentTimeMillis() - date.getTime();
-           long seconds = diff / 1000;
-           long minutes = seconds / 60;
-           long hours = minutes / 60;
-           long days = (hours / 24) + 1;
-           editTextAge.setText(days + " Days");
-       }
-   }
+            String stringDate = String.valueOf(date.getTime());
+
+            DateFormat sdf = new SimpleDateFormat("yyyy");
+            SimpleDateFormat sdfDOY = new SimpleDateFormat("dd");
+            SimpleDateFormat sdfDOM = new SimpleDateFormat("MM");
+
+            Date netDate = (new Date(Long.parseLong(stringDate)));
+            Date DOY = (new Date(Long.parseLong(stringDate)));
+            Date DOM = (new Date(Long.parseLong(stringDate)));
+
+            String date_DOY = sdfDOY.format(DOY);
+            String date_result = sdf.format(netDate);
+            String date_DOM = sdfDOM.format(DOM);
+
+            Calendar today = Calendar.getInstance();
+
+            d = Integer.parseInt(date_DOY);
+            m = Integer.parseInt(date_DOM);
+            y = Integer.parseInt(date_result);
+            //getAge(y,m,d);
+            yearValue = today.get(Calendar.YEAR) - y;
+        } else {
+            yearValue = 0;
+        }
+
+
+        if (yearValue >= 1) {
+            editTextAge.setText(String.valueOf(yearValue) + " Years");
+        } else {
+            long diff = System.currentTimeMillis() - date.getTime();
+            long seconds = diff / 1000;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = (hours / 24) + 1;
+            editTextAge.setText(days + " Days");
+        }
+    }
+
+    @Override
+    public void onSuccessResponse(int reqType, Result data) {
+        switch (reqType) {
+            case ApiServices.REQUEST_CHILD_SIGINUP:
+                Toast.makeText(getActivity(), "Child registered successfully.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void onFailureResponse(int reqType, Result data) {
+        DialogUtil.stopProgressDisplay();
+        Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_SHORT).show();
+    }
 }
