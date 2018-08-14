@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+    </android.support.design.widget.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,6 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -104,13 +114,13 @@
                 app:passwordToggleEnabled="true">
 
                 <EditText
+                    android:id="@+id/confirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"
-                    android:id="@+id/confirmPassword"
                     android:visibility="visible" />
             </android.support.design.widget.TextInputLayout>
 

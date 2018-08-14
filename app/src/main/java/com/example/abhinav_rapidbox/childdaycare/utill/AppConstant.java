@@ -19,6 +19,7 @@ public class AppConstant {
     public static final int SIGNUP_FRAGMENT_CHILD = 6;
     public static final int FRAGMENT_USER_SIGNUP = 7;
     public static final int FRAGMENT_OTP = 8;
+    public static final int USER_PROFILE = 9;
 
 
     private void showError(EditText editText, Context context) {

@@ -22,20 +22,19 @@ import android.widget.TextView;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.fragment.EnquiryFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.HomeFragment;
-import com.example.abhinav_rapidbox.childdaycare.fragment.OtpFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ProductDetailsFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignInFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragmentChild;
+import com.example.abhinav_rapidbox.childdaycare.fragment.UserProfileFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.UserSignUpFragment;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentInteractionListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
-import com.example.abhinav_rapidbox.childdaycare.pojo.User;
-import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.example.abhinav_rapidbox.childdaycare.utill.HashCodeFileNameWithDummyExtGenerator;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -45,19 +44,18 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+    public static DisplayImageOptions options;
+    public static ImageLoader imageLoader;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle toggle;
     private FragmentManager mFragmentManager;
     private int mCurrentFragment;
     private TextView textheader, text;
     private String mFragmentTag;
     private ImageView imageViewSideMenu;
     private BottomNavigationView navigation;
-    public static DisplayImageOptions options;
-    public static ImageLoader imageLoader;
-
     private Toolbar toolbar;
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build();
         File cacheDir = StorageUtils.getCacheDirectory(this);
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).diskCache(new UnlimitedDiscCache(cacheDir)).defaultDisplayImageOptions(options).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).diskCache(new UnlimitedDiskCache(cacheDir, null, new HashCodeFileNameWithDummyExtGenerator())).defaultDisplayImageOptions(options).build();
         ImageLoader.getInstance().init(config);
 
         onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
@@ -160,19 +158,27 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .replace(R.id.fragment_main, new SignupFragmentChild().newInstance(childSignUp),
                                 mFragmentTag).commit();
                 break;
-            case AppConstant.FRAGMENT_OTP:
+           /* case AppConstant.FRAGMENT_OTP:
                 UserSignUpModel userSignUpModel = (UserSignUpModel) data;
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
                         .replace(R.id.fragment_main, new OtpFragment().newInstance(userSignUpModel),
                                 mFragmentTag).commit();
-                break;
+                break;*/
             case AppConstant.FRAGMENT_USER_SIGNUP:
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
                         .replace(R.id.fragment_main, new UserSignUpFragment().newInstance(),
+                                mFragmentTag).commit();
+                break;
+
+            case AppConstant.USER_PROFILE:
+                mFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(mFragmentTag)
+                        .replace(R.id.fragment_main, new UserProfileFragment().newInstance(),
                                 mFragmentTag).commit();
                 break;
 
@@ -237,12 +243,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         switch (id) {
             case R.id.navigation_home:
-                onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
+                //onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
                 break;
             case R.id.navigation_dashboard:
                 break;
             case R.id.navigation_notifications:
-                onFragmentInteraction(AppConstant.SignupFragment, null);
+                onFragmentInteraction(AppConstant.USER_PROFILE, null);
                 break;
 //            case R.id.about_us:
 //                onFragmentInteraction(FRAGMENT_ABOUT_US, null);

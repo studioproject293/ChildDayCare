@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.activity.DemoLoginActivity;
 import com.example.abhinav_rapidbox.childdaycare.adapter.HomeRecyclerAdapter;
 import com.example.abhinav_rapidbox.childdaycare.adapter.ProductViewPagerAdapter;
 import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
@@ -35,26 +37,25 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.abhinav_rapidbox.childdaycare.service.ApiServices.REQUEST_DAYCARE;
 
 public class HomeFragment extends BaseFragment implements OnFragmentListItemSelectListener, View.OnClickListener, EventListner {
-    private View rootView;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-    private TextView login, textViewshort;
-    private RecyclerView recyclerViewHome;
     HomeRecyclerAdapter homeRecyclerAdapter;
     ProductViewPagerAdapter productViewPagerAdapter;
     SpringDotsIndicator springDotsIndicator;
     ViewPager product_viewPager;
     ArrayList<DayCareListModel> dayCareListModels;
-    private int currentPage = 0;
     String checkValue = "";
     PrefManager prefManager;
+    private View rootView;
+    private TextView login, textViewshort;
+    private RecyclerView recyclerViewHome;
+    private int currentPage = 0;
     private int imageArra[] = {R.drawable.dummy1, R.drawable.dummy2, R.drawable.dummy3};
 
     public static HomeFragment newInstance() {
@@ -169,11 +170,37 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
     }
 
+    public void logoutApp() {
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setMessage(getString(R.string.logout_message));
+
+        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+                prefManager.setUsername(null);
+                Intent intent = new Intent(getActivity(), DemoLoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                mListener.onFragmentInteraction(AppConstant.SignInFragment, null);
+                logoutApp();
                 break;
             case R.id.sortby:
                 // Sorting

@@ -3,31 +3,22 @@ package com.example.abhinav_rapidbox.childdaycare.fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -35,18 +26,18 @@ import java.util.Locale;
 
 public class SignupFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
-    private View root_view;
-    private FirebaseStorage mFirebaseStorage;
-    private StorageReference mStorageReference;
-    private EditText editTextFatherName, editTextMotherName, editTextEmail, editTextContactNo,
-            editTextAddress, editTextPassword, editTextChildName, editTextAge;
-    private TextView dateOfbirth;
     Button button_register;
     User user;
     Spinner sppiner;
     Button nextScreen;
     String valueBloodGroup;
     String[] sppinerData = {"Select Blood Group *", "O+", "O-", "AB+", "AB-", "B-", "B+", "A+", "A-"};
+    ProgressDialog progressBar;
+    String dateSelected;
+    private View root_view;
+    private EditText editTextFatherName, editTextMotherName, editTextEmail, editTextContactNo,
+            editTextAddress, editTextPassword, editTextChildName, editTextAge;
+    private TextView dateOfbirth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +52,7 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
         //Setting the ArrayAdapter data on the Spinner
         sppiner.setAdapter(aa);*/
         // Create an instance of Firebase Storage
-        mFirebaseStorage = FirebaseStorage.getInstance();
+        //mFirebaseStorage = FirebaseStorage.getInstance();
        /* dateOfbirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,16 +111,55 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
         nextScreen = root_view.findViewById(R.id.next);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
     }
 
-
     private boolean isValidMobile(String phone) {
         return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
     }
+
+   /* private void saveUser() {
+
+        AsyncTask<Void, Void, Void> saveTask = new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showProgressBar();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference userRef = database.getReference(AppConstant.TABLE_USER);
+                userRef.push().setValue(user);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                hideProgressBar();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("User details saved.");
+                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //clearFields();
+
+                    }
+                });
+                builder.show();
+            }
+        }.execute();
+
+//
+//
+        //finish();
+
+    }*/
 
     private void showError(EditText editText) {
         // Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
@@ -186,49 +216,6 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
         return true;
     }
 
-   /* private void saveUser() {
-
-        AsyncTask<Void, Void, Void> saveTask = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                showProgressBar();
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference userRef = database.getReference(AppConstant.TABLE_USER);
-                userRef.push().setValue(user);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                hideProgressBar();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("User details saved.");
-                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //clearFields();
-
-                    }
-                });
-                builder.show();
-            }
-        }.execute();
-
-//
-//
-        //finish();
-
-    }*/
-
-    ProgressDialog progressBar;
-
     private void showProgressBar() {
         if (progressBar == null)
             progressBar = new ProgressDialog(getActivity());
@@ -241,8 +228,6 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
     private void hideProgressBar() {
         progressBar.hide();
     }
-
-    String dateSelected;
 
     public Dialog datePickerStrt() {
 

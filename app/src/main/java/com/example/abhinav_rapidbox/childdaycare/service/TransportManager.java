@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.view.View;
 
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
@@ -31,19 +30,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class TransportManager {
-    private static ApiServices apiServices;
-    EventListner listener;
-    private static TransportManager manager;
     private static final int CODE_UNAUTHORIZED = 401;
+    private static ApiServices apiServices;
+    private static TransportManager manager;
+    EventListner listener;
 
     public static TransportManager getInstance(EventListner conlistener) {
         if (manager == null) manager = new TransportManager();
         manager.setListener(conlistener);
         return manager;
-    }
-
-    public void setListener(EventListner listener) {
-        this.listener = listener;
     }
 
     public static ApiServices getAPIService() {
@@ -62,6 +57,10 @@ public class TransportManager {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.API_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(client).build();
         apiServices = retrofit.create(ApiServices.class);
         return apiServices;
+    }
+
+    public void setListener(EventListner listener) {
+        this.listener = listener;
     }
 
     public void filterData(int type, Result result) {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
@@ -21,18 +22,15 @@ import com.example.abhinav_rapidbox.childdaycare.service.Result;
 import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
-import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SignInFragment extends BaseFragment implements EventListner{
 
-    private View root_view;
-    private EditText editText_password, editText_emailID;
     Button button_register;
     TextView signUp;
-    private FirebaseAuth auth;
     PrefManager prefManager;
+    private View root_view;
+    private EditText editText_password, editText_emailID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

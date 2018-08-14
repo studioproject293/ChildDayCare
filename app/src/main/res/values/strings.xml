@@ -13,4 +13,6 @@
     <string name="sent_to_static">sent to</string>
     <string name="please_enter_otp">Please enter OTP. OTP is sent via SMS  </string>
     <string name="sent_to">sent to %1$s</string>
+    <string name="move_resize_to_crop_the_picture">Move / resize to crop the picture</string>
+    <string name="logout_message">Are you sure, You want to Logout ?</string>
 </resources>

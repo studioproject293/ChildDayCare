@@ -1,9 +1,9 @@
-package com.example.abhinav_rapidbox.childdaycare.fragment;
+package com.example.abhinav_rapidbox.childdaycare.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -11,25 +11,39 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.fragment.OtpFragment;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
-import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
+import com.google.gson.Gson;
 
 
-public class UserSignUpFragment extends BaseFragment {
+public class RegistrationActivity extends BaseActivity {
 
     Button button_register;
-    private View root_view;
+    String[] cityList = {"Select City*", "Bangalore"};
+    private Context context;
     private EditText edit_text_name, edit_text_mobile, edit_text_email, edit_text_password, editTextConfirmPassword;
 
-    public static UserSignUpFragment newInstance() {
-        return new UserSignUpFragment();
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.fragment_registration, container, false);
-        setId();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_registration);
+
+        context = RegistrationActivity.this;
+       
+
+/*
+
+        TelephonyManager tm = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tm.getDeviceId(0);
+        }
+*/
+        button_register = findViewById(R.id.button_register);
+        edit_text_name = findViewById(R.id.editText_userName);
+        edit_text_mobile = findViewById(R.id.editText_phoneNo);
+        edit_text_email = findViewById(R.id.editText_email);
+        edit_text_password = findViewById(R.id.editText_password);
+        editTextConfirmPassword = findViewById(R.id.confirmPassword);
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +70,7 @@ public class UserSignUpFragment extends BaseFragment {
                     editTextConfirmPassword.requestFocus();
                     showError(editTextConfirmPassword);
                 } else if (!edit_text_password.getText().toString().equals(editTextConfirmPassword.getText().toString())) {
-                    Toast.makeText(getActivity(), "Password and confirm doesn't match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Password and confirm doesn't match", Toast.LENGTH_SHORT).show();
                 } else {
                     UserSignUpModel userSignUpModel = new UserSignUpModel();
                     userSignUpModel.setContact_no(edit_text_mobile.getText().toString());
@@ -68,35 +82,49 @@ public class UserSignUpFragment extends BaseFragment {
                 }
             }
         });
-
-        return root_view;
-    }
-
-    private void usersTable(UserSignUpModel userSignUpModel) {
-
-        mListener.onFragmentInteraction(AppConstant.FRAGMENT_OTP, userSignUpModel);
-    }
-
-    private void setId() {
-        button_register = root_view.findViewById(R.id.button_register);
-        edit_text_name = root_view.findViewById(R.id.editText_userName);
-        edit_text_mobile = root_view.findViewById(R.id.editText_phoneNo);
-        edit_text_email = root_view.findViewById(R.id.editText_email);
-        edit_text_password = root_view.findViewById(R.id.editText_password);
-        editTextConfirmPassword = root_view.findViewById(R.id.confirmPassword);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private boolean isValidMobile(String phone) {
         return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
+    private void usersTable(UserSignUpModel userSignUpModel) {
+        Intent intent = new Intent(RegistrationActivity.this, OtpFragment.class);
+        Gson gson = new Gson();
+        String studentDataObjectAsAString = gson.toJson(userSignUpModel);
+        intent.putExtra("MyStudentObjectAsString", studentDataObjectAsAString);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    public boolean isValidEmail(String target) {
+        return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
     private void showError(EditText editText) {
-        Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        Animation shake = AnimationUtils.loadAnimation(context, R.anim.shake);
         editText.startAnimation(shake);
     }
 }
+   

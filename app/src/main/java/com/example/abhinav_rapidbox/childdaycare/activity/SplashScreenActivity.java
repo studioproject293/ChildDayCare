@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 
@@ -18,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
+    public static final int MULTIPLE_PERMISSIONS = 10;
+    String[] permissions = new String[]
+            {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
     private LinearLayout imageSplash;
     private boolean timerStarted;
     private Animation animator;
-    String[] permissions = new String[]
-            {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
 
     private boolean checkPermissions() {
         int result;
@@ -39,8 +39,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
         return true;
     }
-
-    public static final int MULTIPLE_PERMISSIONS = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +63,16 @@ public class SplashScreenActivity extends AppCompatActivity {
                                           @Override
                                           public void onAnimationEnd(Animation animation) {
                                               timerStarted = false;
-                                              if (checkPermissions()) {
+                                             /* if (checkPermissions()) {
                                                   Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
                                                   startActivity(intent);
                                                   finish();
                                               } else {
                                                   checkPermissions();
-                                              }
+                                              }*/
+                                              Intent intent = new Intent(SplashScreenActivity.this, DemoLoginActivity.class);
+                                              startActivity(intent);
+                                              finish();
 
                                           }
 

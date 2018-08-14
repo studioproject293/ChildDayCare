@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,42 +21,41 @@ import android.widget.Toast;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
-import com.example.abhinav_rapidbox.childdaycare.pojo.User;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
 import com.example.abhinav_rapidbox.childdaycare.service.Result;
 import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import java.util.Date;
 import java.util.Locale;
 
 
 public class SignupFragmentChild extends BaseFragment implements AdapterView.OnItemSelectedListener, EventListner {
 
-    private View root_view;
-    private FirebaseStorage mFirebaseStorage;
-    private StorageReference mStorageReference;
-    private EditText editTextChildName, editTextAge;
-    private TextView dateOfbirth;
-    Button button_register;
     static ChildSignUp userRecive;
-
+    Button button_register;
     Spinner sppiner;
     String valueBloodGroup;
     Integer yearValue;
     Date date = null;
     String[] sppinerData = {"Select Blood Group *", "O+", "O-", "AB+", "AB-", "B-", "B+", "A+", "A-"};
     int d, m, y;
+    ProgressDialog progressBar;
+    String dateSelected;
+    private View root_view;
+    private EditText editTextChildName, editTextAge;
+    private TextView dateOfbirth;
+
+    public static SignupFragmentChild newInstance(ChildSignUp user1) {
+        userRecive = user1;
+        return new SignupFragmentChild();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +70,7 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         //Setting the ArrayAdapter data on the Spinner
         sppiner.setAdapter(aa);
         // Create an instance of Firebase Storage
-        mFirebaseStorage = FirebaseStorage.getInstance();
+        // mFirebaseStorage = FirebaseStorage.getInstance();
 
 
         dateOfbirth.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +107,6 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         return root_view;
     }
 
-
     private void setId() {
         editTextChildName = root_view.findViewById(R.id.editText_childName);
         editTextAge = root_view.findViewById(R.id.editText_age);
@@ -118,43 +115,9 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         button_register = root_view.findViewById(R.id.button_register);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-
-    private boolean isValidMobile(String phone) {
-        return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
-    }
-
-    private void showError(EditText editText) {
-        // Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-        //editText.startAnimation(shake);
-    }
-
-    private boolean validDataEntered() {
-        if (TextUtils.isEmpty(editTextChildName.getText())) {
-            editTextChildName.setError("Enter Child Name");
-            editTextChildName.requestFocus();
-            showError(editTextChildName);
-            //Toast.makeText(getActivity(), "Enter Child Name", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (TextUtils.isEmpty(editTextAge.getText())) {
-            editTextAge.setError("Enter Age");
-            editTextAge.requestFocus();
-            showError(editTextAge);
-            //Toast.makeText(getActivity(), "Enter Age", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (TextUtils.isEmpty(dateOfbirth.getText())) {
-            Toast.makeText(getActivity(), "Enter Date of birth", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (sppiner.getSelectedItem().equals("Select Blood Group *")) {
-            Toast.makeText(getActivity(), "Please select blood group", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
     }
 
    /* private void saveUser() {
@@ -198,7 +161,37 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
 
     }*/
 
-    ProgressDialog progressBar;
+    private boolean isValidMobile(String phone) {
+        return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+
+    private void showError(EditText editText) {
+        // Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        //editText.startAnimation(shake);
+    }
+
+    private boolean validDataEntered() {
+        if (TextUtils.isEmpty(editTextChildName.getText())) {
+            editTextChildName.setError("Enter Child Name");
+            editTextChildName.requestFocus();
+            showError(editTextChildName);
+            //Toast.makeText(getActivity(), "Enter Child Name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(editTextAge.getText())) {
+            editTextAge.setError("Enter Age");
+            editTextAge.requestFocus();
+            showError(editTextAge);
+            //Toast.makeText(getActivity(), "Enter Age", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(dateOfbirth.getText())) {
+            Toast.makeText(getActivity(), "Enter Date of birth", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (sppiner.getSelectedItem().equals("Select Blood Group *")) {
+            Toast.makeText(getActivity(), "Please select blood group", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     private void showProgressBar() {
         if (progressBar == null)
@@ -212,8 +205,6 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     private void hideProgressBar() {
         progressBar.hide();
     }
-
-    String dateSelected;
 
     public Dialog datePickerStrt() {
 
@@ -256,11 +247,6 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public static SignupFragmentChild newInstance(ChildSignUp user1) {
-        userRecive = user1;
-        return new SignupFragmentChild();
     }
 
     public void ageCaluate() {
