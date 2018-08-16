@@ -27,8 +27,11 @@ import android.widget.Toast;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
+import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
+import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
 import com.example.abhinav_rapidbox.childdaycare.service.Result;
+import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImageCropActivity;
 import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImagePickerManager;
@@ -49,6 +52,7 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
     String vName, vAddress, vPhone;
     String cityName;
     CircleImageView profile;
+    UserSignUpModel userSignUpModelService;
     private Context context;
     private View rootView;
     private EditText editText_vendor_name, editText_phoneNo, editText_address, editText_email,
@@ -70,6 +74,8 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
     public void onResume() {
         super.onResume();
         //MainActivity.setToolbarTitle("User Profile");
+        DialogUtil.displayProgress(getActivity());
+        TransportManager.getInstance(this).getUserInfoService(getActivity(), prefManager.getUserId());
     }
 
     @Override
@@ -117,7 +123,6 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
 
 
         vName = editText_vendor_name.getText().toString().trim();
-        vAddress = editText_address.getText().toString().trim();
         vPhone = editText_phoneNo.getText().toString().trim();
 
         if (vName.isEmpty()) {
@@ -129,8 +134,15 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
             editText_phoneNo.requestFocus();
             showError(editText_phoneNo);
         } else {
-            //  DialogUtil.displayProgress(getActivity());
-
+            DialogUtil.displayProgress(getActivity());
+            UserSignUpModel userSignUpModel = new UserSignUpModel();
+            userSignUpModel.setContact_no(editText_phoneNo.getText().toString());
+            userSignUpModel.setUser_name(editText_vendor_name.getText().toString());
+            userSignUpModel.setEmail_id(editText_email.getText().toString());
+            userSignUpModel.setPassword(userSignUpModelService.getPassword());
+            userSignUpModel.setUser_id(String.valueOf(prefManager.getUserId()));
+            userSignUpModel.setOtp(userSignUpModelService.getOtp());
+            TransportManager.getInstance(UserProfileFragment.this).saveUser(getActivity(), userSignUpModel);
         }
 
     }
@@ -147,7 +159,20 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
 
     @Override
     public void onSuccessResponse(int reqType, Result data) {
-
+        switch (reqType) {
+            case ApiServices.REQUEST_USER_INFO:
+                userSignUpModelService = (UserSignUpModel) data.getData();
+                editText_email.setText(userSignUpModelService.getEmail_id());
+                editText_phoneNo.setText(userSignUpModelService.getContact_no());
+                editText_vendor_name.setText(userSignUpModelService.getUser_name());
+                break;
+            case ApiServices.REQUEST_USER_SIGINUP:
+                Toast.makeText(context, data.getMessage(), Toast.LENGTH_SHORT).show();
+                UserSignUpModel userSignUpModel1 = (UserSignUpModel) data.getData();
+                prefManager.setUsername(userSignUpModel1.getUser_name());
+                prefManager.setUserId(userSignUpModel1.getUser_id());
+                break;
+        }
 
         DialogUtil.stopProgressDisplay();
     }
@@ -155,7 +180,14 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
     @Override
     public void onFailureResponse(int reqType, Result data) {
         DialogUtil.stopProgressDisplay();
-        Toast.makeText(context, data.getMessage(), Toast.LENGTH_SHORT).show();
+        switch (reqType) {
+            case ApiServices.REQUEST_USER_INFO:
+                Toast.makeText(context, data.getMessage(), Toast.LENGTH_SHORT).show();
+                break;
+            case ApiServices.REQUEST_USER_SIGINUP:
+                Toast.makeText(context, data.getMessage(), Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override

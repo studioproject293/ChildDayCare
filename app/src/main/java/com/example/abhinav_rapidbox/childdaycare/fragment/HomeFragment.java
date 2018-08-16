@@ -182,6 +182,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
                 Intent intent = new Intent(getActivity(), DemoLoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });

@@ -20,6 +20,8 @@ public class AppConstant {
     public static final int FRAGMENT_USER_SIGNUP = 7;
     public static final int FRAGMENT_OTP = 8;
     public static final int USER_PROFILE = 9;
+    public static final int IMAGEFULLSCREENFRAGMENT = 10;
+
 
 
     private void showError(EditText editText, Context context) {

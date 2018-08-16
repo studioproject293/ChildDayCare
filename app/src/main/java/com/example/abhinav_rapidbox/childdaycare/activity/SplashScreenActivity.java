@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions = new String[]
             {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    PrefManager prefManager;
     private LinearLayout imageSplash;
     private boolean timerStarted;
     private Animation animator;
@@ -44,6 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        prefManager = PrefManager.getInstance();
         setUpXMLVariables();
     }
 
@@ -70,9 +73,15 @@ public class SplashScreenActivity extends AppCompatActivity {
                                               } else {
                                                   checkPermissions();
                                               }*/
-                                              Intent intent = new Intent(SplashScreenActivity.this, DemoLoginActivity.class);
-                                              startActivity(intent);
-                                              finish();
+                                              if (prefManager.getUsername() != null) {
+                                                  Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                                                  startActivity(intent);
+                                                  finish();
+                                              } else {
+                                                  Intent intent = new Intent(SplashScreenActivity.this, DemoLoginActivity.class);
+                                                  startActivity(intent);
+                                                  finish();
+                                              }
 
                                           }
 

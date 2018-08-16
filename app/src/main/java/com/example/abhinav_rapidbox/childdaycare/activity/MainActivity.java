@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.fragment.EnquiryFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.HomeFragment;
+import com.example.abhinav_rapidbox.childdaycare.fragment.ImageFullScreenFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ProductDetailsFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignInFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragment;
@@ -32,6 +33,7 @@ import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentInteractionLi
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ZoomImage;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.HashCodeFileNameWithDummyExtGenerator;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -180,6 +182,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack(mFragmentTag)
                         .replace(R.id.fragment_main, new UserProfileFragment().newInstance(),
                                 mFragmentTag).commit();
+                break;
+            case AppConstant.IMAGEFULLSCREENFRAGMENT:
+                // ArrayList<String> imageList = (ArrayList<String>) data;
+                ZoomImage zoomImage = (ZoomImage) data;
+                // mFragmentManager.beginTransaction().addToBackStack(mFragmentTag).setCustomAnimations(R.anim.right_enter, R.anim.left_out, R.anim.left_enter, R.anim.right_out).replace(R.id.fragment_main, ImageFullScreenFragment.newInstance(imageList), mFragmentTag).commit();
+                mFragmentManager.beginTransaction().addToBackStack(mFragmentTag).setCustomAnimations(R.anim.right_enter, R.anim.left_out, R.anim.left_enter, R.anim.right_out).replace(R.id.fragment_main, ImageFullScreenFragment.newInstance(zoomImage), mFragmentTag).commit();
+
                 break;
 
 

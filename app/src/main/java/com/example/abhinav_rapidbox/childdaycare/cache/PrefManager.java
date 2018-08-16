@@ -9,14 +9,8 @@ import android.content.SharedPreferences;
 
 public class PrefManager {
 
-    SharedPreferences pref;
-    Context _context;
-    SharedPreferences.Editor editor;
-
-    int PRIVATE_MODE = 0;
-
-    static PrefManager manager;
-
+    public static final String KEY_DEVICEID = "deviceId";
+    public static final String KEY_GCM_TOKEN = "gcmId";
     static final String PREF_USER_NAME = "username";
     static final String PREF_USER_ID = "userId";
     static final String PREF_ADDRESS = "address";
@@ -27,25 +21,28 @@ public class PrefManager {
     static final String PREF_APARTMENTNAME ="apartmentName";
     static final String PREF_PIN ="pin";
     static final String PREF_IMAGE_LINK ="imagelink";
-    public static final String KEY_DEVICEID = "deviceId";
-    public static final String KEY_GCM_TOKEN = "gcmId";
     private static final String KEY_REG_TOKEN = "regToken";
     private static final String KEY_DEVICE_UPDATE = "deviceupdate";
     private static final String KEY_SHOWCASE = "showcase";
     private static final String OrderNo ="OrderNo";
     private static final String PROFILE_IMAGE_LINK="profile";
     private static final String PREF_NAME = "consumer";
-
-    public void init(Context context) {
-        this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
-    }
+    static PrefManager manager;
+    SharedPreferences pref;
+    Context _context;
+    SharedPreferences.Editor editor;
+    int PRIVATE_MODE = 0;
 
     public static PrefManager getInstance(){
         if(manager == null)
         manager =  new PrefManager();
         return manager;
+    }
+
+    public void init(Context context) {
+        this._context = context;
+        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        editor = pref.edit();
     }
 
     public String getGCMId() {
@@ -65,34 +62,34 @@ public class PrefManager {
         editor.commit();
     }
 
+    public String getDeviceUpdate() {
+        return pref.getString(KEY_DEVICE_UPDATE, "U");
+    }
+
     public void setDeviceUpdate(String deviceUpdate)
     {
         editor.putString(KEY_DEVICE_UPDATE, deviceUpdate);
         editor.commit();
     }
 
-    public String getDeviceUpdate(){
-        return pref.getString(KEY_DEVICE_UPDATE,"U");
-    }
-
-
-
     public String getUsername() {
         return pref.getString(PREF_USER_NAME, null);
-    }
-
-    public void setProfileImageLink(String userName) {
-        editor.putString(PROFILE_IMAGE_LINK, userName);
-        editor.commit();
-    }
-    public String getProfileImageLink() {
-        return pref.getString(PROFILE_IMAGE_LINK, null);
     }
 
     public void setUsername(String userName) {
         editor.putString(PREF_USER_NAME, userName);
         editor.commit();
     }
+
+    public String getProfileImageLink() {
+        return pref.getString(PROFILE_IMAGE_LINK, null);
+    }
+
+    public void setProfileImageLink(String userName) {
+        editor.putString(PROFILE_IMAGE_LINK, userName);
+        editor.commit();
+    }
+
     public String getPrefImageLink() {
         return pref.getString(PREF_IMAGE_LINK, null);
     }
@@ -133,12 +130,13 @@ public class PrefManager {
         editor.putString(PREF_CITY, city);
         editor.commit();
     }
-    public int getUserId() {
-        return pref.getInt(PREF_USER_ID, 0);
+
+    public String getUserId() {
+        return pref.getString(PREF_USER_ID, null);
     }
 
-    public void setUserId(int count) {
-        editor.putInt(PREF_USER_ID, count);
+    public void setUserId(String count) {
+        editor.putString(PREF_USER_ID, count);
         editor.commit();
     }
 

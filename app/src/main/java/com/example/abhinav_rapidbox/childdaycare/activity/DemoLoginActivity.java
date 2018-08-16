@@ -36,7 +36,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     private static final String TAG = "DemoLoginActivity";
     String mTokenId;
     Button button_register;
-    TextView signUp;
+    TextView signUp, signUpGuest;
     String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private Context context;
     private EditText editText_password, editText_emailID;
@@ -55,7 +55,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
         context = DemoLoginActivity.this;
         prefManager = PrefManager.getInstance();
         checkPermissions();
-
+        signUpGuest = findViewById(R.id.signUpGuest);
         editText_emailID = findViewById(R.id.editText_emailID);
         editText_password = findViewById(R.id.editText_password);
         button_register = findViewById(R.id.button_register);
@@ -92,7 +92,13 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
                 startActivity(intent);
             }
         });
-
+        signUpGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DemoLoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean checkPermissions() {
@@ -122,9 +128,11 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
             case ApiServices.REQUEST_SIGININ_USER:
                 UserSignUpModel userSignUpModel = (UserSignUpModel) data.getData();
                 prefManager.setUsername(userSignUpModel.getUser_name());
+                prefManager.setUserId(userSignUpModel.getUser_id());
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 break;
         }
         DialogUtil.stopProgressDisplay();

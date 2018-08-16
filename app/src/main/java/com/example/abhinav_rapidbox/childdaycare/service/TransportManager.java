@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
+import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
@@ -143,6 +144,54 @@ public class TransportManager {
             });
         } else {
             processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_CHILD_SIGINUP);
+        }
+    }
+
+    public void getDayCareDetailsService(Context context, int id) {
+        if (isConnectionAvailable(context)) {
+            getAPIService().getDayCareDetailsUrl(id).enqueue(new Callback<Result<DayCareDetailsModel>>() {
+                @Override
+                public void onResponse(Call<Result<DayCareDetailsModel>> call, Response<Result<DayCareDetailsModel>> res) {
+                    if (res.isSuccessful()) {
+//                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
+                        filterData(ApiServices.REQUEST_DAYCARE_DETAILS, res.body());
+                    } else {
+                        processResponse(res, ApiServices.REQUEST_DAYCARE_DETAILS);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Result<DayCareDetailsModel>> call, Throwable arg0) {
+                    //arg0.printStackTrace();
+                    processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_DAYCARE_DETAILS);
+                }
+            });
+        } else {
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_DAYCARE_DETAILS);
+        }
+    }
+
+    public void getUserInfoService(Context context, String userId) {
+        if (isConnectionAvailable(context)) {
+            getAPIService().getUserInfoUrl(userId).enqueue(new Callback<Result<UserSignUpModel>>() {
+                @Override
+                public void onResponse(Call<Result<UserSignUpModel>> call, Response<Result<UserSignUpModel>> res) {
+                    if (res.isSuccessful()) {
+//                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
+                        filterData(ApiServices.REQUEST_USER_INFO, res.body());
+                    } else {
+                        processResponse(res, ApiServices.REQUEST_USER_INFO);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Result<UserSignUpModel>> call, Throwable arg0) {
+                    //arg0.printStackTrace();
+                    processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_USER_INFO);
+                }
+            });
+        } else {
+            processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_USER_INFO);
         }
     }
 

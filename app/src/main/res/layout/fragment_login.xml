@@ -113,6 +113,18 @@
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/signUpGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Continue as guest"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
 
     </ScrollView>
