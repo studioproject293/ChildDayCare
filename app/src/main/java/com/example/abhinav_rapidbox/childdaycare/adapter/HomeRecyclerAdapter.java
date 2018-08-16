@@ -1,10 +1,7 @@
 package com.example.abhinav_rapidbox.childdaycare.adapter;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,25 +17,10 @@ import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.LatLng;
-import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.GPSTracker;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import static com.example.abhinav_rapidbox.childdaycare.activity.MainActivity.imageLoader;
-import static com.example.abhinav_rapidbox.childdaycare.activity.MainActivity.options;
 
 
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.homeViewHolder> {
@@ -75,6 +57,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.text_name.setText(listModel.getName());
         holder.textRating.setText(listModel.getRating() + "");
         holder.textViewFee.setText(listModel.getFee() + "");
+        holder.text_description.setText(listModel.getDescription());
         if (listModel.getHomeImage() != null) {
             //imageLoader.displayImage(listModel.getHomeImage(), holder.image_icon, options);
             Glide.with(context).load(listModel.getHomeImage())
@@ -118,27 +101,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public int getItemCount() {
 
         return dayCareListModels.size();
-    }
-
-
-    public class homeViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private LinearLayout cardID1;
-        ImageView image_icon;
-        TextView text_name, text_description, textRating, textViewFee, textViewdistance;
-
-
-        public homeViewHolder(View itemView) {
-            super(itemView);
-            this.view = itemView;
-            image_icon = itemView.findViewById(R.id.image_icon);
-            text_description = itemView.findViewById(R.id.text_description);
-            text_name = itemView.findViewById(R.id.text_name);
-            textRating = itemView.findViewById(R.id.textRating);
-            textViewFee = itemView.findViewById(R.id.textFee);
-            textViewdistance = itemView.findViewById(R.id.textDistance);
-            cardID1=itemView.findViewById(R.id.cardID1);
-        }
     }
 
     /*  private String getDistanceOnRoad(double latitude, double longitude,
@@ -211,7 +173,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         return (rad * 180.0 / Math.PI);
     }
 
-
     public double CalculationByDistance(LatLng StartP, LatLng EndP) {
         int Radius = 6371;// radius of earth in Km
         double lat1 = StartP.getLatitude();
@@ -235,5 +196,25 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 + " Meter   " + meterInDec);
 
         return Radius * c;
+    }
+
+    public class homeViewHolder extends RecyclerView.ViewHolder {
+        ImageView image_icon;
+        TextView text_name, text_description, textRating, textViewFee, textViewdistance;
+        private View view;
+        private LinearLayout cardID1;
+
+
+        public homeViewHolder(View itemView) {
+            super(itemView);
+            this.view = itemView;
+            image_icon = itemView.findViewById(R.id.image_icon);
+            text_description = itemView.findViewById(R.id.text_description);
+            text_name = itemView.findViewById(R.id.text_name);
+            textRating = itemView.findViewById(R.id.textRating);
+            textViewFee = itemView.findViewById(R.id.textFee);
+            textViewdistance = itemView.findViewById(R.id.textDistance);
+            cardID1 = itemView.findViewById(R.id.cardID1);
+        }
     }
 }

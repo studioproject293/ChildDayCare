@@ -18,6 +18,7 @@ public class DayCareDetailsModel {
     private String phoneNo;
     private String feeStructure;
     private String facilities;
+
     private ArrayList<String> imageUrlList = null;
 
     public Integer getId() {

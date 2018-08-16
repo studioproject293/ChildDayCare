@@ -33,7 +33,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     SpringDotsIndicator springDotsIndicator;
     ViewPager product_viewPager;
     ProductDetailsViewPagerAdapter productDetailsViewPagerAdapter;
-    private TextView button_register, dayCareName;
+    private TextView button_register, dayCareName, facilities;
     private View rootView;
 
     public static ProductDetailsFragment newInstance(DayCareListModel dayCareListModel) {
@@ -66,6 +66,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         dayCareName = rootView.findViewById(R.id.dayCareName);
         product_viewPager = rootView.findViewById(R.id.product_viewPager);
         springDotsIndicator = rootView.findViewById(R.id.dots_indicator);
+        facilities = rootView.findViewById(R.id.facilities);
     }
 
 
@@ -137,7 +138,8 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
                 phoneNo.setText(dayCareDetailsModel.getPhoneNo());
                 chatNo.setText(dayCareDetailsModel.getPhoneNo());
                 price.setText(dayCareDetailsModel.getFeeStructure());
-                address.setText(dayCareDetailsModel.getStreet() + " ," + dayCareDetailsModel.getLine1() + " ," + dayCareDetailsModel.getLine2() + ",Pincode :" + dayCareDetailsModel.getZipCode());
+                facilities.setText(dayCareDetailsModel.getFacilities());
+                address.setText(dayCareDetailsModel.getStreet() + "," + dayCareDetailsModel.getLine1() + "," + dayCareDetailsModel.getLine2() + ",Pincode :" + dayCareDetailsModel.getZipCode());
                 break;
         }
         DialogUtil.stopProgressDisplay();
