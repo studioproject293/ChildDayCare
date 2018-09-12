@@ -1,6 +1,7 @@
 package com.example.abhinav_rapidbox.childdaycare.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.fragment.EnquiryFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.HomeFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ImageFullScreenFragment;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle toggle;
+    PrefManager prefManager;
     private FragmentManager mFragmentManager;
     private int mCurrentFragment;
     private TextView textheader, text;
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //setId();
+        prefManager = PrefManager.getInstance();
         setupNavigationDrawer();
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build();
@@ -259,6 +263,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             case R.id.navigation_notifications:
                 onFragmentInteraction(AppConstant.USER_PROFILE, null);
                 break;
+            case R.id.navigation_logout:
+                logoutApp();
+                break;
 //            case R.id.about_us:
 //                onFragmentInteraction(FRAGMENT_ABOUT_US, null);
 //                break;
@@ -271,6 +278,33 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     }
 
+    public void logoutApp() {
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(getString(R.string.logout_message));
+
+        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+                prefManager.setUsername(null);
+                Intent intent = new Intent(MainActivity.this, DemoLoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     private void setupNavigationDrawer() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_app_bar_home);
 

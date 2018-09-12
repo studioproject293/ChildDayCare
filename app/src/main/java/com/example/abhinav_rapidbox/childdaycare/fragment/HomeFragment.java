@@ -56,7 +56,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     private TextView login, textViewshort;
     private RecyclerView recyclerViewHome;
     private int currentPage = 0;
-    private int imageArra[] = {R.drawable.dummy1, R.drawable.dummy2, R.drawable.dummy3};
+    private int imageArra[] = {R.drawable.imagecurosial1, R.drawable.dummy2, R.drawable.dummy3};
 
     public static HomeFragment newInstance() {
         return new HomeFragment();

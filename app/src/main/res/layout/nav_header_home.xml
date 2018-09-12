@@ -3,14 +3,16 @@
     android:id="@+id/layout_profile"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@color/colorPrimary"
-    android:gravity="center"
+    android:background="@drawable/background"
+    android:gravity="center|left"
+
     android:orientation="vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewNavigation"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/dummy1"
         android:visibility="visible"/>
@@ -20,7 +22,8 @@
         android:id="@+id/text_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:gravity="center|left"
         android:paddingTop="5dp"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
