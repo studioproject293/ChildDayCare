@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,8 +53,9 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     ArrayList<DayCareListModel> dayCareListModels;
     String checkValue = "";
     PrefManager prefManager;
+    Dialog sortdialog;
     private View rootView;
-    private TextView login, textViewshort;
+    private TextView filter, textViewshort;
     private RecyclerView recyclerViewHome;
     private int currentPage = 0;
     private int imageArra[] = {R.drawable.imagecurosial1, R.drawable.dummy2, R.drawable.dummy3};
@@ -95,14 +97,14 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
             }
         }, DELAY_MS, PERIOD_MS);
 
-        login.setOnClickListener(this);
+        filter.setOnClickListener(this);
         textViewshort.setOnClickListener(this);
         return rootView;
     }
 
     private void setId() {
         recyclerViewHome = rootView.findViewById(R.id.recyclerviewhome);
-        login = rootView.findViewById(R.id.login);
+        filter = rootView.findViewById(R.id.filter);
         textViewshort = rootView.findViewById(R.id.sortby);
         recyclerViewHome.setLayoutManager(new LinearLayoutManager(getContext()));
         product_viewPager = (ViewPager) rootView.findViewById(R.id.product_viewPager);
@@ -110,6 +112,59 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
     }
 
+    protected void showsortDialog() {
+        sortdialog = new BottomSheetDialog(getContext());
+        sortdialog.setCancelable(true);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.bottomdialog_sort, null);
+        sortdialog.setContentView(view);
+        RadioButton radioButtonFee = (RadioButton) view.findViewById(R.id.radiofee);
+        RadioButton radioButtonRating = (RadioButton) view.findViewById(R.id.radioRating);
+        Button buttonSubmit = view.findViewById(R.id.submit);
+        Button buttonCancel = view.findViewById(R.id.cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortdialog.cancel();
+            }
+        });
+        radioButtonFee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()) {
+                    checkValue = "yes";
+                }
+            }
+        });
+        radioButtonRating.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()) {
+                    checkValue = "no";
+                }
+            }
+        });
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortdialog.cancel();
+                ArrayList<DayCareListModel> arrayList = new ArrayList<>();
+                if (AppCache.getInstance().getDayCareListModels() != null && AppCache.getInstance().getDayCareListModels().size() > 0) {
+                    for (int i = 0; i < AppCache.getInstance().getDayCareListModels().size(); i++) {
+                        DayCareListModel dayCareListModel = AppCache.getInstance().getDayCareListModels().get(i);
+                        if (checkValue.equals("yes"))
+                            dayCareListModel.setFeeOrNot("yes");
+                        else
+                            dayCareListModel.setFeeOrNot("no");
+
+                        arrayList.add(i, dayCareListModel);
+                        Collections.sort(arrayList);
+                        updateList(arrayList);
+                    }
+                }
+            }
+        });
+        sortdialog.show();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -125,7 +180,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     @Override
     public void onResume() {
         super.onResume();
-        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Day Care"));
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Day Care List"));
         DialogUtil.displayProgress(getActivity());
         TransportManager.getInstance(this).getDayCareList(getActivity());
 
@@ -202,12 +257,12 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login:
-                logoutApp();
+            case R.id.filter:
+                mListener.onFragmentInteraction(AppConstant.FilterFragment, null);
                 break;
             case R.id.sortby:
                 // Sorting
-                final Dialog dialog = new Dialog(getActivity());
+               /* final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.custom_dialog);
                 dialog.setCancelable(false);
 
@@ -260,7 +315,8 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
                         }
                     }
                 });
-                dialog.show();
+                dialog.show();*/
+                showsortDialog();
 
                 break;
         }

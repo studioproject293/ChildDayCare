@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
@@ -17,12 +16,14 @@ import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class SplashScreenActivity extends AppCompatActivity {
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions = new String[]
             {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
     PrefManager prefManager;
-    private LinearLayout imageSplash;
+    private GifImageView imageSplash;
     private boolean timerStarted;
     private Animation animator;
 
@@ -66,22 +67,22 @@ public class SplashScreenActivity extends AppCompatActivity {
                                           @Override
                                           public void onAnimationEnd(Animation animation) {
                                               timerStarted = false;
-                                             /* if (checkPermissions()) {
-                                                  Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                                                  startActivity(intent);
-                                                  finish();
+                                              if (checkPermissions()) {
+                                                  if (prefManager.getUsername() != null) {
+                                                      Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                                                      startActivity(intent);
+                                                      finish();
+                                                  } else {
+                                                      Intent intent = new Intent(SplashScreenActivity.this, DemoLoginActivity.class);
+                                                      startActivity(intent);
+                                                      finish();
+                                                  }
                                               } else {
-                                                  checkPermissions();
-                                              }*/
-                                              if (prefManager.getUsername() != null) {
-                                                  Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                                                  startActivity(intent);
-                                                  finish();
-                                              } else {
-                                                  Intent intent = new Intent(SplashScreenActivity.this, DemoLoginActivity.class);
+                                                  Intent intent = new Intent(SplashScreenActivity.this, LocationActivity.class);
                                                   startActivity(intent);
                                                   finish();
                                               }
+
 
                                           }
 
@@ -123,7 +124,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     // Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                    checkPermissions();
+                    Intent intent = new Intent(SplashScreenActivity.this, LocationActivity.class);
+                    startActivity(intent);
+                    finish();
+                    //checkPermissions();
                 }
                 return;
             }

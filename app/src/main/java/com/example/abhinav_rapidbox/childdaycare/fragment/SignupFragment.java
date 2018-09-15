@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
+import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 
@@ -39,44 +40,17 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
             editTextAddress, editTextPassword, editTextChildName, editTextAge;
     private TextView dateOfbirth;
 
+    public final static boolean isValidEmail(CharSequence email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_signup, container, false);
         setId();
         user = new User();
-        /*sppiner.setOnItemSelectedListener(this);
-        //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, sppinerData);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        sppiner.setAdapter(aa);*/
-        // Create an instance of Firebase Storage
-        //mFirebaseStorage = FirebaseStorage.getInstance();
-       /* dateOfbirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerStrt();
-            }
-        });*/
-        /*button_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validDataEntered()) {
-                    user.setFatherName(editTextFatherName.getText().toString());
-                    user.setPhoneNo(editTextContactNo.getText().toString());
-                    user.setAddress(editTextAddress.getText().toString());
-                    user.setPassword(editTextPassword.getText().toString());
-                    user.setMotherName(editTextMotherName.getText().toString());
-                    user.setChildName(editTextChildName.getText().toString());
-                    user.setBlirdGroup(valueBloodGroup);
-                    user.setAge(editTextAge.getText().toString());
-                    user.setEmailId(editTextEmail.getText().toString());
 
-
-                }
-            }
-        });*/
         nextScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,10 +88,7 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    private boolean isValidMobile(String phone) {
-        return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Child Sign Up"));
     }
 
    /* private void saveUser() {
@@ -161,6 +132,10 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
 
     }*/
 
+    private boolean isValidMobile(String phone) {
+        return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+
     private void showError(EditText editText) {
         // Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
         //editText.startAnimation(shake);
@@ -193,7 +168,7 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
             //Toast.makeText(getActivity(), "Enter Valid mobile number", Toast.LENGTH_SHORT).show();
             // enterPhone.getInputField().requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(editTextEmail.getText())) {
+        } else if (!isValidEmail(editTextEmail.getText())) {
             editTextEmail.setError("Enter Valid EmailId");
             editTextEmail.requestFocus();
             showError(editTextEmail);

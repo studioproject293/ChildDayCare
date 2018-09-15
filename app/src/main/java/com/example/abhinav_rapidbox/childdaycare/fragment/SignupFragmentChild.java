@@ -3,12 +3,16 @@ package com.example.abhinav_rapidbox.childdaycare.fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,10 +25,12 @@ import android.widget.Toast;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
+import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
 import com.example.abhinav_rapidbox.childdaycare.service.Result;
 import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
+import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 
@@ -48,6 +54,8 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     int d, m, y;
     ProgressDialog progressBar;
     String dateSelected;
+    android.app.AlertDialog alertD;
+    View view;
     private View root_view;
     private EditText editTextChildName, editTextAge;
     private TextView dateOfbirth;
@@ -107,19 +115,6 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         return root_view;
     }
 
-    private void setId() {
-        editTextChildName = root_view.findViewById(R.id.editText_childName);
-        editTextAge = root_view.findViewById(R.id.editText_age);
-        dateOfbirth = root_view.findViewById(R.id.dateofbirth);
-        sppiner = root_view.findViewById(R.id.sppiner);
-        button_register = root_view.findViewById(R.id.button_register);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
    /* private void saveUser() {
 
         AsyncTask<Void, Void, Void> saveTask = new AsyncTask<Void, Void, Void>() {
@@ -160,6 +155,21 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         //finish();
 
     }*/
+
+    private void setId() {
+        editTextChildName = root_view.findViewById(R.id.editText_childName);
+        editTextAge = root_view.findViewById(R.id.editText_age);
+        dateOfbirth = root_view.findViewById(R.id.dateofbirth);
+        sppiner = root_view.findViewById(R.id.sppiner);
+        button_register = root_view.findViewById(R.id.button_register);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Child Sign Up"));
+
+    }
 
     private boolean isValidMobile(String phone) {
         return phone.length() == 10 && android.util.Patterns.PHONE.matcher(phone).matches();
@@ -303,12 +313,38 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     public void onSuccessResponse(int reqType, Result data) {
         switch (reqType) {
             case ApiServices.REQUEST_CHILD_SIGINUP:
-                Toast.makeText(getActivity(), "Child registered successfully.", Toast.LENGTH_SHORT).show();
+                CallLogoutPopup("Child registered successfully.");
+                break;
+
+        }
+        DialogUtil.stopProgressDisplay();
+    }
+
+    private void CallLogoutPopup(String msg) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.dashboard_logout_popup, null);
+        alertD = new android.app.AlertDialog.Builder(getActivity()).create();
+
+        /*set alert at bottom*/
+        Window window = alertD.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        TextView alertActionText = view.findViewById(R.id.message);
+        alertActionText.setText(msg);
+        TextView cancelAlert = view.findViewById(R.id.action_text);
+        cancelAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                break;
-        }
+            }
+        });
+        alertD.setView(view);
+        alertD.show();
     }
 
     @Override

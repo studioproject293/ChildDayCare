@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     Button button_register;
     TextView signUp, signUpGuest;
     String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    ImageView side_menu;
     private Context context;
     private EditText editText_password, editText_emailID;
     private PrefManager prefManager;
@@ -51,7 +53,8 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
-
+        side_menu = findViewById(R.id.side_menu);
+        side_menu.setVisibility(View.GONE);
         context = DemoLoginActivity.this;
         prefManager = PrefManager.getInstance();
         checkPermissions();

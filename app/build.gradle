@@ -41,7 +41,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.3'
     compile project(path: ':android-image-zoom-crop')
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
+    compile 'me.grantland:autofittextview:0.2.+'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
     // Android SDK
     compile 'com.google.code.gson:gson:2.8.1'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.0.0'

@@ -34,7 +34,7 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                 android:gravity="center"
-                android:text="LogIn"
+                android:text="Log In"
                 android:textColor="#000"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -99,7 +99,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="LogIn"
+                android:text="Log In"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

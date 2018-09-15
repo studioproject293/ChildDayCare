@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                android:text="User Register"
+                android:text="Sign Up"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

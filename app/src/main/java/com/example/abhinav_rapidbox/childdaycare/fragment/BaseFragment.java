@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentInteractionListener;
 
 import static android.content.ContentValues.TAG;
@@ -25,11 +24,14 @@ import static android.content.ContentValues.TAG;
 public abstract class BaseFragment extends Fragment {
     public final int PERMISSION_REQUEST = 100;
     public final int MAX_COUNTER = 2;
-    int permissionMode;
-    int permissionCounter;
     public OnFragmentInteractionListener mListener;
     protected AppCompatActivity mActivity;
+    int permissionMode;
+    int permissionCounter;
 
+    public static boolean isValidEmail(CharSequence email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 //        // QLog.m11v("Class:" + getClass().getSimpleName());
@@ -92,7 +94,6 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
     }
 
-
     public void onLowMemory() {
         // QLog.m11v("Class:" + getClass().getSimpleName());
         super.onLowMemory();
@@ -115,10 +116,6 @@ public abstract class BaseFragment extends Fragment {
         super.onDetach();
         mListener = null;
         mActivity = null;
-    }
-
-    public final static boolean isValidEmail(CharSequence email) {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
 
@@ -177,7 +174,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: requestCode " + requestCode);
+        Log.d("Permission", "PermisionCode" + requestCode);
         switch (requestCode) {
             case PERMISSION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.
@@ -187,7 +184,7 @@ public abstract class BaseFragment extends Fragment {
 //                    PrefManager.getInstance(getContext()).setPermissionDenied(false);
                 } else {
                     // functionality depends on this permission.
-                    Log.d(TAG, "onRequestPermissionsResult:permissionCounter  " + permissionCounter);
+                    Log.d("Permission", "Permision" + permissionCounter);
                     if (permissionCounter < MAX_COUNTER) {
                         permissionCounter++;
                         requestPermissions(permissions, PERMISSION_REQUEST);

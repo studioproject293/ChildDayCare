@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
                 app:dotsStrokeWidth="1dp"
                 app:stiffness="200" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/dayCareName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +51,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
+                android:maxLines="1"
                 android:text="Day Care Name"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
@@ -68,39 +70,45 @@
                     android:padding="2dp"
                     android:src="@drawable/iconsphone" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.45"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Phone"
+
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
                     android:drawablePadding="5dp"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
+
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text=":"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/phoneNo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="1234567890"
+
                     android:textColor="#000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -116,19 +124,22 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/iconssecuredletter" />
+                    android:src="@drawable/iconssecuredletter"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.45"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="EmailId"
+
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
@@ -140,15 +151,17 @@
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/emailId"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="abc@gmail.com"
                     android:textColor="#000"
+
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -156,47 +169,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-
                 android:weightSum="2">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/iconsrupee" />
+                    android:src="@drawable/iconsrupee"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.45"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
+
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Price"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:drawablePadding="5dp"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
+
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text=":"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/price"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:drawableTint="#0f0"
+
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="500"
                     android:textColor="#000"
 
@@ -219,37 +238,44 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/iconsquestions" />
+                    android:src="@drawable/iconsquestions"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:drawablePadding="5dp"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
+
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Enquiry"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
                     android:drawablePadding="5dp"
                     android:gravity="center|left"
+
+                    android:maxLines="1"
                     android:text=":"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
-                    android:text="1234567890"
+                    android:maxLines="1"
+
+                    android:text="123567890"
                     android:textColor="#000"
 
                     android:textSize="18sp" />
@@ -267,20 +293,23 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/iconscollaboration" />
+                    android:src="@drawable/iconscollaboration"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.455"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Chat"
+
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
@@ -291,15 +320,17 @@
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/chatNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:drawableTint="#0f0"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
-                    android:text="1234567890"
+                    android:maxLines="1"
+                    android:text="123467890"
+
                     android:textColor="#000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -315,20 +346,23 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/iconsmarker" />
+                    android:src="@drawable/iconsmarker"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.45"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
+
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Facilities"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
@@ -340,18 +374,20 @@
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/facilities"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:fontFamily="@font/open_sans"
-
                     android:gravity="center|left"
+
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="#000"
                     android:textSize="18sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -365,39 +401,42 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/iconsmarker" />
+                    android:src="@drawable/iconsmarker"
+                    android:tint="@color/colorPrimary" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.45"
+                    android:layout_weight="0.5"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Address"
 
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text=":"
-
                     android:textColor="#000"
                     android:textSize="18sp" />
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.45"
+                    android:layout_weight="1.4"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:text="Btm Layout Near Udpi Garden"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -418,9 +457,9 @@
         android:background="@drawable/dark_boder_red"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
-        android:padding="10dp"
+
         android:text="Register"
-        android:textColor="#000"
+        android:textColor="#FFF"
         android:textSize="22sp"
         android:textStyle="bold" />
 </RelativeLayout>

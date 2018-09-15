@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-
+            android:drawableLeft="@drawable/ic_icons_sort"
             android:drawablePadding="10dp"
             android:gravity="center|left"
             android:padding="10dp"
@@ -22,17 +22,18 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/login"
+            android:id="@+id/filter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:drawableLeft="@drawable/ic_icons_filter"
             android:drawablePadding="10dp"
             android:gravity="center|left"
             android:padding="10dp"
-            android:text="Log Out"
+            android:text="Filter"
             android:textColor="#000"
             android:textSize="18sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 
     <View

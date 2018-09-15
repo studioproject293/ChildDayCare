@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lin_filter_rangeBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical">
+
+        <com.example.abhinav_rapidbox.childdaycare.rangeSeekBarTwo.rangeseekbar.RangeSeekBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rangeBar_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            custom:absoluteMaxValue="100"
+            custom:absoluteMinValue="5"
+            custom:activateOnDefaultValues="true"
+            custom:activeColor="@color/colorPrimary"
+            custom:alwaysActive="true"
+            custom:barHeight="8dp"
+            custom:defaultColor="@color/colorPrimary"
+            custom:showLabels="false"
+            custom:textAboveThumbsColor="@color/colorPrimary"
+            custom:valuesAboveThumbs="true" />
+    </LinearLayout>
+</LinearLayout>

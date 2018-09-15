@@ -21,6 +21,8 @@ public class AppConstant {
     public static final int FRAGMENT_OTP = 8;
     public static final int USER_PROFILE = 9;
     public static final int IMAGEFULLSCREENFRAGMENT = 10;
+    public static final int FilterFragment = 11;
+    public static final int AddReviewFragment = 12;
 
 
 

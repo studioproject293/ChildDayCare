@@ -6,4 +6,6 @@
     <color name="white">#FFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="Main_color">#5e9ecc</color>
+    <color name="homebottombar">#f5f6fa</color>
+
 </resources>

@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
@@ -20,6 +21,7 @@ public class RegistrationActivity extends BaseActivity {
 
     Button button_register;
     String[] cityList = {"Select City*", "Bangalore"};
+    ImageView side_menu;
     private Context context;
     private EditText edit_text_name, edit_text_mobile, edit_text_email, edit_text_password, editTextConfirmPassword;
 
@@ -27,17 +29,10 @@ public class RegistrationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_registration);
-
+        side_menu = findViewById(R.id.side_menu);
+        side_menu.setVisibility(View.GONE);
         context = RegistrationActivity.this;
        
-
-/*
-
-        TelephonyManager tm = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            tm.getDeviceId(0);
-        }
-*/
         button_register = findViewById(R.id.button_register);
         edit_text_name = findViewById(R.id.editText_userName);
         edit_text_mobile = findViewById(R.id.editText_phoneNo);
@@ -126,5 +121,6 @@ public class RegistrationActivity extends BaseActivity {
         Animation shake = AnimationUtils.loadAnimation(context, R.anim.shake);
         editText.startAnimation(shake);
     }
+
 }
    

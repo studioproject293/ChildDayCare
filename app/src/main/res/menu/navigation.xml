@@ -14,25 +14,26 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/profile"
         android:title="Account" />
     <item
 
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:id="@+id/rating"
+        android:icon="@drawable/ratings_icon"
         android:title="Rate Ninos" />
     <item
 
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/icons_payment"
         android:title="Payment Roaster" />
     <item
 
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/reports_icon"
         android:title="Reports" />
     <item
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/contact_us"
         android:title="Contacts Us" />
     <item
         android:id="@+id/navigation_logout"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/logout_icon"
         android:title="Logout" />
 </menu>

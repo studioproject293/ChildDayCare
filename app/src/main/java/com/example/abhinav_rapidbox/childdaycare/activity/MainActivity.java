@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +23,9 @@ import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
+import com.example.abhinav_rapidbox.childdaycare.fragment.AddReviewFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.EnquiryFragment;
+import com.example.abhinav_rapidbox.childdaycare.fragment.FilterFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.HomeFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ImageFullScreenFragment;
 import com.example.abhinav_rapidbox.childdaycare.fragment.ProductDetailsFragment;
@@ -54,19 +57,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle toggle;
     PrefManager prefManager;
+    Toolbar toolbar_home;
+    ImageView sidemenu;
+    TextView toolbar_title;
+    DrawerLayout drawer;
     private FragmentManager mFragmentManager;
     private int mCurrentFragment;
     private TextView textheader, text;
     private String mFragmentTag;
     private ImageView imageViewSideMenu;
     private BottomNavigationView navigation;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setId();
+        setId();
         prefManager = PrefManager.getInstance();
         setupNavigationDrawer();
         imageLoader = ImageLoader.getInstance();
@@ -76,43 +82,51 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         ImageLoader.getInstance().init(config);
 
         onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
-        /*BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-                = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
-                        return true;
-                    case R.id.navigation_dashboard:
-                        return true;
-                    case R.id.navigation_notifications:
-                        onFragmentInteraction(AppConstant.SignupFragment, null);
-                        return true;
-                }
-                return false;
-            }
-        };
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
-        /*getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-                    imageViewSideMenu.setVisibility(View.VISIBLE);
+                    sidemenu.setImageResource(R.drawable.ic_icons_back);
                 } else {
-                    imageViewSideMenu.setVisibility(View.GONE);
+                    sidemenu.setImageResource(R.drawable.ic_icons_menu);
                 }
             }
-        });*/
+        });
+        drawer.closeDrawer(GravityCompat.START);
+
+        sidemenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = getSupportFragmentManager().getBackStackEntryCount();
+                if (count <= 1) {
+                    if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                        drawer.closeDrawer(Gravity.LEFT);
+                    } else drawer.openDrawer(Gravity.LEFT);
+                } else {
+                    onBackPressed();
+                }
+            }
+        });
+
     }
 
-    /* private void setId() {
-         imageViewSideMenu = findViewById(R.id.side_menu);
-         navigation = (BottomNavigationView) findViewById(R.id.navigation);
-         textheader = findViewById(R.id.textheader);
-     }
- */
+    private void setId() {
+        drawer = findViewById(R.id.drawer_layout);
+
+        toolbar_home = findViewById(R.id.toolbar_home);
+        toolbar_title = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar_home);
+        textheader = findViewById(R.id.textheader);
+        sidemenu = findViewById(R.id.side_menu);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        navigationView.addHeaderView(setUpHeaderView());
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+    }
+
+
     @Override
     public void onFragmentInteraction(int fragmentId, Object data) {
         mFragmentManager = getSupportFragmentManager();
@@ -194,6 +208,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 mFragmentManager.beginTransaction().addToBackStack(mFragmentTag).setCustomAnimations(R.anim.right_enter, R.anim.left_out, R.anim.left_enter, R.anim.right_out).replace(R.id.fragment_main, ImageFullScreenFragment.newInstance(zoomImage), mFragmentTag).commit();
 
                 break;
+            case AppConstant.FilterFragment:
+                mFragmentManager.beginTransaction().addToBackStack(mFragmentTag).setCustomAnimations(R.anim.right_enter, R.anim.left_out, R.anim.left_enter, R.anim.right_out).replace(R.id.fragment_main, FilterFragment.newInstance(), mFragmentTag).commit();
+                break;
+            case AppConstant.AddReviewFragment:
+                mFragmentManager.beginTransaction().addToBackStack(mFragmentTag).setCustomAnimations(R.anim.right_enter, R.anim.left_out, R.anim.left_enter, R.anim.right_out).replace(R.id.fragment_main, AddReviewFragment.newInstance(), mFragmentTag).commit();
+                break;
 
 
         }
@@ -210,10 +230,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void updateToolbar(HeaderData headerData) {
-       /* if (headerData.getText() != null)
-           // textheader.setText(headerData.getText());
+        if (headerData.getText() != null)
+            toolbar_title.setText(headerData.getText());
         else
-            textheader.setText("Day Care");*/
+            toolbar_title.setText("Ninos");
 
 
     }
@@ -266,6 +286,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             case R.id.navigation_logout:
                 logoutApp();
                 break;
+            case R.id.rating:
+                onFragmentInteraction(AppConstant.AddReviewFragment, null);
+                break;
 //            case R.id.about_us:
 //                onFragmentInteraction(FRAGMENT_ABOUT_US, null);
 //                break;
@@ -306,60 +329,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         alertDialog.show();
     }
     private void setupNavigationDrawer() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_app_bar_home);
 
-        setSupportActionBar(toolbar);
-        try {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
-        navigationView.addHeaderView(setUpHeaderView());
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        if (toolbar != null) {
-            toggle = new ActionBarDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
-            toggle.syncState();
-            drawerLayout.setDrawerListener(toggle);
-            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-                @Override
-                public void onBackStackChanged() {
-                    if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                               /* if (currentFragment == FRAGMENT_ORDER_DETAILS ||
-                                        currentFragment == FRAGMENT_ORDER_HISTORY) {
-                                    gotoHomePage();
-                                } else {*/
-                                onBackPressed();
-                                // }
-                            }
-                        });
-                    } else {
-
-                        //show hamburger
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                        toggle.syncState();
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                drawerLayout.openDrawer(GravityCompat.START);
-                                //DialogUtil.hideKeyboard(getCurrentFocus(), getApplicationContext());
-                            }
-                        });
-                    }
-                }
-            });
-        }
     }
 
     public View setUpHeaderView() {
@@ -380,6 +350,5 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         return header;
     }
-
 
 }

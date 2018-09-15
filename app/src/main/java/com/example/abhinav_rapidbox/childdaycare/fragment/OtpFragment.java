@@ -1,10 +1,16 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +36,9 @@ public class OtpFragment extends BaseActivity implements EventListner {
     Button confirm;
     LinearLayout lineer;
     Activity activity;
+    ImageView side_menu;
+    android.app.AlertDialog alertD;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,8 @@ public class OtpFragment extends BaseActivity implements EventListner {
         setContentView(R.layout.fragment_otp);
         activity = OtpFragment.this;
         initView();
+        side_menu = findViewById(R.id.side_menu);
+        side_menu.setVisibility(View.GONE);
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
         Gson gson = new Gson();
@@ -80,10 +91,8 @@ public class OtpFragment extends BaseActivity implements EventListner {
     public void onSuccessResponse(int reqType, Result data) {
         switch (reqType) {
             case ApiServices.REQUEST_USER_SIGINUP:
-                Toast.makeText(activity, data.getMessage(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OtpFragment.this, DemoLoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                CallLogoutPopup(data.getMessage());
+                break;
 
         }
         DialogUtil.stopProgressDisplay();
@@ -94,13 +103,38 @@ public class OtpFragment extends BaseActivity implements EventListner {
         DialogUtil.stopProgressDisplay();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
     }
 
+    private void CallLogoutPopup(String msg) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.dashboard_logout_popup, null);
+        alertD = new android.app.AlertDialog.Builder(this).create();
+
+        /*set alert at bottom*/
+        Window window = alertD.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        TextView alertActionText = view.findViewById(R.id.message);
+        alertActionText.setText(msg);
+        TextView cancelAlert = view.findViewById(R.id.action_text);
+        cancelAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OtpFragment.this, DemoLoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        alertD.setView(view);
+        alertD.show();
+    }
     @Override
     public void onResume() {
         super.onResume();

@@ -1,6 +1,8 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -8,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.adapter.ProductDetailsViewPagerAdapter;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
+import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ZoomImage;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
@@ -50,6 +54,8 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         button_register.setOnClickListener(this);
         enquiryLayout.setOnClickListener(this);
         dayCareName.setText(dayCareListModelData.getName());
+        phoneNo.setOnClickListener(this);
+        emailId.setOnClickListener(this);
 
         return rootView;
     }
@@ -90,9 +96,41 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
             case R.id.enquiryLayout:
                 mListener.onFragmentInteraction(AppConstant.ENQUIRY_FRAGMENT, null);
                 break;
+            case R.id.phoneNo:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNo.getText().toString()));
+                startActivity(intent);
+                break;
+            case R.id.emailId:
+               /* Intent intent1 = new Intent(Intent.ACTION_SEND);
+                intent1.setType("text/html");
+                intent1.putExtra(Intent.EXTRA_EMAIL, emailId.getText().toString());
+                intent1.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                intent1.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+                startActivity(Intent.createChooser(intent1, "Send Email"));*/
+                sendEmail();
+                break;
         }
     }
 
+    protected void sendEmail() {
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, emailId.getText().toString());
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getActivity(), "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void productImagedata(ArrayList<String> otherImages) {
         if (otherImages != null && otherImages.size() > 0) {
             productDetailsViewPagerAdapter = new ProductDetailsViewPagerAdapter(getActivity(), otherImages);
@@ -126,6 +164,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     public void onResume() {
         super.onResume();
         TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getId());
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData(dayCareListModelData.getName()));
     }
 
     @Override
