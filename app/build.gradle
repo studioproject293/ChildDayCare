@@ -4,10 +4,11 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.abhinav_rapidbox.childdaycare"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.5"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -47,5 +48,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.0.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.google.android.gms:play-services:12.0.1'
+    compile('com.razorpay:checkout:1.4.1')
+
 }
 apply plugin: 'com.google.gms.google-services'

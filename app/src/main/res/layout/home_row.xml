@@ -23,11 +23,11 @@
         android:translationZ="10dp">
 
         <LinearLayout
+            android:id="@+id/cardID1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:id="@+id/cardID1">
+            android:weightSum="1">
 
             <ImageView
                 android:id="@+id/image_icon"
@@ -99,29 +99,32 @@
                          android:layout_gravity="center"
                          android:src="@drawable/iconstar"/>
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="4.1"
                         android:id="@+id/textRating"
-                        android:paddingStart="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
                         android:gravity="center|left"
-                        android:textSize="15sp"
-                        android:textColor="#000" />
+                        android:paddingStart="5dp"
+                        android:text="4.1"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="48 min"
                         android:id="@+id/textDistance"
-                        android:textColor="#000" />
-
-                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="48 min"
+                        android:textColor="#000" />
+
+                    <TextView
                         android:id="@+id/textFee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="&#x20B9;  500"
                         android:textColor="#000" />
                 </LinearLayout>

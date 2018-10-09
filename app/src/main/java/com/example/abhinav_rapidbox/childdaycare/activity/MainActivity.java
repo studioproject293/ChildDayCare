@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private void setId() {
         drawer = findViewById(R.id.drawer_layout);
-
         toolbar_home = findViewById(R.id.toolbar_home);
         toolbar_title = findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar_home);

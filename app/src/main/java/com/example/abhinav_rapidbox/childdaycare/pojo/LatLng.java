@@ -8,6 +8,11 @@ public class LatLng {
     double latitude;
     double longitude;
 
+    public LatLng(double v, double v1) {
+    }
+
+    public LatLng() {
+    }
     public double getLatitude() {
         return latitude;
     }

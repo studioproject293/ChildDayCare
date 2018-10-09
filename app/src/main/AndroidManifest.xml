@@ -37,6 +37,18 @@
         <activity android:name=".fragment.OtpFragment" />
         <activity android:name=".utill.imagepicker.ImageCropActivity" />
         <activity android:name=".activity.LocationActivity"></activity>
+        <activity android:name=".activity.PaymentActivity" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCY7FrQwohzINon7ityLKxv8saU6LBlBe8" />
+        <!-- <meta-data
+             android:name="com.razorpay.ApiKey"
+             android:value="rzp_test_tOhQmKZQgZC6cm"/>-->
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_4pj3iU5wFZELpi" />
+
     </application>
 
 </manifest>

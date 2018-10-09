@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.BaseActivity;
-import com.example.abhinav_rapidbox.childdaycare.activity.DemoLoginActivity;
+import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
+import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
@@ -38,6 +40,7 @@ public class OtpFragment extends BaseActivity implements EventListner {
     Activity activity;
     ImageView side_menu;
     android.app.AlertDialog alertD;
+    PrefManager prefManager;
     View view;
 
     @Override
@@ -45,6 +48,7 @@ public class OtpFragment extends BaseActivity implements EventListner {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_otp);
         activity = OtpFragment.this;
+        prefManager = PrefManager.getInstance();
         initView();
         side_menu = findViewById(R.id.side_menu);
         side_menu.setVisibility(View.GONE);
@@ -93,6 +97,18 @@ public class OtpFragment extends BaseActivity implements EventListner {
             case ApiServices.REQUEST_USER_SIGINUP:
                 CallLogoutPopup(data.getMessage());
                 break;
+            case ApiServices.REQUEST_SIGININ_USER:
+                UserSignUpModel userSignUpModel = (UserSignUpModel) data.getData();
+                prefManager.setUsername(userSignUpModel.getUser_name());
+                prefManager.setUserId(userSignUpModel.getUser_id());
+                prefManager.setEmail(userSignUpModel.getEmail_id());
+                prefManager.setContact(userSignUpModel.getContact_no());
+                Intent intent = new Intent(this, PaymentActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+                break;
 
         }
         DialogUtil.stopProgressDisplay();
@@ -127,14 +143,16 @@ public class OtpFragment extends BaseActivity implements EventListner {
         cancelAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OtpFragment.this, DemoLoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                SiginInModel siginInModel = new SiginInModel();
+                siginInModel.setUser_id(userSignUpModelData.getEmail_id());
+                siginInModel.setPassword(userSignUpModelData.getPassword());
+                TransportManager.getInstance(OtpFragment.this).signInService(OtpFragment.this, siginInModel);
             }
         });
         alertD.setView(view);
         alertD.show();
     }
+
     @Override
     public void onResume() {
         super.onResume();

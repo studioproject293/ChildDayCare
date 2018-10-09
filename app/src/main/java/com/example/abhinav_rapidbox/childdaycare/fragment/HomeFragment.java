@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
@@ -38,6 +39,7 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -184,18 +186,17 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         DialogUtil.displayProgress(getActivity());
         TransportManager.getInstance(this).getDayCareList(getActivity());
 
-
     }
 
     @Override
     public void onListItemSelected(int itemId, Object data) {
         final DayCareListModel dayCareListModel = (DayCareListModel) data;
         switch (itemId) {
-            case R.id.cardID1:
+            case R.id.list_item:
                 if (TextUtils.isEmpty(prefManager.getUsername())) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                     alert.setTitle("Alert !");
-                    alert.setMessage("Sorry you don't have to permission to see details.Please login or signup.");
+                    alert.setMessage("Sorry you don't have  permission to see details.Please login or signup.");
                     alert.setPositiveButton("LogIn",
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -219,6 +220,41 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
                     mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
                 }
                 break;
+            case R.id.image_icon:
+                if (TextUtils.isEmpty(prefManager.getUsername())) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Alert !");
+                    alert.setMessage("Sorry you don't have  permission to see details.Please login or signup.");
+                    alert.setPositiveButton("LogIn",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    Intent intent = new Intent(getActivity(), DemoLoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            });
+                    alert.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alert.show();
+                } else {
+                    mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
+                }
+                break;
+            case R.id.textDistance:
+                String geoUri = "http://maps.google.com/maps?q=loc:" + dayCareListModel.getLatitude() + "," + dayCareListModel.getLongitude() + " (" + dayCareListModel.getName() + ")";
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", dayCareListModel.getLatitude(), dayCareListModel.getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
+                startActivity(intent);
+                break;
+
         }
     }
 

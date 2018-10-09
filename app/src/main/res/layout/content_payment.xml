@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <RelativeLayout
+        android:id="@+id/relSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/paymentStatusImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/success" />
+
+        <TextView
+            android:id="@+id/paymentStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paymentStatusImage"
+            android:layout_centerHorizontal="true"
+            android:text="Congratulations!"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/paymentStatusText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paymentStatusText"
+            android:layout_centerHorizontal="true"
+            android:text="Successful transaction"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relFail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relSuccess"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/paymentStatusImageFail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/fail" />
+
+        <TextView
+            android:id="@+id/paymentStatusTextFail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paymentStatusImageFail"
+            android:layout_centerHorizontal="true"
+            android:text="Error!"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/paymentStatusText2Fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paymentStatusTextFail"
+            android:layout_centerHorizontal="true"
+            android:text="Failed transaction"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

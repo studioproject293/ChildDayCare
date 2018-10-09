@@ -22,7 +22,6 @@ import com.example.abhinav_rapidbox.childdaycare.utill.GPSTracker;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.homeViewHolder> {
 
     Context context;
@@ -52,7 +51,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(homeViewHolder holder, final int position) {
+    public void onBindViewHolder(final homeViewHolder holder, final int position) {
         final DayCareListModel listModel = dayCareListModels.get(position);
         holder.text_name.setText(listModel.getName());
         holder.textRating.setText(listModel.getRating() + "");
@@ -69,10 +68,22 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             holder.image_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.dummy1));
         }
 
-        holder.cardID1.setOnClickListener(new View.OnClickListener() {
+        holder.list_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onListItemSelected(R.id.cardID1, listModel);
+                listener.onListItemSelected(R.id.list_item, listModel);
+            }
+        });
+        holder.textViewdistance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onListItemSelected(R.id.textDistance, listModel);
+            }
+        });
+        holder.image_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onListItemSelected(R.id.list_item, listModel);
             }
         });
         GPSTracker mGPS = new GPSTracker(context);
@@ -90,9 +101,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             if (String.valueOf(CalculationByDistance(latLng, latLng1)) != null)
                 holder.textViewdistance.setText(String.format("%.2f", CalculationByDistance(latLng, latLng1)) + " km");
             System.out.println("New Distance is pleas corect :" + CalculationByDistance(latLng, latLng1));
-
             System.out.print("Dis :::::Tance::" + distance(mGPS.getLatitude(), mGPS.getLongitude(), listModel.getLatitude(), listModel.getLatitude()));
         }
+
+        // Getting URL to the Google Directions API
+
 
     }
 
@@ -202,7 +215,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         ImageView image_icon;
         TextView text_name, text_description, textRating, textViewFee, textViewdistance;
         private View view;
-        private LinearLayout cardID1;
+        private LinearLayout cardID1, list_item;
 
 
         public homeViewHolder(View itemView) {
@@ -215,6 +228,185 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             textViewFee = itemView.findViewById(R.id.textFee);
             textViewdistance = itemView.findViewById(R.id.textDistance);
             cardID1 = itemView.findViewById(R.id.cardID1);
+            list_item = itemView.findViewById(R.id.list_item);
         }
     }
+  /*  private String getDirectionsUrl(LatLng origin,LatLng dest){
+
+        // Origin of route
+        String str_origin = "origin="+origin.getLatitude()+","+origin.getLongitude();
+
+        // Destination of route
+        String str_dest = "destination="+dest.getLatitude()+","+dest.getLongitude();
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+
+        return url;
+    }
+
+
+    @SuppressLint("LongLogTag")
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try{
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb  = new StringBuffer();
+
+            String line = "";
+            while( ( line = br.readLine())  != null){
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        }catch(Exception e){
+            Log.d("Exception while downloading url","bjhjadhf"+ e.toString());
+        }finally{
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    private class DownloadTask extends AsyncTask<String, Void, String> {
+        private final homeViewHolder viewHolder;
+
+        public DownloadTask(homeViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
+        }
+        // Downloading data in non-ui thread
+        @Override
+        protected String doInBackground(String... url) {
+
+            // For storing data from web service
+            String data = "";
+
+            try{
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+            }catch(Exception e){
+                Log.d("Background Task",e.toString());
+            }
+            return data;
+        }
+
+        // Executes in UI thread, after the execution of
+        // doInBackground()
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            ParserTask parserTask = new ParserTask(viewHolder);
+
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
+        }
+    }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>> >{
+        private final homeViewHolder viewHolder;
+
+        public ParserTask(homeViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
+        }
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try{
+                jObject = new JSONObject(jsonData[0]);
+                DirectionsJSONParser parser = new DirectionsJSONParser();
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions lineOptions = null;
+            MarkerOptions markerOptions = new MarkerOptions();
+            String distance = "";
+            String duration = "";
+
+            if(result.size()<1){
+                Toast.makeText(context, "No Points", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Traversing through all the routes
+            for(int i=0;i<result.size();i++){
+                points = new ArrayList<LatLng>();
+                lineOptions = new PolylineOptions();
+
+                // Fetching i-th route
+                List<HashMap<String, String>> path = result.get(i);
+
+                // Fetching all the points in i-th route
+                for(int j=0;j<path.size();j++){
+                    HashMap<String,String> point = path.get(j);
+
+                    if(j==0){    // Get distance from the list
+                        distance = (String)point.get("distance");
+                        continue;
+                    }else if(j==1){ // Get duration from the list
+                        duration = (String)point.get("duration");
+                        continue;
+                    }
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+
+                    points.add(position);
+                }
+
+                // Adding all the points in the route to LineOptions
+               // lineOptions.addAll();
+                lineOptions.width(2);
+                lineOptions.color(Color.RED);
+            }
+
+            Toast.makeText(context, "Distance:"+distance + ", Duration:"+duration, Toast.LENGTH_SHORT).show();
+            Log.d("bhfsdfs","fdjshfhd"+"Distance:"+distance + ", Duration:"+duration);
+
+            // Drawing polyline in the Google Map for the i-th route
+           // map.addPolyline(lineOptions);
+        }
+    }*/
+
 }
