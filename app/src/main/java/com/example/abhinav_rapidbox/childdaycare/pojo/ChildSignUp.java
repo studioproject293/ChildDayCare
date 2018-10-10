@@ -16,6 +16,15 @@ public class ChildSignUp {
     private Integer age;
     private String date_of_birth;
     private String blood_group;
+    private String imagefile;
+
+    public String getImagefile() {
+        return imagefile;
+    }
+
+    public void setImagefile(String imagefile) {
+        this.imagefile = imagefile;
+    }
 
     public String getUserid() {
         return userid;

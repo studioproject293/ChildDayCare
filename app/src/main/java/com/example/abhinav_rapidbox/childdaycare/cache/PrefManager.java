@@ -21,6 +21,7 @@ public class PrefManager {
     static final String PREF_APARTMENTNAME ="apartmentName";
     static final String PREF_PIN ="pin";
     static final String PREF_IMAGE_LINK ="imagelink";
+    static final String PREF_AMOUNT = "amount";
     private static final String KEY_REG_TOKEN = "regToken";
     private static final String KEY_DEVICE_UPDATE = "deviceupdate";
     private static final String KEY_SHOWCASE = "showcase";
@@ -146,6 +147,15 @@ public class PrefManager {
 
     public void setAddress(String address) {
         editor.putString(PREF_ADDRESS, "" + address);
+        editor.commit();
+    }
+
+    public String getAmount() {
+        return pref.getString(PREF_AMOUNT, null);
+    }
+
+    public void setAmount(String amount) {
+        editor.putString(PREF_AMOUNT, "" + amount);
         editor.commit();
     }
   public String getContact() {

@@ -245,6 +245,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
                     alert.show();
                 } else {
+                    prefManager.setAmount(String.valueOf(dayCareListModel.getFee()));
                     mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
                 }
                 break;

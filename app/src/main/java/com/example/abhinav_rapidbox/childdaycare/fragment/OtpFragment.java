@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.BaseActivity;
-import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
+import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.pojo.SiginInModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
@@ -103,7 +103,7 @@ public class OtpFragment extends BaseActivity implements EventListner {
                 prefManager.setUserId(userSignUpModel.getUser_id());
                 prefManager.setEmail(userSignUpModel.getEmail_id());
                 prefManager.setContact(userSignUpModel.getContact_no());
-                Intent intent = new Intent(this, PaymentActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

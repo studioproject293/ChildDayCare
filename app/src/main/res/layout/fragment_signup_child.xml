@@ -28,6 +28,14 @@
                 android:textStyle="bold"
                 android:visibility="visible"/>
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imare_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="4dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,19 +57,19 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:hint="Child Name"
                         android:backgroundTint="@color/colorPrimary"
+                        android:hint="Child Name"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:textColor="#000" />
                 </android.support.design.widget.TextInputLayout>
                 <TextView
+                    android:id="@+id/dateofbirth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/dateofbirth"
                     android:hint="Date of birth"
                     android:paddingLeft="3dp"
                     android:textColor="#000"
@@ -89,8 +97,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:hint="Age"
                         android:backgroundTint="@color/colorPrimary"
+                        android:hint="Age"
                         android:inputType="text"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
@@ -113,9 +121,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:layout_margin="8dp"
                         android:backgroundTint="#000"
                         android:enabled="false"
-                        android:layout_margin="8dp"
                         />
                 </LinearLayout>
                 <Button
@@ -123,9 +131,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_margin="10dp"
                     android:background="@color/colorPrimaryDark"
                     android:text="Register"
-                    android:layout_margin="10dp"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="16sp" />

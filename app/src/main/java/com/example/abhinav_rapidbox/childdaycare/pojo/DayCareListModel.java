@@ -15,6 +15,15 @@ public class DayCareListModel implements Comparable<DayCareListModel> {
     private Double longitude;
     private Integer fee;
     private String description;
+    private Integer dayCare_Id;
+
+    public Integer getDayCare_Id() {
+        return dayCare_Id;
+    }
+
+    public void setDayCare_Id(Integer dayCare_Id) {
+        this.dayCare_Id = dayCare_Id;
+    }
 
     public String getDescription() {
         return description;

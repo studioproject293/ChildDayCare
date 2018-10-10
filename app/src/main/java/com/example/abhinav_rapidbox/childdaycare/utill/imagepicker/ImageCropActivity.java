@@ -33,8 +33,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.fragment.SignupFragmentChild;
 import com.example.abhinav_rapidbox.childdaycare.fragment.UserProfileFragment;
 
 import java.io.Closeable;
@@ -52,17 +52,25 @@ import io.togoto.imagezoomcrop.photoview.PhotoView;
 import io.togoto.imagezoomcrop.photoview.RotationSeekBar;
 
 
-
 /**
  * @author GT
  */
 public class ImageCropActivity extends AppCompatActivity {
 
     public static final String TAG = "ImageCropActivity";
+    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+    public static final int REQUEST_CODE_PICK_GALLERY = 0x1;
+    public static final int REQUEST_CODE_TAKE_PICTURE = 0x2;
+    public static final int REQUEST_CODE_SAVE_PICTURE = 0x4;
+    public static final int REQUEST_CODE_CROPPED_PICTURE = 0x3;
+    public static final String ERROR_MSG = "error_msg";
+    public static final String ERROR = "error";
     private static final int ANCHOR_CENTER_DELTA = 10;
     private static final int PERMISSION_REQUEST = 100;
-
+    private final int IMAGE_MAX_SIZE = 1024;
+    private final Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG;
     PhotoView mImageView;
+    //Context context;
     CropOverlayView mCropOverlayView;
     Button btnRetakePic;
     Button btnFromGallery;
@@ -72,28 +80,60 @@ public class ImageCropActivity extends AppCompatActivity {
     RotationSeekBar mRotationBar;
     Button mBtnUndoRotation;
     private Uri imageUri;
-    //Context context;
-
     private ContentResolver mContentResolver;
-
-    private final int IMAGE_MAX_SIZE = 1024;
-    private final Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG;
-
     //Temp file to save cropped image
     private String mImagePath;
     private Uri mSaveUri = null;
     private Uri mImageUri = null;
-
-
     //File for capturing camera images
     private File mFileTemp;
-    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
-    public static final int REQUEST_CODE_PICK_GALLERY = 0x1;
-    public static final int REQUEST_CODE_TAKE_PICTURE = 0x2;
-    public static final int REQUEST_CODE_SAVE_PICTURE = 0x4;
-    public static final int REQUEST_CODE_CROPPED_PICTURE = 0x3;
-    public static final String ERROR_MSG = "error_msg";
-    public static final String ERROR = "error";
+    private View.OnClickListener btnDoneListerner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            saveUploadCroppedImage();
+        }
+    };
+    private View.OnClickListener btnResetListerner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mRotationBar.reset();
+            // init();
+            mImageView.reset();
+        }
+    };
+    private View.OnClickListener btnRetakeListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            takePic();
+            //cameraIntent();
+
+
+        }
+    };
+    private View.OnClickListener btnUndoRotationListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mImageView.setRotationBy(0, true);
+            mRotationBar.reset();
+        }
+    };
+    private View.OnClickListener btnFromGalleryListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (null == mFileTemp) {
+                createTempFile();
+            }
+            pickImage();
+        }
+    };
+
+    private static void copyStream(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = input.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
@@ -183,7 +223,7 @@ public class ImageCropActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
-        if (UserProfileFragment.isFlagattachment) {
+        if (UserProfileFragment.isFlagattachment || SignupFragmentChild.isFlagattachment) {
             getIntent().removeExtra("ACTION");
             pickImage();
             btnRetakePic.setVisibility(View.GONE);
@@ -193,7 +233,6 @@ public class ImageCropActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     protected void onStart() {
@@ -216,13 +255,6 @@ public class ImageCropActivity extends AppCompatActivity {
         mMoveResizeText.setLayoutParams(lp);
     }
 
-    private View.OnClickListener btnDoneListerner = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            saveUploadCroppedImage();
-        }
-    };
-
     private void saveUploadCroppedImage() {
         boolean saved = saveOutput();
         if (saved) {
@@ -236,44 +268,6 @@ public class ImageCropActivity extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener btnResetListerner = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mRotationBar.reset();
-            // init();
-            mImageView.reset();
-        }
-    };
-
-    private View.OnClickListener btnRetakeListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            takePic();
-            //cameraIntent();
-
-
-        }
-    };
-
-    private View.OnClickListener btnUndoRotationListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mImageView.setRotationBy(0, true);
-            mRotationBar.reset();
-        }
-    };
-
-    private View.OnClickListener btnFromGalleryListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (null == mFileTemp) {
-                createTempFile();
-            }
-            pickImage();
-        }
-    };
-
-
     private void createTempFile() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -282,7 +276,6 @@ public class ImageCropActivity extends AppCompatActivity {
             mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
         }
     }
-
 
     public boolean checkForPermission(String permission, int mode) {
         //this.permissionMode = mode;
@@ -329,6 +322,25 @@ public class ImageCropActivity extends AppCompatActivity {
         }
     }
 
+   /* private void cameraIntent() {
+        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //startActivityForResult(intent, REQUEST_CAMERA);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(context,  Manifest.permission.CAMERA);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{ Manifest.permission.CAMERA},
+                    REQUEST_CODE_TAKE_PICTURE);
+        } else {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
+            imageUri = Uri.fromFile(photo);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
+        }
+    }*/
+
     private void takePic() {
         if (!checkForPermission(Manifest.permission.CAMERA, REQUEST_CODE_TAKE_PICTURE)) {
             Log.d(TAG, "getMobileNumberRequest: sms not approved");
@@ -371,26 +383,6 @@ public class ImageCropActivity extends AppCompatActivity {
         }
     }
 
-   /* private void cameraIntent() {
-        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //startActivityForResult(intent, REQUEST_CAMERA);
-
-        int permissionCheck = ContextCompat.checkSelfPermission(context,  Manifest.permission.CAMERA);
-
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{ Manifest.permission.CAMERA},
-                    REQUEST_CODE_TAKE_PICTURE);
-        } else {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
-            imageUri = Uri.fromFile(photo);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
-        }
-    }*/
-
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -403,14 +395,6 @@ public class ImageCropActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE_PICK_GALLERY);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "No image source available", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private static void copyStream(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = input.read(buffer)) != -1) {
-            output.write(buffer, 0, bytesRead);
         }
     }
 
@@ -463,7 +447,7 @@ public class ImageCropActivity extends AppCompatActivity {
 
 
     private Bitmap getBitmap(Uri uri) {
-        InputStream in ;
+        InputStream in;
         Bitmap returnedBitmap;
         try {
             in = mContentResolver.openInputStream(uri);
@@ -595,5 +579,7 @@ public class ImageCropActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         UserProfileFragment.isFlagattachment = false;
+        SignupFragmentChild.isFlagattachment = false;
+
     }
 }

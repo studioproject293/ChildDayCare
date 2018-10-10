@@ -163,7 +163,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getId());
+        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getDayCare_Id());
         mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData(dayCareListModelData.getName()));
     }
 

@@ -1,12 +1,17 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
-import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
+import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
@@ -33,7 +39,11 @@ import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
+import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImageCropActivity;
+import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImagePickerManager;
+import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,9 +51,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
+
 
 public class SignupFragmentChild extends BaseFragment implements AdapterView.OnItemSelectedListener, EventListner {
 
+    private static final int PERMISSION_REQUEST_CAMERA = 100;
+    public static boolean isFlagattachment = false;
     static ChildSignUp userRecive;
     Button button_register;
     Spinner sppiner;
@@ -56,6 +72,8 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     String dateSelected;
     android.app.AlertDialog alertD;
     View view;
+    CircleImageView profile;
+    String encodedImage;
     private View root_view;
     private EditText editTextChildName, editTextAge;
     private TextView dateOfbirth;
@@ -80,7 +98,12 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         // Create an instance of Firebase Storage
         // mFirebaseStorage = FirebaseStorage.getInstance();
 
-
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attchmemntPopup(getActivity());
+            }
+        });
         dateOfbirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +129,9 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                     }
                     //userRecive.setAge(Integer.parseInt(editTextAge.getText().toString()));
                     userRecive.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                    userRecive.setImagefile(encodedImage);
                     DialogUtil.displayProgress(getActivity());
+                    Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
                     TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
 
                 }
@@ -115,6 +140,70 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         return root_view;
     }
 
+    private void attchmemntPopup(final Activity context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
+        View layout = inflater.inflate(R.layout.attachment_popup, null);
+        final android.app.AlertDialog alertD = new android.app.AlertDialog.Builder(context).create();
+        alertD.setCancelable(true);
+        //Making alert as bottom
+        Window window = alertD.getWindow();
+        assert window != null;
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+
+        LinearLayout camera = layout.findViewById(R.id.camera);
+        LinearLayout gallery = layout.findViewById(R.id.gallery);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertD.dismiss();
+                boolean result = DialogUtil.checkPermission(getActivity());
+               /* if (result) {*/
+                isFlagattachment = false;
+                Intent intent = new Intent(context, ImageCropActivity.class);
+                startActivityForResult(intent, 100);
+                // }
+
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertD.dismiss();
+                boolean result = DialogUtil.checkPermission(getActivity());
+                if (result) {
+                    isFlagattachment = true;
+                    Intent intent = new Intent(context, ImageCropActivity.class);
+                    startActivityForResult(intent, 100);
+                }
+            }
+        });
+        alertD.setView(layout);
+        alertD.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PERMISSION_REQUEST_CAMERA && resultCode == RESULT_OK) {
+
+            String path = data.getStringExtra(ImagePickerManager.IntentExtras.IMAGE_PATH);
+            Bitmap selectedImage = BitmapFactory.decodeFile(path);
+            profile.setImageBitmap(selectedImage);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream);
+            byte[] imagedata = byteArrayOutputStream.toByteArray();
+//            Log.d(TAG, "data=======" + Arrays.toString(imagedata));
+            encodedImage = Base64.encodeToString(imagedata, Base64.DEFAULT);
+            Log.d("kgyd", "data=======byteArray" + encodedImage);
+
+        }
+    }
    /* private void saveUser() {
 
         AsyncTask<Void, Void, Void> saveTask = new AsyncTask<Void, Void, Void>() {
@@ -162,6 +251,8 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         dateOfbirth = root_view.findViewById(R.id.dateofbirth);
         sppiner = root_view.findViewById(R.id.sppiner);
         button_register = root_view.findViewById(R.id.button_register);
+        profile = root_view.findViewById(R.id.imare_user);
+
     }
 
     @Override
@@ -338,8 +429,9 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         cancelAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                intent.putExtra("email", userRecive.getEmail_id());
+                intent.putExtra("phone", userRecive.getContact_no());
                 startActivity(intent);
             }
         });
