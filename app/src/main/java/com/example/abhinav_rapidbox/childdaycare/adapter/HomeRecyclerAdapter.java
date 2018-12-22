@@ -88,8 +88,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         });
         GPSTracker mGPS = new GPSTracker(context);
 
-        if (mGPS.canGetLocation) {
-            mGPS.getLocation();
+            if (mGPS.canGetLocation) {
+                mGPS.getLocation();
             System.out.print("lat :" + mGPS.getLatitude() + "jshvjfd" + "," + "long:" + mGPS.getLongitude());
             LatLng latLng = new LatLng();
             latLng.setLatitude(mGPS.getLatitude());

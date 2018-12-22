@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +42,9 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     ProductDetailsViewPagerAdapter productDetailsViewPagerAdapter;
     private TextView button_register, dayCareName, facilities;
     private View rootView;
-
+    TextView viewallreview, reviewCount, textReview, rateUsButton,loadMoreReview;
+    LinearLayout  layoutReview;
+    RatingBar ratingBar;
     public static ProductDetailsFragment newInstance(DayCareListModel dayCareListModel) {
         dayCareListModelData = dayCareListModel;
         return new ProductDetailsFragment();
@@ -51,6 +56,29 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_blank, container, false);
         setId();
+        ratingBar.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        rateUsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(AppConstants.AddReviewFragment, productId.getListingId());
+            }
+        });
+        loadMoreReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(AppConstants.REVIEW_LIST_FRAGMENT, productId.getListingId());
+            }
+        });
+        viewallreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(AppConstants.REVIEW_LIST_FRAGMENT, productId.getListingId());
+            }
+        });
         button_register.setOnClickListener(this);
         enquiryLayout.setOnClickListener(this);
         dayCareName.setText(dayCareListModelData.getName());
@@ -59,8 +87,46 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
 
         return rootView;
     }
+    private void loadReviewList(ArrayList<ReviewData> reviewData) {
+        ArrayList<ReviewData> reviewData1 = new ArrayList<>();
+        if (reviewData != null && reviewData.size() > 0) {
+            reviewRecyclerview.setVisibility(View.VISIBLE);
+            layoutReview.setVisibility(View.VISIBLE);
 
+            // topReview.setVisibility(View.VISIBLE);
+            if (reviewData.size() > 2) {
+                for (int i = 0; i < 2; i++) {
+
+                    ReviewData reviewData2 = reviewData.get(i);
+                    reviewData1.add(reviewData2);
+                    reviewRecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+                    reviewAdapter = new ReviewAdapter(activity, reviewData1);
+                    reviewAdapter.setListner(this);
+                    reviewRecyclerview.setAdapter(reviewAdapter);
+                    loadMoreReview.setVisibility(View.VISIBLE);
+                }
+            } else {
+                reviewRecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+                reviewAdapter = new ReviewAdapter(activity, reviewData);
+                reviewAdapter.setListner(this);
+                reviewRecyclerview.setAdapter(reviewAdapter);
+                loadMoreReview.setVisibility(View.GONE);
+            }
+        } else {
+            reviewRecyclerview.setVisibility(View.GONE);
+            layoutReview.setVisibility(View.GONE);
+
+            // topReview.setVisibility(View.GONE);
+        }
+    }
     private void setId() {
+        loadMoreReview = rootview.findViewById(R.id.loadMoreItem);
+        layoutReview = rootView.findViewById(R.id.layoutReview);
+        viewallreview = rootView.findViewById(R.id.viewallreview);
+        reviewCount = rootView.findViewById(R.id.reviewCount);
+        textReview = rootView.findViewById(R.id.textReview);
+        ratingBar = rootView.findViewById(R.id.ratingBar);
+        rateUsButton = rootView.findViewById(R.id.rateUsButton);
         button_register = rootView.findViewById(R.id.button_register);
         enquiryLayout = rootView.findViewById(R.id.enquiryLayout);
         price = rootView.findViewById(R.id.price);
