@@ -22,16 +22,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
+import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.UserSignUpModel;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
 import com.example.abhinav_rapidbox.childdaycare.service.EventListner;
 import com.example.abhinav_rapidbox.childdaycare.service.Result;
 import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
+import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImageCropActivity;
 import com.example.abhinav_rapidbox.childdaycare.utill.imagepicker.ImagePickerManager;
@@ -58,7 +61,7 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
     private EditText editText_vendor_name, editText_phoneNo, editText_address, editText_email,
             editText_road, editText_facalityName, editText_pincode;
     private ProgressDialog mProgress;
-    private Button button_update;
+    private TextView button_update;
     private PrefManager prefManager;
 
 
@@ -74,6 +77,7 @@ public class UserProfileFragment extends BaseFragment implements OnFragmentListI
     public void onResume() {
         super.onResume();
         //MainActivity.setToolbarTitle("User Profile");
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Update Profile"));
         DialogUtil.displayProgress(getActivity());
         TransportManager.getInstance(this).getUserInfoService(getActivity(), prefManager.getUserId());
     }

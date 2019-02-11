@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5BC5A7</color>
+   <!-- <color name="colorPrimary">#5BC5A7</color>
     <color name="colorPrimaryDark">#5BC5A7</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FF4081</color>-->
+    <color name="red">#bc4d9b</color>
+    <color name="editTextColor">@color/colorAccent</color>
+    <color name="grey">#555555</color>
+    <color name="grey_light">#ffbabcbe</color>
+    <color name="ultra_dark">#212121</color>
+    <color name="colorPrimaryDark">#FC9242</color>
+    <color name="colorPrimary">#5e9ecc</color>
+    <color name="colorLightPrimary">#FF8DD2</color>
+    <color name="colorAccent">#4c4c4e</color>
+    <color name="colorDivider">#B6B6B6</color>
+    <color name="backgroundColor">@color/white</color>
+
+    <color name="bg_home">#f5f6fa</color>
+    <color name="black">#000000</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="greydark">#616161</color>
+    <color name="text_heading">#e51d2d</color>
+    <color name="transparent_grey">#CCCCCCCC</color>
+    <color name="whiteFF">#edeef2</color>
+    <color name="blue">#5e9ecc</color>
+    <color name="transpertblue">#b7e1fc</color>
+    <color name="primarybg">#ff8f36</color>
     <color name="white">#FFF</color>
+    <color name="secondary_text_color_2">#686868</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="Main_color">#5e9ecc</color>
     <color name="homebottombar">#f5f6fa</color>
-
+    <color name="startcolor">#ffaa67</color>
+    <color name="middlecolor">#ff518c</color>
+    <color name="endcolor">#5e309c</color>
+ <color name="primary_text_color">#222e4b</color>
+ <color name="primary_bg">#e9e9eb</color>
+ <color name="primary_button">#ff8f36</color>
 </resources>

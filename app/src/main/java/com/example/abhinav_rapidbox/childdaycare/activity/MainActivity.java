@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ZoomImage;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
+import com.example.abhinav_rapidbox.childdaycare.utill.Constants;
 import com.example.abhinav_rapidbox.childdaycare.utill.HashCodeFileNameWithDummyExtGenerator;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -50,7 +52,8 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity
+        implements OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
     public static DisplayImageOptions options;
     public static ImageLoader imageLoader;
     NavigationView navigationView;
@@ -67,20 +70,42 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private String mFragmentTag;
     private ImageView imageViewSideMenu;
     private BottomNavigationView navigation;
-
+    public static BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setId();
         prefManager = PrefManager.getInstance();
-        setupNavigationDrawer();
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build();
         File cacheDir = StorageUtils.getCacheDirectory(this);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).diskCache(new UnlimitedDiskCache(cacheDir, null, new HashCodeFileNameWithDummyExtGenerator())).defaultDisplayImageOptions(options).build();
         ImageLoader.getInstance().init(config);
+        /*bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        // BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        final Menu menu = bottomNavigationView.getMenu();
+        menu.findItem(R.id.home).setIcon(R.drawable.ic_home_black_24dp);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        menu.findItem(R.id.home).setIcon(R.drawable.ic_home_black_24dp);
+                        if (mCurrentFragment != AppConstant.HOME_FRAGMENT)
+                            clearHomeScreen(AppConstant.HOME_FRAGMENT);
+                        break;
 
+                    case R.id.action_refer:
+
+                        break;
+                    case R.id.cart:
+
+                        break;
+                }
+                return true;
+            }
+        });*/
         onFragmentInteraction(AppConstant.HOME_FRAGMENT, null);
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -109,6 +134,26 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         });
 
     }
+    public void clearHomeScreen(int fragmentId) {
+        try {
+            if (getSupportFragmentManager().findFragmentByTag(String.valueOf(fragmentId)) != null) {
+                FragmentManager manager = getSupportFragmentManager();
+
+                for (int i = manager.getBackStackEntryCount() - 1; i > 0; i--) {
+                    String fragment = manager.getBackStackEntryAt(i).getName();
+                    if (!fragment.equals(fragmentId)) {
+                        manager.popBackStack();
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                onFragmentInteraction(fragmentId, null);
+            }
+        } catch (Exception e) {
+
+        }
+    }
 
     private void setId() {
         drawer = findViewById(R.id.drawer_layout);
@@ -136,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 mFragmentManager
                         .beginTransaction()
                         .addToBackStack(mFragmentTag)
-                        .replace(R.id.fragment_main, new HomeFragment(),
+                        .replace(R.id.fragment_main, new HomeFragment().newInstance(),
                                 mFragmentTag).commit();
                 break;
             case AppConstant.PRODUCT_DETAILS_FRAGMENT:
@@ -326,9 +371,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-    private void setupNavigationDrawer() {
-
     }
 
     public View setUpHeaderView() {

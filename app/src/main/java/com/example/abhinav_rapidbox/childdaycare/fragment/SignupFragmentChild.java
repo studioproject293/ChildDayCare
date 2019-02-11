@@ -61,7 +61,7 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     private static final int PERMISSION_REQUEST_CAMERA = 100;
     public static boolean isFlagattachment = false;
     static ChildSignUp userRecive;
-    Button button_register;
+    TextView button_register;
     Spinner sppiner;
     String valueBloodGroup;
     Integer yearValue;

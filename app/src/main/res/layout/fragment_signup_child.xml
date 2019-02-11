@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/primary_bg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,13 +20,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:text="Child Details"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imare_user"
@@ -36,6 +36,7 @@
                 android:src="@drawable/profile"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="4dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,69 +45,66 @@
                 android:visibility="visible">
 
 
-                <android.support.design.widget.TextInputLayout
+               <!-- <android.support.design.widget.TextInputLayout
                     android:id="@+id/editText6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp">-->
 
                     <EditText
                         android:id="@+id/editText_childName"
+                        style="@style/GenericEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Child Name"
-                        android:paddingBottom="4dp"
                         android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
                         android:textColor="#000" />
-                </android.support.design.widget.TextInputLayout>
+               <!-- </android.support.design.widget.TextInputLayout>-->
+
                 <TextView
                     android:id="@+id/dateofbirth"
+                    style="@style/GenericEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
                     android:hint="Date of birth"
-                    android:paddingLeft="3dp"
+                    android:paddingLeft="10dp"
                     android:textColor="#000"
-                    android:textSize="12sp"
+
                     android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="10dp"
-                    android:background="#000" />
-                <android.support.design.widget.TextInputLayout
+               <!-- <android.support.design.widget.TextInputLayout
                     android:id="@+id/editText4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp">-->
 
                     <EditText
                         android:id="@+id/editText_age"
+                        style="@style/GenericEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Age"
                         android:inputType="text"
-                        android:paddingBottom="4dp"
                         android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
                         android:textColor="#000" />
-                </android.support.design.widget.TextInputLayout>
-
-
-
+              <!--  </android.support.design.widget.TextInputLayout>-->
 
 
                 <LinearLayout
@@ -123,22 +121,53 @@
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
                         android:backgroundTint="#000"
-                        android:enabled="false"
-                        />
+                        android:enabled="false" />
                 </LinearLayout>
-                <Button
-                    android:id="@+id/button_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:text="Register"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                <!-- <Button
+                     android:id="@+id/button_register"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentBottom="true"
+                     android:layout_margin="10dp"
+                     android:background="@color/colorPrimaryDark"
+                     android:text="Register"
+                     android:textAllCaps="false"
+                     android:textColor="@color/white"
+                     android:textSize="16sp" />-->
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_small"
+            android:background="@drawable/aboveshadow" />
+
+
+        <LinearLayout
+            android:id="@+id/cart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            android:weightSum="1">
+
+
+            <TextView
+                android:id="@+id/button_register"
+                style="@style/BottomButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Register" />
+
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

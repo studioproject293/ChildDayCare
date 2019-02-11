@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,10 +60,10 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
                 return true;
             }
         });
-        rateUsButton.setOnClickListener(new View.OnClickListener() {
+       /* rateUsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onFragmentInteraction(AppConstants.AddReviewFragment, productId.getListingId());
+                mListener.onFragmentInteraction(AppConstant.AddReviewFragment, productId.getListingId());
             }
         });
         loadMoreReview.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +77,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
             public void onClick(View v) {
                 mListener.onFragmentInteraction(AppConstants.REVIEW_LIST_FRAGMENT, productId.getListingId());
             }
-        });
+        });*/
         button_register.setOnClickListener(this);
         enquiryLayout.setOnClickListener(this);
         dayCareName.setText(dayCareListModelData.getName());
@@ -87,7 +86,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
 
         return rootView;
     }
-    private void loadReviewList(ArrayList<ReviewData> reviewData) {
+    /*private void loadReviewList(ArrayList<ReviewData> reviewData) {
         ArrayList<ReviewData> reviewData1 = new ArrayList<>();
         if (reviewData != null && reviewData.size() > 0) {
             reviewRecyclerview.setVisibility(View.VISIBLE);
@@ -118,9 +117,9 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
 
             // topReview.setVisibility(View.GONE);
         }
-    }
+    }*/
     private void setId() {
-        loadMoreReview = rootview.findViewById(R.id.loadMoreItem);
+       // loadMoreReview = rootview.findViewById(R.id.loadMoreItem);
         layoutReview = rootView.findViewById(R.id.layoutReview);
         viewallreview = rootView.findViewById(R.id.viewallreview);
         reviewCount = rootView.findViewById(R.id.reviewCount);
@@ -229,7 +228,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getDayCare_Id());
+        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getId());
         mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData(dayCareListModelData.getName()));
     }
 

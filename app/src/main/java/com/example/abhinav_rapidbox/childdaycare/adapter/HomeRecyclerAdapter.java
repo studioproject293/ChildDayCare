@@ -22,11 +22,14 @@ import com.example.abhinav_rapidbox.childdaycare.utill.GPSTracker;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import static com.example.abhinav_rapidbox.childdaycare.activity.MainActivity.imageLoader;
+import static com.example.abhinav_rapidbox.childdaycare.activity.MainActivity.options;
+
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.homeViewHolder> {
 
     Context context;
-    OnFragmentListItemSelectListener listener;
-    ArrayList<DayCareListModel> dayCareListModels;
+    private OnFragmentListItemSelectListener listener;
+    private ArrayList<DayCareListModel> dayCareListModels;
 
     public HomeRecyclerAdapter(Context context, ArrayList<DayCareListModel> dayCareListModels) {
         this.context = context;
@@ -36,16 +39,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public homeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.home_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.home_row_new, parent, false);
         HomeRecyclerAdapter.homeViewHolder cartViewHolder = new HomeRecyclerAdapter.homeViewHolder(view);
         return cartViewHolder;
     }
 
-    public void updateHome(ArrayList<DayCareListModel> cartItems) {
+   /* public void updateHome(ArrayList<DayCareListModel> cartItems) {
         this.dayCareListModels = cartItems;
         notifyDataSetChanged();
     }
-
+*/
     public void setListner(OnFragmentListItemSelectListener listner) {
         this.listener = listner;
     }
@@ -55,15 +58,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         final DayCareListModel listModel = dayCareListModels.get(position);
         holder.text_name.setText(listModel.getName());
         holder.textRating.setText(listModel.getRating() + "");
-        holder.textViewFee.setText(listModel.getFee() + "");
+        holder.textViewFee.setText("₹ "+listModel.getFee() + "");
         holder.text_description.setText(listModel.getDescription());
         if (listModel.getHomeImage() != null) {
-            //imageLoader.displayImage(listModel.getHomeImage(), holder.image_icon, options);
-            Glide.with(context).load(listModel.getHomeImage())
+            imageLoader.displayImage(listModel.getHomeImage(), holder.image_icon, options);
+           /* Glide.with(context).load(listModel.getHomeImage())
                     .thumbnail(0.5f)
-                    .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.image_icon);
+                    .into(holder.image_icon);*/
         } else {
             holder.image_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.dummy1));
         }
@@ -112,7 +114,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public int getItemCount() {
-
         return dayCareListModels.size();
     }
 
@@ -218,7 +219,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         private LinearLayout cardID1, list_item;
 
 
-        public homeViewHolder(View itemView) {
+        homeViewHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             image_icon = itemView.findViewById(R.id.image_icon);

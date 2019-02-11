@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,6 +38,7 @@ import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -52,7 +54,6 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     ProductViewPagerAdapter productViewPagerAdapter;
     SpringDotsIndicator springDotsIndicator;
     ViewPager product_viewPager;
-    ArrayList<DayCareListModel> dayCareListModels;
     String checkValue = "";
     PrefManager prefManager;
     Dialog sortdialog;
@@ -101,6 +102,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
         filter.setOnClickListener(this);
         textViewshort.setOnClickListener(this);
+
         return rootView;
     }
 
@@ -108,7 +110,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         recyclerViewHome = rootView.findViewById(R.id.recyclerviewhome);
         filter = rootView.findViewById(R.id.filter);
         textViewshort = rootView.findViewById(R.id.sortby);
-        recyclerViewHome.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(),2));
         product_viewPager = (ViewPager) rootView.findViewById(R.id.product_viewPager);
         springDotsIndicator = (SpringDotsIndicator) rootView.findViewById(R.id.dots_indicator);
 

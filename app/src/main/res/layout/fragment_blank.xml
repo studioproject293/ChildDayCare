@@ -125,7 +125,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/iconssecuredletter"
-                    android:tint="@color/colorPrimary" />
+                     />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -176,7 +176,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:src="@drawable/iconsrupee"
-                    android:tint="@color/colorPrimary" />
+                    android:tint="@color/primary_button" />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -239,7 +239,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/iconsquestions"
-                    android:tint="@color/colorPrimary" />
+                    android:tint="@color/primary_button" />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -294,7 +294,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/iconscollaboration"
-                    android:tint="@color/colorPrimary" />
+                    android:tint="@color/primary_button" />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -347,7 +347,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/iconsmarker"
-                    android:tint="@color/colorPrimary" />
+                    android:tint="@color/primary_button" />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -402,7 +402,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/iconsmarker"
-                    android:tint="@color/colorPrimary" />
+                    android:tint="@color/primary_button" />
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="0dp"
@@ -475,7 +475,7 @@
                         android:gravity="center|end"
                         android:text="@string/VIEW_ALL"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/primary_button"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -491,8 +491,8 @@
                         android:layout_marginLeft="20dp"
                         android:clickable="false"
                         android:progressBackgroundTint="#4c4c4e"
-                        android:progressTint="@color/colorPrimary"
-                        android:secondaryProgressTint="@color/colorPrimary" />
+                        android:progressTint="@color/primary_button"
+                        android:secondaryProgressTint="@color/primary_button" />
 
                     <TextView
                         android:id="@+id/textReview"
@@ -519,7 +519,7 @@
                     android:gravity="center"
                     android:text="@string/View_All_reviews"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/primary_button"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -554,6 +554,7 @@
         android:gravity="center"
         android:text="Register"
         android:textColor="#FFF"
+        
         android:textSize="22sp"
         android:textStyle="bold" />
 </RelativeLayout>

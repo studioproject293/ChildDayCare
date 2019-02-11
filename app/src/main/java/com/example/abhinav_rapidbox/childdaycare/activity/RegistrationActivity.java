@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
@@ -19,7 +20,7 @@ import com.google.gson.Gson;
 
 public class RegistrationActivity extends BaseActivity {
 
-    Button button_register;
+    TextView button_register;
     String[] cityList = {"Select City*", "Bangalore"};
     ImageView side_menu;
     private Context context;

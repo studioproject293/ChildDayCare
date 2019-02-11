@@ -17,6 +17,7 @@ import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelec
 import java.util.List;
 
 
+/*
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyOrderViewHolder> {
     private int count;
     private Context context;
@@ -127,3 +128,4 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyOrderVie
 
 
 }
+*/

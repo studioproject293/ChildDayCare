@@ -30,7 +30,7 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
     Button button_register;
     User user;
     Spinner sppiner;
-    Button nextScreen;
+    TextView nextScreen;
     String valueBloodGroup;
     String[] sppinerData = {"Select Blood Group *", "O+", "O-", "AB+", "AB-", "B-", "B+", "A+", "A-"};
     ProgressDialog progressBar;

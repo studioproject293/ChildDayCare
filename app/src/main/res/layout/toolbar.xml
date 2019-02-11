@@ -3,18 +3,18 @@
     android:id="@+id/toolbar_home"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:contentInsetEnd="0dp"
-    android:contentInsetLeft="0dp"
-    android:contentInsetRight="0dp"
+    android:background="@drawable/toolbarbackround"
     android:contentInsetStart="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetEnd="0dp"
+    android:contentInsetRight="0dp"
     android:fadingEdgeLength="1dp"
     android:translationZ="10dp"
     app:contentInsetEnd="0dp"
     app:contentInsetLeft="0dp"
     app:contentInsetRight="0dp"
     app:contentInsetStart="0dp"
-    app:contentInsetStartWithNavigation="5dp"
+    app:contentInsetStartWithNavigation="@dimen/spacing_xsmall"
     app:layout_scrollFlags="scroll|enterAlways">
 
     <LinearLayout
@@ -32,7 +32,7 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_icons_menu" />
+            app:srcCompat="@drawable/ic_icons_menu" />
 
         <TextView
             android:id="@+id/toolbar_title"
