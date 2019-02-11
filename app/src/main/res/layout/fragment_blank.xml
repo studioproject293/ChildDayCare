@@ -52,11 +52,36 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:maxLines="1"
+                android:visibility="gone"
                 android:text="Day Care Name"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:clickable="false"
+                    android:progressBackgroundTint="#4c4c4e"
+                    android:progressTint="@color/primary_button"
+                    android:secondaryProgressTint="@color/primary_button" />
+
+                <TextView
+                    android:id="@+id/textReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/outof"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -479,30 +504,7 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <RatingBar
-                        android:id="@+id/ratingBar"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:clickable="false"
-                        android:progressBackgroundTint="#4c4c4e"
-                        android:progressTint="@color/primary_button"
-                        android:secondaryProgressTint="@color/primary_button" />
-
-                    <TextView
-                        android:id="@+id/textReview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="@string/outof"
-                        android:textColor="#000"
-                        android:textStyle="bold" />
-                </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/reviewRecyclerview"
@@ -541,20 +543,36 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/button_register"
+
+    <LinearLayout
+        android:id="@+id/bottomlayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/dark_boder_red"
-        android:fontFamily="@font/open_sans_bold"
-        android:gravity="center"
-        android:text="Register"
-        android:textColor="#FFF"
-        
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_small"
+            android:background="@drawable/aboveshadow" />
+
+
+        <LinearLayout
+            android:id="@+id/cart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            android:weightSum="1">
+
+
+            <TextView
+                android:id="@+id/button_register"
+                style="@style/BottomButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Register" />
+
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

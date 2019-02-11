@@ -23,4 +23,5 @@
     <string name="WRITE_A_REVIEW">WRITE A REVIEW</string>
     <string name="Rating">Rating</string>
     <string name="Ratings">Ratings</string>
+    <string name="add_one_more_child"><u>+ Add One More Child</u></string>
 </resources>

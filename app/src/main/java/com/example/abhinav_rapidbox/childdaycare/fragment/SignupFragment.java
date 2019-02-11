@@ -59,7 +59,6 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
                     user.setFathers_name(editTextFatherName.getText().toString());
                     user.setContact_no(editTextContactNo.getText().toString());
                     user.setAddress(editTextAddress.getText().toString());
-                    user.setPassword(editTextPassword.getText().toString());
                     user.setMothers_name(editTextMotherName.getText().toString());
                     user.setEmail_id(editTextEmail.getText().toString());
                     user.setUserid(editTextEmail.getText().toString());
@@ -88,7 +87,7 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
     @Override
     public void onResume() {
         super.onResume();
-        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Child Sign Up"));
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Parent Sign Up"));
     }
 
    /* private void saveUser() {
@@ -181,13 +180,13 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
             //Toast.makeText(getActivity(),
             //Toast.makeText(getActivity(), "Enter Address", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (TextUtils.isEmpty(editTextPassword.getText())) {
+        } /*else if (TextUtils.isEmpty(editTextPassword.getText())) {
             editTextPassword.setError("Enter Password");
             editTextPassword.requestFocus();
             showError(editTextPassword);
             // Toast.makeText(getActivity(), "Enter Password", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         return true;
     }
 

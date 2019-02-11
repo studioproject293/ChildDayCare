@@ -2,7 +2,6 @@ package com.example.abhinav_rapidbox.childdaycare.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,6 +28,8 @@ import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
+import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
@@ -47,9 +47,11 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,22 +63,24 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
     private static final int PERMISSION_REQUEST_CAMERA = 100;
     public static boolean isFlagattachment = false;
     static ChildSignUp userRecive;
-    TextView button_register;
-    Spinner sppiner;
+    TextView button_register, adonechild;
+    Spinner sppiner, spinnerGender;
     String valueBloodGroup;
     Integer yearValue;
     Date date = null;
     String[] sppinerData = {"Select Blood Group *", "O+", "O-", "AB+", "AB-", "B-", "B+", "A+", "A-"};
+    String[] sppinerDataGender = {"Select Gender *", "Male", "Female", "Others"};
     int d, m, y;
     ProgressDialog progressBar;
     String dateSelected;
     android.app.AlertDialog alertD;
     View view;
     CircleImageView profile;
-    String encodedImage;
+    String encodedImage, gender;
     private View root_view;
     private EditText editTextChildName, editTextAge;
     private TextView dateOfbirth;
+    ArrayList<ChildData> arrayList = new ArrayList<>();
 
     public static SignupFragmentChild newInstance(ChildSignUp user1) {
         userRecive = user1;
@@ -95,13 +99,25 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         sppiner.setAdapter(aa);
-        // Create an instance of Firebase Storage
-        // mFirebaseStorage = FirebaseStorage.getInstance();
+        ArrayAdapter aa1 = new ArrayAdapter(getActivity(), android.R.layout.simple_expandable_list_item_1, sppinerDataGender);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinnerGender.setAdapter(aa1);
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gender = sppinerDataGender[position];
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attchmemntPopup(getActivity());
+                attchmemntPopup(Objects.requireNonNull(getActivity()));
             }
         });
         dateOfbirth.setOnClickListener(new View.OnClickListener() {
@@ -115,26 +131,47 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
             public void onClick(View v) {
                 if (validDataEntered()) {
 
-
-                    userRecive.setChild_name(editTextChildName.getText().toString());
-                    userRecive.setBlood_group(valueBloodGroup);
-                    if (editTextAge.getText().toString().contains("Days")) {
-                        String ageValue = editTextAge.getText().toString();
-                        String newAge = ageValue.replace(" Days", "");
-                        userRecive.setAge(Integer.parseInt(newAge));
-                    } else {
-                        String ageValue = editTextAge.getText().toString();
-                        String newAge = ageValue.replace(" Years", "");
-                        userRecive.setAge(Integer.parseInt(newAge));
-                    }
-                    //userRecive.setAge(Integer.parseInt(editTextAge.getText().toString()));
-                    userRecive.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
-                    userRecive.setImagefile(encodedImage);
+                    userRecive.setArrayListChild(AppCache.getInstance().getChildDataArrayList());
                     DialogUtil.displayProgress(getActivity());
                     Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
                     TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
 
                 }
+            }
+        });
+        adonechild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChildData childData = new ChildData();
+                if (editTextAge.getText().toString().contains("Days")) {
+                    String ageValue = editTextAge.getText().toString();
+                    String newAge = ageValue.replace(" Days", "");
+                    childData.setAge(Integer.parseInt(newAge));
+                } else {
+                    String ageValue = editTextAge.getText().toString();
+                    String newAge = ageValue.replace(" Years", "");
+                    childData.setAge(Integer.parseInt(newAge));
+                }
+                childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                childData.setImagefile(encodedImage);
+                childData.setChild_name(editTextChildName.getText().toString());
+                childData.setBlood_group(valueBloodGroup);
+                childData.setChild_gender(gender);
+
+                arrayList.add(childData);
+                Log.d("dhfdhjb","before clear"+new Gson().toJson(arrayList));
+                AppCache.getInstance().setChildDataArrayList(arrayList);
+
+                Log.d("dhfdhjb","fhdhdgfvhd"+new Gson().toJson( AppCache.getInstance().getChildDataArrayList()));
+                //arrayList.clear();
+                Log.d("dhfdhjb","after clear"+new Gson().toJson(arrayList));
+                editTextAge.setText("");
+                editTextChildName.setText("");
+                spinnerGender.setSelection(0);
+                sppiner.setSelection(0);
+                dateOfbirth.setText("");
+                encodedImage = null;
+
             }
         });
         return root_view;
@@ -163,7 +200,7 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
             public void onClick(View v) {
                 alertD.dismiss();
                 boolean result = DialogUtil.checkPermission(getActivity());
-               /* if (result) {*/
+                /* if (result) {*/
                 isFlagattachment = false;
                 Intent intent = new Intent(context, ImageCropActivity.class);
                 startActivityForResult(intent, 100);
@@ -204,52 +241,14 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
 
         }
     }
-   /* private void saveUser() {
-
-        AsyncTask<Void, Void, Void> saveTask = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                showProgressBar();
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference userRef = database.getReference(AppConstant.TABLE_USER);
-                userRef.push().setValue(user);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                hideProgressBar();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("User details saved.");
-                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //clearFields();
-
-                    }
-                });
-                builder.show();
-            }
-        }.execute();
-
-//
-//
-        //finish();
-
-    }*/
 
     private void setId() {
         editTextChildName = root_view.findViewById(R.id.editText_childName);
+        adonechild = root_view.findViewById(R.id.adonechild);
         editTextAge = root_view.findViewById(R.id.editText_age);
         dateOfbirth = root_view.findViewById(R.id.dateofbirth);
         sppiner = root_view.findViewById(R.id.sppiner);
+        spinnerGender = root_view.findViewById(R.id.sppiner_gender);
         button_register = root_view.findViewById(R.id.button_register);
         profile = root_view.findViewById(R.id.imare_user);
 
@@ -290,6 +289,9 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         } else if (sppiner.getSelectedItem().equals("Select Blood Group *")) {
             Toast.makeText(getActivity(), "Please select blood group", Toast.LENGTH_SHORT).show();
             return false;
+        } else if (spinnerGender.getSelectedItem().equals("Select Gender *")) {
+            Toast.makeText(getActivity(), "Please select gender", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
@@ -307,14 +309,14 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         progressBar.hide();
     }
 
-    public Dialog datePickerStrt() {
+    public void datePickerStrt() {
 
         Calendar c = Calendar.getInstance(Locale.ENGLISH);
         Integer ALyear = c.get(Calendar.YEAR);
         Integer ALmonthOfYear = c.get(Calendar.MONTH);
         Integer ALdayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dpd = new DatePickerDialog(mActivity, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dpd = new DatePickerDialog(mActivity, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateSelected = (getProperFormat(dayOfMonth) + "-" + getProperFormat(monthOfYear + 1) + "-" + year);
@@ -326,15 +328,13 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
 
         dpd.getDatePicker().setMaxDate(c.getTimeInMillis());
         dpd.show();
-        return dpd;
+
     }
 
     private String getProperFormat(int hhORmm) {
         String temp = hhORmm + "";
         if (temp.length() == 1) {
             temp = "0" + temp;
-        } else {
-
         }
         return temp;
     }

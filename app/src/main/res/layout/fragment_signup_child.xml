@@ -7,7 +7,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
         <LinearLayout
@@ -24,9 +24,10 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:text="Child Details"
                 android:textColor="#000"
+
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imare_user"
@@ -34,6 +35,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/profile"
+                android:layout_marginTop="10dp"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="4dp" />
 
@@ -45,21 +47,14 @@
                 android:visibility="visible">
 
 
-               <!-- <android.support.design.widget.TextInputLayout
-                    android:id="@+id/editText6"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp">-->
-
-                    <EditText
+                <EditText
                         android:id="@+id/editText_childName"
                         style="@style/GenericEditText"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_height="50dp"
+
                         android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
                         android:hint="Child Name"
@@ -70,11 +65,14 @@
 
                 <TextView
                     android:id="@+id/dateofbirth"
-                    style="@style/GenericEditText"
+                   android:background="@drawable/edittext"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:gravity="center|left"
+                    android:textSize="16sp"
+
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:hint="Date of birth"
                     android:paddingLeft="10dp"
@@ -95,7 +93,7 @@
                         style="@style/GenericEditText"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
@@ -112,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/dark_boder">
+                    android:background="@drawable/edittext">
 
                     <Spinner
                         android:id="@+id/sppiner"
@@ -123,6 +121,32 @@
                         android:backgroundTint="#000"
                         android:enabled="false" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/spinnerLayout_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edittext">
+
+                    <Spinner
+                        android:id="@+id/sppiner_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="#000"
+                        android:enabled="false" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:id="@+id/adonechild"
+                    android:padding="5dp"
+                    android:text="@string/add_one_more_child"
+                    android:textColor="@android:color/holo_blue_dark"/>
                 <!-- <Button
                      android:id="@+id/button_register"
                      android:layout_width="match_parent"

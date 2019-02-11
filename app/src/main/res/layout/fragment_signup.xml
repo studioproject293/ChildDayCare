@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_bg">
@@ -8,7 +7,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="75dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -20,11 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:text="Parent Details"
                 android:textColor="#000"
                 android:textSize="20sp"
+                android:visibility="gone"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -51,7 +53,7 @@
                         android:hint="Father Name"
 
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                       android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:inputType="textCapWords"
                         android:maxLength="25"
@@ -63,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp">-->
 
                     <EditText
@@ -72,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
                         android:hint="Mother Name"
@@ -84,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp">-->
 
                     <EditText
@@ -93,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                       android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
                         android:hint="Contact No"
@@ -110,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp">-->
 
                     <EditText
@@ -119,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                       android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
 
                         android:layout_centerHorizontal="true"
@@ -135,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp">-->
 
                     <EditText
@@ -144,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                       android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
 
                         android:layout_centerHorizontal="true"
@@ -160,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     app:passwordToggleEnabled="true">-->
 
@@ -170,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                       android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:visibility="gone"
                         android:layout_centerHorizontal="true"
@@ -198,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="5dp"
+               android:layout_marginTop="10dp"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:text="Child Details"
                 android:textColor="#000"
@@ -311,7 +313,7 @@
     <LinearLayout
         android:id="@+id/bottomlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 

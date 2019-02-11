@@ -37,4 +37,10 @@
         <item name="android:fontFamily">@font/open_sans_bold</item>
         <item name="android:background">@color/primary_button</item>
     </style>
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary_button</item>
+        <item name="colorPrimaryDark">@color/primary_button</item>
+        <item name="colorAccent">@color/primary_button</item>
+    </style>
 </resources>
+
