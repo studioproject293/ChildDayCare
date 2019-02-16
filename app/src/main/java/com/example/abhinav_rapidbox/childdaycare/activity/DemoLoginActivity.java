@@ -104,7 +104,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
         });
     }
 
-    private boolean checkPermissions() {
+    private void checkPermissions() {
         int result;
         List<String> listPermissionsNeeded = new ArrayList<>();
         for (String p : permissions) {
@@ -115,9 +115,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
-            return false;
         }
-        return true;
     }
 
     private void showError(EditText editText) {

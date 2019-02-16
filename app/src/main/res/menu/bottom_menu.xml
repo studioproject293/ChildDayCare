@@ -5,13 +5,10 @@
         android:id="@+id/home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home"
+
         app:showAsAction="always|withText"/>
 
-   <!-- <item
-        android:icon="@drawable/bottom_nav_feed"
-        android:orderInCategory="100"
-        android:title="Feed"
-        app:showAsAction="always|withText"/> !-->
+
     <item
         android:id="@+id/action_refer"
         android:icon="@drawable/profile"

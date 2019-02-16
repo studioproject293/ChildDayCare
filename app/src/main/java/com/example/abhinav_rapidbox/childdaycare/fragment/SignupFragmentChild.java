@@ -130,11 +130,33 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
             @Override
             public void onClick(View v) {
                 if (validDataEntered()) {
-
+                   if (AppCache.getInstance().getChildDataArrayList()!=null && AppCache.getInstance().getChildDataArrayList().size()>0)
                     userRecive.setArrayListChild(AppCache.getInstance().getChildDataArrayList());
-                    DialogUtil.displayProgress(getActivity());
+                   else {
+                       ChildData childData = new ChildData();
+                       if (editTextAge.getText().toString().contains("Days")) {
+                           String ageValue = editTextAge.getText().toString();
+                           String newAge = ageValue.replace(" Days", "");
+                           childData.setAge(Integer.parseInt(newAge));
+                       } else {
+                           String ageValue = editTextAge.getText().toString();
+                           String newAge = ageValue.replace(" Years", "");
+                           childData.setAge(Integer.parseInt(newAge));
+                       }
+                       childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                       childData.setImagefile(encodedImage);
+                       childData.setChild_name(editTextChildName.getText().toString());
+                       childData.setBlood_group(valueBloodGroup);
+                       childData.setChild_gender(gender);
+
+                       arrayList.add(childData);
+                       userRecive.setArrayListChild(arrayList);
+                       Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
+                       arrayList.clear();
+                   }
+                   // DialogUtil.displayProgress(getActivity());
                     Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
-                    TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
+                    //TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
 
                 }
             }
@@ -142,38 +164,41 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
         adonechild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChildData childData = new ChildData();
-                if (editTextAge.getText().toString().contains("Days")) {
-                    String ageValue = editTextAge.getText().toString();
-                    String newAge = ageValue.replace(" Days", "");
-                    childData.setAge(Integer.parseInt(newAge));
-                } else {
-                    String ageValue = editTextAge.getText().toString();
-                    String newAge = ageValue.replace(" Years", "");
-                    childData.setAge(Integer.parseInt(newAge));
+                if (validDataEntered()) {
+                    ChildData childData = new ChildData();
+                    if (editTextAge.getText().toString().contains("Days")) {
+                        String ageValue = editTextAge.getText().toString();
+                        String newAge = ageValue.replace(" Days", "");
+                        childData.setAge(Integer.parseInt(newAge));
+                    } else {
+                        String ageValue = editTextAge.getText().toString();
+                        String newAge = ageValue.replace(" Years", "");
+                        childData.setAge(Integer.parseInt(newAge));
+                    }
+                    childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                    childData.setImagefile(encodedImage);
+                    childData.setChild_name(editTextChildName.getText().toString());
+                    childData.setBlood_group(valueBloodGroup);
+                    childData.setChild_gender(gender);
+
+                    arrayList.add(childData);
+                    Log.d("dhfdhjb", "before clear" + new Gson().toJson(arrayList));
+                    AppCache.getInstance().setChildDataArrayList(arrayList);
+
+                    Log.d("dhfdhjb", "fhdhdgfvhd" + new Gson().toJson(AppCache.getInstance().getChildDataArrayList()));
+                    //arrayList.clear();
+                    Log.d("dhfdhjb", "after clear" + new Gson().toJson(arrayList));
+                    editTextAge.setText("");
+                    editTextChildName.setText("");
+                    spinnerGender.setSelection(0);
+                    sppiner.setSelection(0);
+                    dateOfbirth.setText("");
+                    encodedImage = null;
+
                 }
-                childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
-                childData.setImagefile(encodedImage);
-                childData.setChild_name(editTextChildName.getText().toString());
-                childData.setBlood_group(valueBloodGroup);
-                childData.setChild_gender(gender);
-
-                arrayList.add(childData);
-                Log.d("dhfdhjb","before clear"+new Gson().toJson(arrayList));
-                AppCache.getInstance().setChildDataArrayList(arrayList);
-
-                Log.d("dhfdhjb","fhdhdgfvhd"+new Gson().toJson( AppCache.getInstance().getChildDataArrayList()));
-                //arrayList.clear();
-                Log.d("dhfdhjb","after clear"+new Gson().toJson(arrayList));
-                editTextAge.setText("");
-                editTextChildName.setText("");
-                spinnerGender.setSelection(0);
-                sppiner.setSelection(0);
-                dateOfbirth.setText("");
-                encodedImage = null;
-
             }
         });
+
         return root_view;
     }
 

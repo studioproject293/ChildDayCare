@@ -5,12 +5,12 @@ package com.example.abhinav_rapidbox.childdaycare.pojo;
  */
 
 public class UserSignUpModel {
-    String user_id;
-    String user_name ;
-    String contact_no;
-    String otp;
-    String email_id;
-    String password;
+    private String user_id;
+    private String user_name ;
+    private String contact_no;
+    private String otp;
+    private String email_id;
+    private String password;
 
     public String getUser_id() {
         return user_id;

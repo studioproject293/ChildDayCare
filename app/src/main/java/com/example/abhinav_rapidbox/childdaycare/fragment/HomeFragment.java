@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,7 +36,6 @@ import com.example.abhinav_rapidbox.childdaycare.service.TransportManager;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 import com.example.abhinav_rapidbox.childdaycare.utill.DialogUtil;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,8 +119,8 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         sortdialog.setCancelable(true);
         View view = getActivity().getLayoutInflater().inflate(R.layout.bottomdialog_sort, null);
         sortdialog.setContentView(view);
-        RadioButton radioButtonFee = (RadioButton) view.findViewById(R.id.radiofee);
-        RadioButton radioButtonRating = (RadioButton) view.findViewById(R.id.radioRating);
+        RadioButton radioButtonFee =  view.findViewById(R.id.radiofee);
+        RadioButton radioButtonRating =  view.findViewById(R.id.radioRating);
         Button buttonSubmit = view.findViewById(R.id.submit);
         Button buttonCancel = view.findViewById(R.id.cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
@@ -297,7 +295,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.filter:
-                mListener.onFragmentInteraction(AppConstant.FilterFragment, null);
+               // mListener.onFragmentInteraction(AppConstant.FilterFragment, null);
                 break;
             case R.id.sortby:
                 // Sorting

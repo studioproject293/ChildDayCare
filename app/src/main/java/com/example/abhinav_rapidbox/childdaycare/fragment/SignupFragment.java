@@ -1,46 +1,31 @@
 package com.example.abhinav_rapidbox.childdaycare.fragment;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.User;
 import com.example.abhinav_rapidbox.childdaycare.utill.AppConstant;
 
-import java.util.Calendar;
-import java.util.Locale;
 
+public class SignupFragment extends BaseFragment  {
 
-public class SignupFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
-
-    Button button_register;
     User user;
-    Spinner sppiner;
     TextView nextScreen;
-    String valueBloodGroup;
-    String[] sppinerData = {"Select Blood Group *", "O+", "O-", "AB+", "AB-", "B-", "B+", "A+", "A-"};
-    ProgressDialog progressBar;
-    String dateSelected;
     private View root_view;
+    PrefManager prefManager;
     private EditText editTextFatherName, editTextMotherName, editTextEmail, editTextContactNo,
-            editTextAddress, editTextPassword, editTextChildName, editTextAge;
-    private TextView dateOfbirth;
+            editTextAddress;
 
-    public final static boolean isValidEmail(CharSequence email) {
+    public static boolean isValidEmail(CharSequence email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
@@ -49,38 +34,33 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
                              Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_signup, container, false);
         setId();
+        prefManager = PrefManager.getInstance();
         user = new User();
-
-        nextScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validDataEntered()) {
-                    ChildSignUp user = new ChildSignUp();
-                    user.setFathers_name(editTextFatherName.getText().toString());
-                    user.setContact_no(editTextContactNo.getText().toString());
-                    user.setAddress(editTextAddress.getText().toString());
-                    user.setMothers_name(editTextMotherName.getText().toString());
-                    user.setEmail_id(editTextEmail.getText().toString());
-                    user.setUserid(editTextEmail.getText().toString());
-                    mListener.onFragmentInteraction(AppConstant.SIGNUP_FRAGMENT_CHILD, user);
+        //editTextFatherName.setText(prefManager);
+            nextScreen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (validDataEntered()) {
+                        ChildSignUp user = new ChildSignUp();
+                        user.setFathers_name(editTextFatherName.getText().toString());
+                        user.setContact_no(editTextContactNo.getText().toString());
+                        user.setAddress(editTextAddress.getText().toString());
+                        user.setMothers_name(editTextMotherName.getText().toString());
+                        user.setEmail_id(editTextEmail.getText().toString());
+                        user.setUserid(editTextEmail.getText().toString());
+                        mListener.onFragmentInteraction(AppConstant.SIGNUP_FRAGMENT_CHILD, user);
+                    }
                 }
-            }
-        });
+            });
         return root_view;
     }
 
     private void setId() {
         editTextAddress = root_view.findViewById(R.id.editText_address);
-        //editTextChildName = root_view.findViewById(R.id.editText_childName);
         editTextFatherName = root_view.findViewById(R.id.editText_fatherName);
         editTextMotherName = root_view.findViewById(R.id.editText_mothername);
-        editTextPassword = root_view.findViewById(R.id.editText_password);
-        //editTextAge = root_view.findViewById(R.id.editText_age);
-        //dateOfbirth = root_view.findViewById(R.id.dateofbirth);
         editTextEmail = root_view.findViewById(R.id.editText_email);
         editTextContactNo = root_view.findViewById(R.id.editText_contactNo);
-        /*sppiner = root_view.findViewById(R.id.sppiner);
-        button_register = root_view.findViewById(R.id.button_register);*/
         nextScreen = root_view.findViewById(R.id.next);
     }
 
@@ -154,18 +134,11 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
             showError(editTextMotherName);
             // Toast.makeText(getActivity(), "Enter Mother Name", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (TextUtils.isEmpty(editTextContactNo.getText())) {
-            editTextContactNo.setError("Enter Phone number");
+        } else if (!isValidMobile(editTextContactNo.getText().toString())) {
+            editTextContactNo.setError("Enter valid phone number");
             editTextContactNo.requestFocus();
             showError(editTextContactNo);
             // Toast.makeText(getActivity(), "Enter Phone number", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (editTextContactNo.getText().length() < 10) {
-            editTextContactNo.setError("Enter Valid mobile number");
-            editTextContactNo.requestFocus();
-            showError(editTextContactNo);
-            //Toast.makeText(getActivity(), "Enter Valid mobile number", Toast.LENGTH_SHORT).show();
-            // enterPhone.getInputField().requestFocus();
             return false;
         } else if (!isValidEmail(editTextEmail.getText())) {
             editTextEmail.setError("Enter Valid EmailId");
@@ -190,58 +163,5 @@ public class SignupFragment extends BaseFragment implements AdapterView.OnItemSe
         return true;
     }
 
-    private void showProgressBar() {
-        if (progressBar == null)
-            progressBar = new ProgressDialog(getActivity());
 
-        progressBar.setMessage("Please wait ...");
-        progressBar.setCancelable(false);
-        progressBar.show();
-    }
-
-    private void hideProgressBar() {
-        progressBar.hide();
-    }
-
-    public Dialog datePickerStrt() {
-
-        Calendar c = Calendar.getInstance(Locale.ENGLISH);
-        Integer ALyear = c.get(Calendar.YEAR);
-        Integer ALmonthOfYear = c.get(Calendar.MONTH);
-        Integer ALdayOfMonth = c.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dpd = new DatePickerDialog(mActivity, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dateSelected = (getProperFormat(dayOfMonth) + "-" + getProperFormat(monthOfYear + 1) + "-" + year);
-                dateOfbirth.setText(dateSelected);
-            }
-        }, ALyear, ALmonthOfYear, ALdayOfMonth);
-
-
-        dpd.getDatePicker().setMaxDate(c.getTimeInMillis());
-        dpd.show();
-        return dpd;
-    }
-
-    private String getProperFormat(int hhORmm) {
-        String temp = hhORmm + "";
-        if (temp.length() == 1) {
-            temp = "0" + temp;
-        } else {
-
-        }
-        return temp;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        valueBloodGroup = sppinerData[position];
-        //Toast.makeText(getApplicationContext(),country[position] ,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

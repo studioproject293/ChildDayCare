@@ -20,7 +20,7 @@
     <string name="logout_message">Are you sure, You want to Logout ?</string>
     <string name="outof">4 of 5</string>
     <string name="View_All_reviews">View All reviews</string>
-    <string name="WRITE_A_REVIEW">WRITE A REVIEW</string>
+    <string name="WRITE_A_REVIEW"><u>WRITE A REVIEW</u></string>
     <string name="Rating">Rating</string>
     <string name="Ratings">Ratings</string>
     <string name="add_one_more_child"><u>+ Add One More Child</u></string>
