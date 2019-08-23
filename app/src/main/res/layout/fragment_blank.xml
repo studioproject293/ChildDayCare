@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp">
@@ -55,7 +55,6 @@
                 android:text="Day Care Name"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
-                android:textStyle="bold"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -81,7 +80,9 @@
                     android:layout_marginLeft="20dp"
                     android:text="@string/outof"
                     android:textColor="#000"
-                    android:textStyle="bold" />
+                    android:textSize="16sp"
+                    android:textAppearance="@style/Nunito_Bold"
+                     />
             </LinearLayout>
 
             <TextView
@@ -89,7 +90,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="hfvbhhbjabdcxbchxcbvcbvnvbzbnzbnbnzbnbnxbznbxnzbxnvbznbvncxvbnxvbnbznvbnvbnvbcnvbcxnvbnvbcnvbxcnbxcnbnxcbnbncbzbcnvbxnbzbnvbnzbvuikjheudxdjwdhdwjhdjshduiashuijfhuiljfhiahUIsldshffhghfghfigfghfghfkjbhvcjkbncm slakieuwywhwenxjxkooswiwhwnwnnzjzjxj" />
+                android:textSize="16sp"
+                android:textAppearance="@style/Nunito_Regular"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,9 +106,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawablePadding="5dp"
-                    android:fontFamily="@font/open_sans"
                     android:maxLines="1"
                     android:text="Address"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -122,6 +125,7 @@
                         android:fontFamily="@font/open_sans"
                         android:gravity="center|left"
                         android:padding="5dp"
+                        android:textAppearance="@style/Nunito_Regular"
                         android:text="Btm Layout Near Udpi Garden"
                         android:textColor="#000"
                         android:textSize="18sp" />
@@ -145,10 +149,10 @@
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
                     android:maxLines="1"
                     android:text="Phone"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -162,10 +166,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.6"
                         android:drawableTint="#0f0"
-                        android:fontFamily="@font/open_sans"
                         android:gravity="center|left"
                         android:maxLines="1"
                         android:padding="5dp"
+                        android:textAppearance="@style/Nunito_Regular"
                         android:text="1234567890"
                         android:textColor="#000"
                         android:textSize="18sp" />
@@ -189,9 +193,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
                     android:maxLines="1"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:text="EmailId"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -205,8 +209,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center|left"
+                        android:textAppearance="@style/Nunito_Regular"                        android:gravity="center|left"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:text="1234567890"
@@ -235,6 +238,7 @@
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
                     android:maxLines="1"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:text="Price"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -247,9 +251,9 @@
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
                         android:gravity="center|left"
                         android:maxLines="1"
+                        android:textAppearance="@style/Nunito_Regular"
                         android:padding="5dp"
                         android:text="1234567890"
                         android:textColor="#000"
@@ -273,6 +277,7 @@
                     android:gravity="center|left"
                     android:maxLines="1"
                     android:text="Chat"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -284,10 +289,10 @@
                         android:id="@+id/chatNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
                         android:gravity="center|left"
                         android:maxLines="1"
                         android:padding="5dp"
+                        android:textAppearance="@style/Nunito_Regular"
                         android:text="1234567890"
                         android:textColor="#000"
                         android:textSize="18sp" />
@@ -306,9 +311,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
                     android:maxLines="1"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:text="Facilities"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -318,10 +323,10 @@
                     android:id="@+id/facilities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
                     android:maxLines="1"
                     android:padding="5dp"
+                    android:textAppearance="@style/Nunito_Regular"
                     android:text="1234567890"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -346,20 +351,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/open_sans"
-                        android:text="Rating &amp; Review"
+                        android:textAppearance="@style/Nunito_Bold"                        android:text="Rating &amp; Review"
                         android:textAllCaps="false"
                         android:textColor="#000"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        />
 
                     <TextView
                         android:id="@+id/rateUsButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:gravity="center|end"
+                        android:textAppearance="@style/Nunito_Bold"                        android:gravity="center|end"
                         android:text="@string/WRITE_A_REVIEW"
                         android:textAllCaps="true"
                         android:textColor="@color/primary_button"
@@ -367,25 +370,25 @@
                 </LinearLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/reviewRecyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
-
                 <TextView
                     android:id="@+id/viewallreview"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
+                    android:textAppearance="@style/Nunito_Bold"
                     android:text="@string/View_All_reviews"
                     android:textAllCaps="true"
                     android:textColor="@color/primary_button"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/reviewRecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
             </LinearLayout>
 
             <TextView
@@ -395,7 +398,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/dark_boder_red"
-                android:fontFamily="@font/open_sans_bold"
+                android:textAppearance="@style/Nunito_Bold"
                 android:gravity="center"
 
                 android:text="@string/WRITE_A_REVIEW"

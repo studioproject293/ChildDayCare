@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,26 +21,25 @@ import com.google.gson.Gson;
 
 public class RegistrationActivity extends BaseActivity {
 
-    TextView button_register;
+    ImageButton button_register;
     String[] cityList = {"Select City*", "Bangalore"};
     ImageView side_menu;
+    Button signin;
     private Context context;
-    private EditText edit_text_name, edit_text_mobile, edit_text_email, edit_text_password, editTextConfirmPassword;
+    private EditText edit_text_name, edit_text_mobile, edit_text_email, edit_text_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_registration);
-        side_menu = findViewById(R.id.side_menu);
-        side_menu.setVisibility(View.GONE);
+        setContentView(R.layout.fragment_registration_new);
         context = RegistrationActivity.this;
-       
+
         button_register = findViewById(R.id.button_register);
+        signin = findViewById(R.id.signin);
         edit_text_name = findViewById(R.id.editText_userName);
         edit_text_mobile = findViewById(R.id.editText_phoneNo);
         edit_text_email = findViewById(R.id.editText_email);
         edit_text_password = findViewById(R.id.editText_password);
-        editTextConfirmPassword = findViewById(R.id.confirmPassword);
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,22 +60,23 @@ public class RegistrationActivity extends BaseActivity {
                     edit_text_password.requestFocus();
                     showError(edit_text_password);
                 } else if (edit_text_password.getText().toString().length() < 6) {
-                    edit_text_password.setError("Plese enter valid password");
-                } else if (editTextConfirmPassword.getText().toString().trim().isEmpty()) {
-                    editTextConfirmPassword.setError("Please enter confirm password");
-                    editTextConfirmPassword.requestFocus();
-                    showError(editTextConfirmPassword);
-                } else if (!edit_text_password.getText().toString().equals(editTextConfirmPassword.getText().toString())) {
-                    Toast.makeText(context, "Password and confirm doesn't match", Toast.LENGTH_SHORT).show();
+                    edit_text_password.setError("Please enter valid password");
                 } else {
                     UserSignUpModel userSignUpModel = new UserSignUpModel();
                     userSignUpModel.setContact_no(edit_text_mobile.getText().toString());
                     userSignUpModel.setUser_name(edit_text_name.getText().toString());
                     userSignUpModel.setEmail_id(edit_text_email.getText().toString());
-                    userSignUpModel.setPassword(editTextConfirmPassword.getText().toString());
+                    userSignUpModel.setPassword(edit_text_password.getText().toString());
                     userSignUpModel.setUser_id(edit_text_email.getText().toString());
                     usersTable(userSignUpModel);
                 }
+            }
+        });
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationActivity.this, DemoLoginActivity.class);
+                startActivity(intent);
             }
         });
     }

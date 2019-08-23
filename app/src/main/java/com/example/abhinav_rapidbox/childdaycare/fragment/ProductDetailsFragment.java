@@ -245,7 +245,8 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
                 chatNo.setText(dayCareDetailsModel.getPhoneNo());
                 price.setText(dayCareDetailsModel.getFeeStructure());
                 facilities.setText(dayCareDetailsModel.getFacilities());
-                address.setText(dayCareDetailsModel.getStreet() + "," + dayCareDetailsModel.getLine1() + "," + dayCareDetailsModel.getLine2() + ",Pincode :" + dayCareDetailsModel.getZipCode());
+//                address.setText(dayCareDetailsModel.getStreet() + "," + dayCareDetailsModel.getLine1() + "," + dayCareDetailsModel.getLine2() + ",Pincode :" + dayCareDetailsModel.getZipCode());
+                address.setText(dayCareDetailsModel.getAddress());
                 break;
         }
         DialogUtil.stopProgressDisplay();

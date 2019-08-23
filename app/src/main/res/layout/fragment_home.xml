@@ -20,6 +20,7 @@
             android:gravity="center|left"
             android:padding="10dp"
             android:text="SORT"
+            android:textAppearance="@style/Nunito_Bold"
             android:textColor="#000"
             android:textSize="18sp" />
 

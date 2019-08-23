@@ -1,6 +1,4 @@
 <resources>
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -42,5 +40,37 @@
         <item name="colorPrimaryDark">@color/primary_button</item>
         <item name="colorAccent">@color/primary_button</item>
     </style>
+    <style name="Nunito_ExtraLight">
+        <item name="fontPath">fonts/Nunito-ExtraLight.ttf</item>
+    </style>
+
+    <style name="Nunito_Light">
+        <item name="fontPath">fonts/Nunito-Light.ttf</item>
+    </style>
+
+    <style name="Nunito_Medium">
+        <item name="fontPath">fonts/Nunito-Medium.ttf</item>
+    </style>
+
+    <style name="Nunito_Regular">
+        <item name="fontPath">fonts/Nunito-Regular.ttf</item>
+    </style>
+
+    <style name="Nunito_SemiBold">
+        <item name="fontPath">fonts/Nunito-SemiBold.ttf</item>
+    </style>
+
+    <style name="Nunito_Black">
+        <item name="fontPath">fonts/Nunito-Black.ttf</item>
+    </style>
+
+    <style name="Nunito_Bold">
+        <item name="fontPath">fonts/Nunito-Bold.ttf</item>
+    </style>
+
+    <style name="Nunito_ExtraBold">
+        <item name="fontPath">fonts/Nunito-ExtraBold.ttf</item>
+    </style>
+
 </resources>
 

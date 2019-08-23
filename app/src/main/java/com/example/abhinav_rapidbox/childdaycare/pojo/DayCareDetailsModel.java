@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class DayCareDetailsModel {
     private Integer id;
     private String street;
+    private String address;
     private String line1;
     private String line2;
     private String zipCode;
@@ -18,6 +19,14 @@ public class DayCareDetailsModel {
     private String phoneNo;
     private String feeStructure;
     private String facilities;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     private ArrayList<String> imageUrlList = null;
 

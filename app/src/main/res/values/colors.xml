@@ -8,8 +8,8 @@
     <color name="grey">#555555</color>
     <color name="grey_light">#ffbabcbe</color>
     <color name="ultra_dark">#212121</color>
-    <color name="colorPrimaryDark">#FC9242</color>
-    <color name="colorPrimary">#ff8f36</color>
+    <color name="colorPrimaryDark">#285FBA</color>
+    <color name="colorPrimary">#285FBA</color>
     <color name="colorLightPrimary">#FF8DD2</color>
     <color name="colorAccent">#4c4c4e</color>
     <color name="colorDivider">#B6B6B6</color>

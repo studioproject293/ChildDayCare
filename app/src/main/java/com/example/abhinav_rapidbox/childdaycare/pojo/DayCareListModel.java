@@ -5,33 +5,17 @@ package com.example.abhinav_rapidbox.childdaycare.pojo;
  */
 
 public class DayCareListModel implements Comparable<DayCareListModel> {
-    String homeImage;
     String feeOrNot;
-    private Integer id;
-    private String code;
-    private String name;
-    private Integer rating;
+    private String daycareId;
+    private String daycareName;
+    private String description;
     private Double latitude;
     private Double longitude;
-    private Integer fee;
-    private String description;
-    private Integer dayCare_Id;
-
-    public Integer getDayCare_Id() {
-        return dayCare_Id;
-    }
-
-    public void setDayCare_Id(Integer dayCare_Id) {
-        this.dayCare_Id = dayCare_Id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private Integer averageRating;
+    private String image_url;
+    private String imageName;
+    private String feeStructures;
+    private String city;
 
     public String getFeeOrNot() {
         return feeOrNot;
@@ -41,44 +25,28 @@ public class DayCareListModel implements Comparable<DayCareListModel> {
         this.feeOrNot = feeOrNot;
     }
 
-    public String getHomeImage() {
-        return homeImage;
+    public String getDaycareId() {
+        return daycareId;
     }
 
-    public void setHomeImage(String homeImage) {
-        this.homeImage = homeImage;
+    public void setDaycareId(String daycareId) {
+        this.daycareId = daycareId;
     }
 
-    public Integer getId() {
-        return id;
+    public String getDaycareName() {
+        return daycareName;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDaycareName(String daycareName) {
+        this.daycareName = daycareName;
     }
 
-    public String getCode() {
-        return code;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getLatitude() {
@@ -97,24 +65,55 @@ public class DayCareListModel implements Comparable<DayCareListModel> {
         this.longitude = longitude;
     }
 
-    public Integer getFee() {
-        return fee;
+    public Integer getAverageRating() {
+        return averageRating;
     }
 
-    public void setFee(Integer fee) {
-        this.fee = fee;
+    public void setAverageRating(Integer averageRating) {
+        this.averageRating = averageRating;
     }
 
+    public String getImage_url() {
+        return image_url;
+    }
 
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getFeeStructures() {
+        return feeStructures;
+    }
+
+    public void setFeeStructures(String feeStructures) {
+        this.feeStructures = feeStructures;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     @Override
     public int compareTo( DayCareListModel dayCareListModel) {
-        int compareRating = ((DayCareListModel) dayCareListModel).getRating();
-        int compareFee = ((DayCareListModel) dayCareListModel).getFee();
+        int compareRating = ((DayCareListModel) dayCareListModel).getAverageRating();
+        int compareFee = Integer.parseInt( dayCareListModel.getFeeStructures());
         //ascending order
         if (this.feeOrNot.equals("yes"))
-            return this.rating - compareRating;
+            return this.averageRating - compareRating;
         else
-            return this.fee - compareFee;
+            Integer fee=Integer.parseInt(feeStructures);
+            return this.Integer.parseInt(feeStructures) - compareFee;
     }
 }

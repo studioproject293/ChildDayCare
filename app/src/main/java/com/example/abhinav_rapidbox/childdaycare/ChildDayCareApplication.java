@@ -8,6 +8,8 @@ import android.support.multidex.MultiDex;
 import com.example.abhinav_rapidbox.childdaycare.activity.MainActivity;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 
 public class ChildDayCareApplication extends Application {
 
@@ -15,8 +17,11 @@ public class ChildDayCareApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath(getString(R.string.app_font))
+                .setFontAttrId(R.attr.fontPath)
+                .build());
         PrefManager.getInstance().init(this);
-
         defHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
     }

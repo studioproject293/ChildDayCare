@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +37,9 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     public static final int MULTIPLE_PERMISSIONS = 10;
     private static final String TAG = "DemoLoginActivity";
     String mTokenId;
-    Button button_register;
-    TextView signUp, signUpGuest;
+    Button signup;
+    ImageButton button_register;
+    TextView  signUpGuest;
     String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     ImageView side_menu;
     private Context context;
@@ -52,17 +54,17 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_login);
-        side_menu = findViewById(R.id.side_menu);
-        side_menu.setVisibility(View.GONE);
+        setContentView(R.layout.fragment_login_new);
+       /* side_menu = findViewById(R.id.side_menu);
+        side_menu.setVisibility(View.GONE);*/
         context = DemoLoginActivity.this;
         prefManager = PrefManager.getInstance();
         checkPermissions();
-        signUpGuest = findViewById(R.id.signUpGuest);
+        //signUpGuest = findViewById(R.id.signUpGuest);
         editText_emailID = findViewById(R.id.editText_emailID);
         editText_password = findViewById(R.id.editText_password);
-        button_register = findViewById(R.id.button_register);
-        signUp = findViewById(R.id.signUp);
+        button_register = findViewById(R.id.signin);
+        signup = findViewById(R.id.signup);
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,20 +90,20 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
             }
         });
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DemoLoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
-        signUpGuest.setOnClickListener(new View.OnClickListener() {
+        /*signUpGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DemoLoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void checkPermissions() {
