@@ -28,8 +28,8 @@ public interface ApiServices {
     int REQUEST_DAYCARE_DETAILS = 5;
     int REQUEST_USER_INFO = 6;
 
-    @GET("DayCareOverview/getCGPSData")
-    Call<Result<ArrayList<DayCareListModel>>> getCategories();
+    @POST("DayCareOverview/getCGPSData")
+    Call<Result<ArrayList<DayCareListModel>>> getCategories(@Body DayCareListModel dayCareListModel);
 
     @POST("signup/login")
     Call<Result<UserSignUpModel>>loginUrl(@Body SiginInModel siginInModel);

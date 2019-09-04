@@ -4,7 +4,7 @@ package com.example.abhinav_rapidbox.childdaycare.pojo;
  * Created by vikram jha on 7/11/2018.
  */
 
-public class DayCareListModel implements Comparable<DayCareListModel> {
+public class DayCareListModel {
     String feeOrNot;
     private String daycareId;
     private String daycareName;
@@ -16,6 +16,15 @@ public class DayCareListModel implements Comparable<DayCareListModel> {
     private String imageName;
     private String feeStructures;
     private String city;
+    private String distRadius;
+
+    public String getDistRadius() {
+        return distRadius;
+    }
+
+    public void setDistRadius(String distRadius) {
+        this.distRadius = distRadius;
+    }
 
     public String getFeeOrNot() {
         return feeOrNot;
@@ -105,15 +114,5 @@ public class DayCareListModel implements Comparable<DayCareListModel> {
         this.city = city;
     }
 
-    @Override
-    public int compareTo( DayCareListModel dayCareListModel) {
-        int compareRating = ((DayCareListModel) dayCareListModel).getAverageRating();
-        int compareFee = Integer.parseInt( dayCareListModel.getFeeStructures());
-        //ascending order
-        if (this.feeOrNot.equals("yes"))
-            return this.averageRating - compareRating;
-        else
-            Integer fee=Integer.parseInt(feeStructures);
-            return this.Integer.parseInt(feeStructures) - compareFee;
-    }
+
 }

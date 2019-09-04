@@ -56,12 +56,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public void onBindViewHolder(final homeViewHolder holder, final int position) {
         final DayCareListModel listModel = dayCareListModels.get(position);
-        holder.text_name.setText(listModel.getName());
-        holder.textRating.setText(listModel.getRating() + "");
-        holder.textViewFee.setText("₹ "+listModel.getFee() + "");
+        holder.text_name.setText(listModel.getDaycareName());
+        holder.textRating.setText(listModel.getAverageRating() + "");
+        holder.textViewFee.setText("₹ "+listModel.getFeeStructures() + "");
         holder.text_description.setText(listModel.getDescription());
-        if (listModel.getHomeImage() != null) {
-            imageLoader.displayImage(listModel.getHomeImage(), holder.image_icon, options);
+        if (listModel.getImage_url() != null) {
+            imageLoader.displayImage(listModel.getImage_url(), holder.image_icon, options);
            /* Glide.with(context).load(listModel.getHomeImage())
                     .thumbnail(0.5f)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

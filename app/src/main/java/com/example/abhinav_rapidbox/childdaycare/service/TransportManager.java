@@ -219,9 +219,9 @@ public class TransportManager {
         }
     }
 
-    public void getDayCareList(Context context) {
+    public void getDayCareList(Context context,DayCareListModel dayCareListModel) {
         if (isConnectionAvailable(context)) {
-            getAPIService().getCategories().enqueue(new Callback<Result<ArrayList<DayCareListModel>>>() {
+            getAPIService().getCategories(dayCareListModel).enqueue(new Callback<Result<ArrayList<DayCareListModel>>>() {
                 @Override
                 public void onResponse(Call<Result<ArrayList<DayCareListModel>>> call, Response<Result<ArrayList<DayCareListModel>>> res) {
                     if (res.isSuccessful()) {

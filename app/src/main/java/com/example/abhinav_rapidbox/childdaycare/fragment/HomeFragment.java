@@ -150,19 +150,19 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
             public void onClick(View view) {
                 sortdialog.cancel();
                 ArrayList<DayCareListModel> arrayList = new ArrayList<>();
-                if (AppCache.getInstance().getDayCareListModels() != null && AppCache.getInstance().getDayCareListModels().size() > 0) {
-                    for (int i = 0; i < AppCache.getInstance().getDayCareListModels().size(); i++) {
-                        DayCareListModel dayCareListModel = AppCache.getInstance().getDayCareListModels().get(i);
-                        if (checkValue.equals("yes"))
-                            dayCareListModel.setFeeOrNot("yes");
-                        else
-                            dayCareListModel.setFeeOrNot("no");
-
-                        arrayList.add(i, dayCareListModel);
-                        Collections.sort(arrayList);
-                        updateList(arrayList);
-                    }
-                }
+//                if (AppCache.getInstance().getDayCareListModels() != null && AppCache.getInstance().getDayCareListModels().size() > 0) {
+//                    for (int i = 0; i < AppCache.getInstance().getDayCareListModels().size(); i++) {
+//                        DayCareListModel dayCareListModel = AppCache.getInstance().getDayCareListModels().get(i);
+//                        if (checkValue.equals("yes"))
+//                            dayCareListModel.setFeeOrNot("yes");
+//                        else
+//                            dayCareListModel.setFeeOrNot("no");
+//
+//                        arrayList.add(i, dayCareListModel);
+//                        Collections.sort(arrayList);
+//                        updateList(arrayList);
+//                    }
+//                }
             }
         });
         sortdialog.show();
@@ -184,7 +184,11 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         super.onResume();
         mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Day Care List"));
         DialogUtil.displayProgress(getActivity());
-        TransportManager.getInstance(this).getDayCareList(getActivity());
+        DayCareListModel dayCareListModel=new DayCareListModel();
+        dayCareListModel.setLatitude(12.9650524);
+        dayCareListModel.setLatitude(77.7631878);
+        dayCareListModel.setDistRadius("0");
+        TransportManager.getInstance(this).getDayCareList(getActivity(),dayCareListModel);
 
     }
 
@@ -245,12 +249,12 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
 
                     alert.show();
                 } else {
-                    prefManager.setAmount(String.valueOf(dayCareListModel.getFee()));
+                    prefManager.setAmount(String.valueOf(dayCareListModel.getFeeStructures()));
                     mListener.onFragmentInteraction(AppConstant.PRODUCT_DETAILS_FRAGMENT, dayCareListModel);
                 }
                 break;
             case R.id.textDistance:
-                String geoUri = "http://maps.google.com/maps?q=loc:" + dayCareListModel.getLatitude() + "," + dayCareListModel.getLongitude() + " (" + dayCareListModel.getName() + ")";
+                String geoUri = "http://maps.google.com/maps?q=loc:" + dayCareListModel.getLatitude() + "," + dayCareListModel.getLongitude() + " (" + dayCareListModel.getDaycareName() + ")";
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", dayCareListModel.getLatitude(), dayCareListModel.getLongitude());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
                 startActivity(intent);
@@ -377,8 +381,6 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         homeRecyclerAdapter = new HomeRecyclerAdapter(getActivity(), dayCareListModels);
         homeRecyclerAdapter.setListner(this);
         recyclerViewHome.setAdapter(homeRecyclerAdapter);
-
-
     }
 
     @Override

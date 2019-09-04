@@ -85,7 +85,7 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
             }
         });*/
         button_register.setOnClickListener(this);
-        dayCareName.setText(dayCareListModelData.getName());
+        dayCareName.setText(dayCareListModelData.getDaycareName());
         phoneNo.setOnClickListener(this);
         emailId.setOnClickListener(this);
         makeTextViewResizable(description, 2, "View More", true);
@@ -230,8 +230,8 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), dayCareListModelData.getId());
-        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData(dayCareListModelData.getName()));
+        TransportManager.getInstance(this).getDayCareDetailsService(getActivity(), Integer.parseInt(dayCareListModelData.getDaycareId()));
+        mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData(dayCareListModelData.getDaycareName()));
     }
 
     @Override
