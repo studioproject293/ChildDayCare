@@ -40,7 +40,7 @@ public interface ApiServices {
     @POST("registration/saveData")
     Call<Result<ChildSignUp>>childSignUpUrl(@Body ChildSignUp childSignUp);
 
-    @GET("daycare/details/{id}")
+    @GET("DayCareRegistration/getDataById/{id}")
     Call<Result<DayCareDetailsModel>> getDayCareDetailsUrl(@Path("id") int id);
 
     @GET("signup/getSignupData/{userId}")

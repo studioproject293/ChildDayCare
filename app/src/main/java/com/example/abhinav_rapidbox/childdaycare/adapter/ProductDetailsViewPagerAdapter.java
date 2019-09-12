@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ZoomImage;
@@ -48,7 +49,8 @@ public class ProductDetailsViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         final View itemView = layoutInflater.inflate(R.layout.row_productimage, container, false);
         final ImageView productimage = (ImageView) itemView.findViewById(R.id.img_product);
-        Utils.displayImage(context, OtherImages.get(position), productimage);
+        Utils.displayImage(context,"http://"+ OtherImages.get(position), productimage);
+        //Glide.with(context).load(OtherImages.get(position)).into(productimage);
         container.addView(itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

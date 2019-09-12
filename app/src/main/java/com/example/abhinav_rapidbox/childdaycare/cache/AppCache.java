@@ -2,6 +2,7 @@ package com.example.abhinav_rapidbox.childdaycare.cache;
 
 
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildData;
+import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 
 import java.util.ArrayList;
@@ -10,6 +11,15 @@ import java.util.ArrayList;
 public class AppCache {
     public ArrayList<ChildData> getChildDataArrayList() {
         return childDataArrayList;
+    }
+    public DayCareDetailsModel dayCareDetailsModel;
+
+    public DayCareDetailsModel getDayCareDetailsModel() {
+        return dayCareDetailsModel;
+    }
+
+    public void setDayCareDetailsModel(DayCareDetailsModel dayCareDetailsModel) {
+        this.dayCareDetailsModel = dayCareDetailsModel;
     }
 
     public void setChildDataArrayList(ArrayList<ChildData> childDataArrayList) {

@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         recyclerViewHome = rootView.findViewById(R.id.recyclerviewhome);
         filter = rootView.findViewById(R.id.filter);
         textViewshort = rootView.findViewById(R.id.sortby);
-        recyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        recyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         product_viewPager = (ViewPager) rootView.findViewById(R.id.product_viewPager);
         springDotsIndicator = (SpringDotsIndicator) rootView.findViewById(R.id.dots_indicator);
 
@@ -119,8 +119,8 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         sortdialog.setCancelable(true);
         View view = getActivity().getLayoutInflater().inflate(R.layout.bottomdialog_sort, null);
         sortdialog.setContentView(view);
-        RadioButton radioButtonFee =  view.findViewById(R.id.radiofee);
-        RadioButton radioButtonRating =  view.findViewById(R.id.radioRating);
+        RadioButton radioButtonFee = view.findViewById(R.id.radiofee);
+        RadioButton radioButtonRating = view.findViewById(R.id.radioRating);
         Button buttonSubmit = view.findViewById(R.id.submit);
         Button buttonCancel = view.findViewById(R.id.cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
@@ -184,11 +184,11 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         super.onResume();
         mListener.onFragmentUpdate(AppConstant.UPDATE_TOOLBAR, new HeaderData("Day Care List"));
         DialogUtil.displayProgress(getActivity());
-        DayCareListModel dayCareListModel=new DayCareListModel();
+        DayCareListModel dayCareListModel = new DayCareListModel();
         dayCareListModel.setLatitude(12.9650524);
-        dayCareListModel.setLatitude(77.7631878);
+        dayCareListModel.setLongitude(77.7631878);
         dayCareListModel.setDistRadius("0");
-        TransportManager.getInstance(this).getDayCareList(getActivity(),dayCareListModel);
+        TransportManager.getInstance(this).getDayCareList(getActivity(), dayCareListModel);
 
     }
 
@@ -295,11 +295,12 @@ public class HomeFragment extends BaseFragment implements OnFragmentListItemSele
         android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.filter:
-               // mListener.onFragmentInteraction(AppConstant.FilterFragment, null);
+                // mListener.onFragmentInteraction(AppConstant.FilterFragment, null);
                 break;
             case R.id.sortby:
                 // Sorting

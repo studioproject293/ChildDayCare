@@ -18,6 +18,7 @@ import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelec
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.LatLng;
 import com.example.abhinav_rapidbox.childdaycare.utill.GPSTracker;
+import com.example.abhinav_rapidbox.childdaycare.utill.Utils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.textViewFee.setText("₹ "+listModel.getFeeStructures() + "");
         holder.text_description.setText(listModel.getDescription());
         if (listModel.getImage_url() != null) {
-            imageLoader.displayImage(listModel.getImage_url(), holder.image_icon, options);
+            Utils.displayImage(context,"http://"+listModel.getImage_url(), holder.image_icon);
            /* Glide.with(context).load(listModel.getHomeImage())
                     .thumbnail(0.5f)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

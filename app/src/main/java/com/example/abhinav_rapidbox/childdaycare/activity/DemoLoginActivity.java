@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,7 +49,7 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
     private Context context;
     private EditText editText_password, editText_emailID;
     private PrefManager prefManager;
-
+    CheckBox checkBox, checkboxRember;
     @Override
     public void onResume() {
         super.onResume();
@@ -61,6 +65,8 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
         prefManager = PrefManager.getInstance();
         checkPermissions();
         //signUpGuest = findViewById(R.id.signUpGuest);
+        checkBox = findViewById(R.id.checkbox);
+        checkboxRember = findViewById(R.id.checkboxRember);
         editText_emailID = findViewById(R.id.editText_emailID);
         editText_password = findViewById(R.id.editText_password);
         button_register = findViewById(R.id.signin);
@@ -89,7 +95,17 @@ public class DemoLoginActivity extends BaseActivity implements EventListner {
 
             }
         });
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    editText_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                else
+                    editText_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+
+            }
+        });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

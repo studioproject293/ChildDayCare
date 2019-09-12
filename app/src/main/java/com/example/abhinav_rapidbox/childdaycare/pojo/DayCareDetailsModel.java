@@ -7,18 +7,65 @@ import java.util.ArrayList;
  */
 
 public class DayCareDetailsModel {
-    private Integer id;
-    private String street;
+    private String daycareId;
+    private String daycareName;
+    private String description;
+    private String contactNo;
+    private String emailId;
     private String address;
-    private String line1;
-    private String line2;
-    private String zipCode;
+    private String localities;
+    private String landmark;
+    private String city;
+    private String state;
+    private String pincode;
+    private String facilities;
+    private String feeStructures;
+    private String timings;
     private Double latitude;
     private Double longitude;
-    private String emailId;
-    private String phoneNo;
-    private String feeStructure;
-    private String facilities;
+    private String imageName;
+    private String image;
+    private String image_url;
+
+    public String getDaycareId() {
+        return daycareId;
+    }
+
+    public void setDaycareId(String daycareId) {
+        this.daycareId = daycareId;
+    }
+
+    public String getDaycareName() {
+        return daycareName;
+    }
+
+    public void setDaycareName(String daycareName) {
+        this.daycareName = daycareName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
 
     public String getAddress() {
         return address;
@@ -28,46 +75,68 @@ public class DayCareDetailsModel {
         this.address = address;
     }
 
-    private ArrayList<String> imageUrlList = null;
-
-    public Integer getId() {
-        return id;
+    public String getLocalities() {
+        return localities;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setLocalities(String localities) {
+        this.localities = localities;
     }
 
-    public String getStreet() {
-        return street;
+    public String getLandmark() {
+        return landmark;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 
-    public String getLine1() {
-        return line1;
+    public String getCity() {
+        return city;
     }
 
-    public void setLine1(String line1) {
-        this.line1 = line1;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getLine2() {
-        return line2;
+    public String getState() {
+        return state;
     }
 
-    public void setLine2(String line2) {
-        this.line2 = line2;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getPincode() {
+        return pincode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(String facilities) {
+        this.facilities = facilities;
+    }
+
+    public String getFeeStructures() {
+        return feeStructures;
+    }
+
+    public void setFeeStructures(String feeStructures) {
+        this.feeStructures = feeStructures;
+    }
+
+    public String getTimings() {
+        return timings;
+    }
+
+    public void setTimings(String timings) {
+        this.timings = timings;
     }
 
     public Double getLatitude() {
@@ -86,43 +155,27 @@ public class DayCareDetailsModel {
         this.longitude = longitude;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getFeeStructure() {
-        return feeStructure;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setFeeStructure(String feeStructure) {
-        this.feeStructure = feeStructure;
-    }
-
-    public String getFacilities() {
-        return facilities;
-    }
-
-    public void setFacilities(String facilities) {
-        this.facilities = facilities;
-    }
-
-    public ArrayList<String> getImageUrlList() {
-        return imageUrlList;
-    }
-
-    public void setImageUrlList(ArrayList<String> imageUrlList) {
-        this.imageUrlList = imageUrlList;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }

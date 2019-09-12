@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
 import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
+import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildData;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
@@ -92,7 +93,6 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                              Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_signup_child, container, false);
         setId();
-
         sppiner.setOnItemSelectedListener(this);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, sppinerData);
@@ -137,24 +137,25 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                        if (editTextAge.getText().toString().contains("Days")) {
                            String ageValue = editTextAge.getText().toString();
                            String newAge = ageValue.replace(" Days", "");
-                           childData.setAge(Integer.parseInt(newAge));
+                           //childData.setAge(Integer.parseInt(newAge));
                        } else {
                            String ageValue = editTextAge.getText().toString();
                            String newAge = ageValue.replace(" Years", "");
-                           childData.setAge(Integer.parseInt(newAge));
+                           //childData.setAge(Integer.parseInt(newAge));
                        }
-                       childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
-                       childData.setImagefile(encodedImage);
-                       childData.setChild_name(editTextChildName.getText().toString());
+                       childData.setBirthDate(Constants.dateConversion(dateOfbirth.getText().toString()));
+                       //childData.setImagefile(encodedImage);
+                       childData.setChildName(editTextChildName.getText().toString());
                        childData.setBlood_group(valueBloodGroup);
-                       childData.setChild_gender(gender);
-
+                       childData.setGender(gender);
+                       childData.setDayCareName(AppCache.getInstance().getDayCareDetailsModel().getDaycareName());
+                       childData.setUserId(PrefManager.getInstance().getUserId());
                        arrayList.add(childData);
                        userRecive.setArrayListChild(arrayList);
                        Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
                        arrayList.clear();
                    }
-                   // DialogUtil.displayProgress(getActivity());
+                    //DialogUtil.displayProgress(getActivity());
                     Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
                     //TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
 
@@ -169,17 +170,18 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                     if (editTextAge.getText().toString().contains("Days")) {
                         String ageValue = editTextAge.getText().toString();
                         String newAge = ageValue.replace(" Days", "");
-                        childData.setAge(Integer.parseInt(newAge));
+                        //childData.setAge(Integer.parseInt(newAge));
                     } else {
                         String ageValue = editTextAge.getText().toString();
                         String newAge = ageValue.replace(" Years", "");
-                        childData.setAge(Integer.parseInt(newAge));
+                        //childData.setAge(Integer.parseInt(newAge));
                     }
-                    childData.setDate_of_birth(Constants.dateConversion(dateOfbirth.getText().toString()));
+                    childData.setBirthDate(Constants.dateConversion(dateOfbirth.getText().toString()));
                     childData.setImagefile(encodedImage);
-                    childData.setChild_name(editTextChildName.getText().toString());
+                    childData.setChildName(editTextChildName.getText().toString());
+
                     childData.setBlood_group(valueBloodGroup);
-                    childData.setChild_gender(gender);
+                    childData.setGender(gender);
 
                     arrayList.add(childData);
                     Log.d("dhfdhjb", "before clear" + new Gson().toJson(arrayList));

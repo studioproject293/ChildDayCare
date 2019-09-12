@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.abhinav_rapidbox.childdaycare.R;
 import com.example.abhinav_rapidbox.childdaycare.adapter.ProductDetailsViewPagerAdapter;
+import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
 import com.example.abhinav_rapidbox.childdaycare.listner.OnFragmentListItemSelectListener;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
@@ -201,8 +202,9 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     private void productImagedata(ArrayList<String> otherImages) {
         if (otherImages != null && otherImages.size() > 0) {
             productDetailsViewPagerAdapter = new ProductDetailsViewPagerAdapter(getActivity(), otherImages);
-            product_viewPager.setAdapter(productDetailsViewPagerAdapter);
+
             productDetailsViewPagerAdapter.setListner(this);
+            product_viewPager.setAdapter(productDetailsViewPagerAdapter);
             springDotsIndicator.setViewPager(product_viewPager);
             final int position = product_viewPager.getCurrentItem();
 
@@ -239,14 +241,17 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         switch (reqType) {
             case ApiServices.REQUEST_DAYCARE_DETAILS:
                 DayCareDetailsModel dayCareDetailsModel = (DayCareDetailsModel) data.getData();
-                productImagedata(dayCareDetailsModel.getImageUrlList());
+                AppCache.getInstance().setDayCareDetailsModel(dayCareDetailsModel);
+                ArrayList<String>arrayList=new ArrayList<>();
+                arrayList.add(dayCareDetailsModel.getImage_url());
+                productImagedata(arrayList);
                 emailId.setText(dayCareDetailsModel.getEmailId());
-                phoneNo.setText(dayCareDetailsModel.getPhoneNo());
-                chatNo.setText(dayCareDetailsModel.getPhoneNo());
-                price.setText(dayCareDetailsModel.getFeeStructure());
+                phoneNo.setText(dayCareDetailsModel.getContactNo());
+                chatNo.setText(dayCareDetailsModel.getContactNo());
+                price.setText(dayCareDetailsModel.getFeeStructures());
                 facilities.setText(dayCareDetailsModel.getFacilities());
-//                address.setText(dayCareDetailsModel.getStreet() + "," + dayCareDetailsModel.getLine1() + "," + dayCareDetailsModel.getLine2() + ",Pincode :" + dayCareDetailsModel.getZipCode());
-                address.setText(dayCareDetailsModel.getAddress());
+                address.setText(dayCareDetailsModel.getAddress() + "," + dayCareDetailsModel.getLandmark() + "," + dayCareDetailsModel.getCity() + ",Pincode :" + dayCareDetailsModel.getPincode());
+                //address.setText(dayCareDetailsModel.getAddress());
                 break;
         }
         DialogUtil.stopProgressDisplay();
