@@ -1,6 +1,7 @@
 package com.example.abhinav_rapidbox.childdaycare.service;
 
 
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildRegistrationInside;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
@@ -38,7 +39,7 @@ public interface ApiServices {
     Call<Result<UserSignUpModel>>signUpUrl(@Body UserSignUpModel userSignUpModel);
 
     @POST("registration/saveData")
-    Call<Result<ChildSignUp>>childSignUpUrl(@Body ChildSignUp childSignUp);
+    Call<Result<ChildRegistrationInside>>childSignUpUrl(@Body ChildRegistrationInside childSignUp);
 
     @GET("DayCareRegistration/getDataById/{id}")
     Call<Result<DayCareDetailsModel>> getDayCareDetailsUrl(@Path("id") int id);

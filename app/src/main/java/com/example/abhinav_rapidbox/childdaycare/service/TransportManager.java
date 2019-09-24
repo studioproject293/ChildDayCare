@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildRegistrationInside;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareDetailsModel;
 import com.example.abhinav_rapidbox.childdaycare.pojo.DayCareListModel;
@@ -123,11 +124,11 @@ public class TransportManager {
         }
     }
 
-    public void saveChildData(Context context, ChildSignUp childSignUp) {
+    public void saveChildData(Context context, ChildRegistrationInside childSignUp) {
         if (isConnectionAvailable(context)) {
-            getAPIService().childSignUpUrl(childSignUp).enqueue(new Callback<Result<ChildSignUp>>() {
+            getAPIService().childSignUpUrl(childSignUp).enqueue(new Callback<Result<ChildRegistrationInside>>() {
                 @Override
-                public void onResponse(Call<Result<ChildSignUp>> call, Response<Result<ChildSignUp>> res) {
+                public void onResponse(Call<Result<ChildRegistrationInside>> call, Response<Result<ChildRegistrationInside>> res) {
                     if (res.isSuccessful()) {
 //                        listener.onSuccessResponse(ApiServices.REQUEST_PRODUCTS, res.body());
                         filterData(ApiServices.REQUEST_CHILD_SIGINUP, res.body());
@@ -137,10 +138,12 @@ public class TransportManager {
                 }
 
                 @Override
-                public void onFailure(Call<Result<ChildSignUp>> call, Throwable arg0) {
+                public void onFailure(Call<Result<ChildRegistrationInside>> call, Throwable arg0) {
                     //arg0.printStackTrace();
                     processResponse(arg0.getLocalizedMessage(), ApiServices.REQUEST_CHILD_SIGINUP);
                 }
+
+
             });
         } else {
             processResponse(Constants.NO_INTERNET, ApiServices.REQUEST_CHILD_SIGINUP);

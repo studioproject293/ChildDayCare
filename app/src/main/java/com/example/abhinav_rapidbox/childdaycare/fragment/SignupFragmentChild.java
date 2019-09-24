@@ -31,6 +31,7 @@ import com.example.abhinav_rapidbox.childdaycare.activity.PaymentActivity;
 import com.example.abhinav_rapidbox.childdaycare.cache.AppCache;
 import com.example.abhinav_rapidbox.childdaycare.cache.PrefManager;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildData;
+import com.example.abhinav_rapidbox.childdaycare.pojo.ChildRegistrationInside;
 import com.example.abhinav_rapidbox.childdaycare.pojo.ChildSignUp;
 import com.example.abhinav_rapidbox.childdaycare.pojo.HeaderData;
 import com.example.abhinav_rapidbox.childdaycare.service.ApiServices;
@@ -130,34 +131,41 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
             @Override
             public void onClick(View v) {
                 if (validDataEntered()) {
-                   if (AppCache.getInstance().getChildDataArrayList()!=null && AppCache.getInstance().getChildDataArrayList().size()>0)
-                    userRecive.setArrayListChild(AppCache.getInstance().getChildDataArrayList());
-                   else {
-                       ChildData childData = new ChildData();
-                       if (editTextAge.getText().toString().contains("Days")) {
-                           String ageValue = editTextAge.getText().toString();
-                           String newAge = ageValue.replace(" Days", "");
-                           //childData.setAge(Integer.parseInt(newAge));
-                       } else {
-                           String ageValue = editTextAge.getText().toString();
-                           String newAge = ageValue.replace(" Years", "");
-                           //childData.setAge(Integer.parseInt(newAge));
-                       }
-                       childData.setBirthDate(Constants.dateConversion(dateOfbirth.getText().toString()));
-                       //childData.setImagefile(encodedImage);
-                       childData.setChildName(editTextChildName.getText().toString());
-                       childData.setBlood_group(valueBloodGroup);
-                       childData.setGender(gender);
-                       childData.setDayCareName(AppCache.getInstance().getDayCareDetailsModel().getDaycareName());
-                       childData.setUserId(PrefManager.getInstance().getUserId());
-                       arrayList.add(childData);
-                       userRecive.setArrayListChild(arrayList);
-                       Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
-                       arrayList.clear();
-                   }
+                    if (AppCache.getInstance().getChildDataArrayList() != null && AppCache.getInstance().getChildDataArrayList().size() > 0)
+                        userRecive.setArrayListChild(AppCache.getInstance().getChildDataArrayList());
+                    else {
+                        ChildData childData = new ChildData();
+                        if (editTextAge.getText().toString().contains("Days")) {
+                            String ageValue = editTextAge.getText().toString();
+                            String newAge = ageValue.replace(" Days", "");
+                            //childData.setAge(Integer.parseInt(newAge));
+                        } else {
+                            String ageValue = editTextAge.getText().toString();
+                            String newAge = ageValue.replace(" Years", "");
+                            //childData.setAge(Integer.parseInt(newAge));
+                        }
+                        childData.setBirthDate(Constants.dateConversion(dateOfbirth.getText().toString()));
+                        childData.setImage_file(encodedImage);
+                        childData.setChildName(editTextChildName.getText().toString());
+                        childData.setBlood_group(valueBloodGroup);
+                        childData.setGender(gender);
+                        arrayList.add(childData);
+                        userRecive.setArrayListChild(arrayList);
+                        Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
+                        arrayList.clear();
+                    }
                     //DialogUtil.displayProgress(getActivity());
                     Log.d("uhgerjshjg", "fgjfdk" + new Gson().toJson(userRecive));
-                    //TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), userRecive);
+                    ChildRegistrationInside childRegistrationInside = new ChildRegistrationInside();
+                    childRegistrationInside.setChilds(arrayList);
+                    childRegistrationInside.setContact_no(userRecive.getContact_no());
+                    childRegistrationInside.setFather_name(userRecive.getFathers_name());
+                    childRegistrationInside.setMother_name(userRecive.getMothers_name());
+                    childRegistrationInside.setEmail_id(userRecive.getEmail_id());
+                    childRegistrationInside.setUserID(Integer.parseInt(PrefManager.getInstance().getUserId()));
+                    childRegistrationInside.setUserName(PrefManager.getInstance().getUsername());
+
+                    TransportManager.getInstance(SignupFragmentChild.this).saveChildData(getActivity(), childRegistrationInside);
 
                 }
             }
@@ -177,7 +185,7 @@ public class SignupFragmentChild extends BaseFragment implements AdapterView.OnI
                         //childData.setAge(Integer.parseInt(newAge));
                     }
                     childData.setBirthDate(Constants.dateConversion(dateOfbirth.getText().toString()));
-                    childData.setImagefile(encodedImage);
+                    childData.setImage_file(encodedImage);
                     childData.setChildName(editTextChildName.getText().toString());
 
                     childData.setBlood_group(valueBloodGroup);
